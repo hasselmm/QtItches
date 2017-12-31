@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/Stage1.qml</file>
+        <file>qml/StageView.qml</file>
+        <file>qml/Stage2.qml</file>
+        <file>assets/cat1.svg</file>
+        <file>assets/cat2.svg</file>
+    </qresource>
+</RCC>
