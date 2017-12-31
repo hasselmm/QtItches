@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/imports/QtItches/Controls">
+        <file>qml/controls/ChoiceView.qml</file>
+        <file>qml/controls/ConstantView.qml</file>
+        <file>qml/controls/ExpressionView.qml</file>
+        <file>qml/controls/NumberView.qml</file>
+        <file>qml/controls/PopupOverlay.qml</file>
+        <file>qml/controls/StringView.qml</file>
+        <file>qml/shapes/BlockShape.qml</file>
+        <file>qml/shapes/BooleanShape.qml</file>
+        <file>qml/shapes/ReporterShape.qml</file>
+        <file>qml/shapes/StackShape.qml</file>
+        <file>qml/controls/BlockViewContent.qml</file>
+        <file>qml/controls/BooleanView.qml</file>
+        <file>qmldir</file>
+    </qresource>
+</RCC>
