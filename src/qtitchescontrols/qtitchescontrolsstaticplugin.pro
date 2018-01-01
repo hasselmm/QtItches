@@ -1,5 +1,6 @@
 TEMPLATE = lib
 CONFIG += plugin static
+DESTDIR = $$PROJECT_LIBRARY_DIR
 
 QMAKE_MOC_OPTIONS += -Muri=QtItches.Controls
 
