@@ -21,7 +21,7 @@ public:
     {
         Q_INIT_RESOURCE(qtitchescoreplugin);
         Q_ASSERT(uri == QLatin1String("QtItches.Core"));
-        using namespace QtItches;
+        using namespace QtItches::Core;
 
         qmlRegisterType<Actor>(uri, 1, 0, "Actor");
         qmlRegisterType<And>(uri, 1, 0, "And");

@@ -5,6 +5,7 @@
 #include <QUrl>
 
 namespace QtItches {
+namespace Core {
 
 class Script;
 class Stage;
@@ -19,8 +20,8 @@ class Actor : public QObject
     Q_PROPERTY(QString saying READ saying NOTIFY said FINAL)
     Q_PROPERTY(QString thinking READ thinking NOTIFY thought FINAL)
 
-    Q_PROPERTY(QQmlListProperty<QtItches::Script> scripts READ scripts CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Stage *stage READ stage CONSTANT FINAL)
+    Q_PROPERTY(QQmlListProperty<QtItches::Core::Script> scripts READ scripts CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Stage *stage READ stage CONSTANT FINAL)
 
 
 public:
@@ -55,6 +56,7 @@ private:
     Private *const d;
 };
 
+} // namespace Core
 } // namespace QtItches
 
 #endif // QTITCHESACTOR_H

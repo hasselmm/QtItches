@@ -5,6 +5,7 @@
 #include <QQmlParserStatus>
 
 namespace QtItches {
+namespace Core {
 
 class Actor;
 class Block;
@@ -16,12 +17,12 @@ class Script : public QObject, public QQmlParserStatus
     Q_INTERFACES(QQmlParserStatus)
     Q_CLASSINFO("DefaultProperty", "blocks")
 
-    Q_PROPERTY(QtItches::Actor *actor READ actor CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Script *scope READ scope CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Stage *stage READ stage CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Actor *actor READ actor CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Script *scope READ scope CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Stage *stage READ stage CONSTANT FINAL)
 
-    Q_PROPERTY(QQmlListProperty<QtItches::Block> blocks READ blocks CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Block *currentBlock READ currentBlock NOTIFY currentBlockChanged FINAL)
+    Q_PROPERTY(QQmlListProperty<QtItches::Core::Block> blocks READ blocks CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Block *currentBlock READ currentBlock NOTIFY currentBlockChanged FINAL)
     Q_PROPERTY(bool running READ running NOTIFY runningChanged FINAL)
 
 public:
@@ -46,7 +47,7 @@ public slots:
 
 signals:
     void runningChanged(bool running);
-    void currentBlockChanged(QtItches::Block *currentBlock);
+    void currentBlockChanged(QtItches::Core::Block *currentBlock);
     void finished();
 
 private:
@@ -54,6 +55,7 @@ private:
     Private *const d;
 };
 
+} // namespace Core
 } // namespace QtItches
 
 #endif // QTITCHESSCRIPT_H

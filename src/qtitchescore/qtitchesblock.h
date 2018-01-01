@@ -5,6 +5,7 @@
 #include <QQmlParserStatus>
 
 namespace QtItches {
+namespace Core {
 
 class Actor;
 class Parameter;
@@ -17,16 +18,16 @@ class Block : public QObject, public QQmlParserStatus
     Q_CLASSINFO("DefaultProperty", "data")
     Q_INTERFACES(QQmlParserStatus)
 
-    Q_PROPERTY(QtItches::Actor *actor READ actor CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Script *script READ script CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Stage *stage READ stage CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Actor *actor READ actor CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Script *script READ script CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Stage *stage READ stage CONSTANT FINAL)
 
     Q_PROPERTY(int category READ category WRITE setCategory NOTIFY categoryChanged FINAL)
     Q_PROPERTY(int connectors READ connectors WRITE setConnectors NOTIFY connectorsChanged FINAL)
     Q_PROPERTY(int shape READ shape WRITE setShape NOTIFY shapeChanged FINAL)
 
     Q_PROPERTY(QQmlListProperty<QObject> data READ data CONSTANT FINAL)
-    Q_PROPERTY(QQmlListProperty<QtItches::Parameter> parameters READ parameters CONSTANT FINAL)
+    Q_PROPERTY(QQmlListProperty<QtItches::Core::Parameter> parameters READ parameters CONSTANT FINAL)
 
 public:
     enum Category {
@@ -106,8 +107,9 @@ private:
     Private *const d;
 };
 
+} // namespace Core
 } // namespace QtItches
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(QtItches::Block::Connectors)
+Q_DECLARE_OPERATORS_FOR_FLAGS(QtItches::Core::Block::Connectors)
 
 #endif // QTITCHESBLOCK_H

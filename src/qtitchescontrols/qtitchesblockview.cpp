@@ -12,6 +12,8 @@ namespace Controls {
 
 namespace {
 
+using Core::Block;
+
 const auto s_qmlShapePrefix = QByteArrayLiteral("import QtItches.Controls 1.0\n"
                                                 "\n");
 const auto s_qmlShapeSuffix = QByteArrayLiteral(" {\n"
@@ -107,7 +109,7 @@ void BlockView::setBlock(Block *block)
         connect(d->m_block, &Block::categoryChanged, this, [this] { d->updateView(this); });
 
         if (const auto script = d->m_block->script())
-            connect(script, &Script::currentBlockChanged, this, [this] { d->updateView(this); });
+            connect(script, &Core::Script::currentBlockChanged, this, [this] { d->updateView(this); });
     }
 
     emit blockChanged(d->m_block);
