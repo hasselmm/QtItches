@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = QtItchesControls
-
+DESTDIR = $$PROJECT_LIBRARY_DIR
 CONFIG += create_prf
 QT = quick
 

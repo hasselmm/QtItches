@@ -9,3 +9,5 @@ OTHER_FILES += \
     .qmake.conf \
 
 tests.depends = src
+
+QML_IMPORT_PATH = $$PROJECT_IMPORTS_DIR

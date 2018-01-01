@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = QtItchesCore
-
+DESTDIR = $$PROJECT_LIBRARY_DIR
 CONFIG += create_prf
 QT += qml
 
