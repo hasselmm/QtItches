@@ -4,13 +4,14 @@
 #include <QQmlListProperty>
 
 namespace QtItches {
+namespace Core {
 
 class Actor;
 
 class Stage : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<QtItches::Actor> actors READ actors CONSTANT FINAL)
+    Q_PROPERTY(QQmlListProperty<QtItches::Core::Actor> actors READ actors CONSTANT FINAL)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged FINAL)
     Q_CLASSINFO("DefaultProperty", "actors")
 
@@ -31,6 +32,7 @@ private:
     Private *const d;
 };
 
+} // namespace Core
 } // namespace QtItches
 
 #endif // QTITCHESSTAGE_H

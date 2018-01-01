@@ -5,6 +5,7 @@
 #include <QLoggingCategory>
 
 namespace QtItches {
+namespace Core {
 
 namespace {
 Q_LOGGING_CATEGORY(lcActor, "qtitches.actor")
@@ -93,4 +94,5 @@ QQmlListProperty<Script> Actor::scripts()
     return {this, d->m_scripts};
 }
 
+} // namespace Core
 } // namespace QtItches

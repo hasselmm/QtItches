@@ -19,6 +19,7 @@
     }
 
 namespace QtItches {
+namespace Core {
 
 class Expression : public Block
 {
@@ -111,6 +112,7 @@ QTITCHES_DECLARE_BINARY_EXPRESSION(Or);
 
 QTITCHES_DECLARE_UNARY_EXPRESSION(Not);
 
+} // namespace Core
 } // namespace QtItches
 
 #endif // QTITCHESEXPRESSION_H

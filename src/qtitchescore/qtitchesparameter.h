@@ -5,6 +5,7 @@
 #include <QVariant>
 
 namespace QtItches {
+namespace Core {
 
 class Expression;
 
@@ -14,7 +15,7 @@ class Parameter : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int type READ type CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Expression *expression READ expression WRITE setExpression NOTIFY valueChanged)
+    Q_PROPERTY(QtItches::Core::Expression *expression READ expression WRITE setExpression NOTIFY valueChanged)
     Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged FINAL)
 
 public:
@@ -185,6 +186,7 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+} // namespace Core
 } // namespace QtItches
 
 #endif // QTITCHESPARAMETER_H

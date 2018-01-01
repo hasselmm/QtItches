@@ -7,6 +7,7 @@
 #include <QTimer>
 
 namespace QtItches {
+namespace Core {
 
 namespace {
 Q_LOGGING_CATEGORY(lcScript, "qtitches.script")
@@ -140,4 +141,5 @@ void Script::stop()
     }
 }
 
+} // namespace Core
 } // namespace QtItches

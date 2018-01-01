@@ -6,6 +6,7 @@
 #include <QMetaMethod>
 
 namespace QtItches {
+namespace Core {
 
 class Block::Private
 {
@@ -130,4 +131,5 @@ void Block::stop()
     emit finished();
 }
 
+} // namespace Core
 } // namespace QtItches

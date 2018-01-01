@@ -5,14 +5,16 @@
 
 namespace QtItches {
 
+namespace Core {
 class Block;
+}
 
 namespace Controls {
 
 class BlockView : public QQuickItem
 {
     Q_OBJECT
-    Q_PROPERTY(QtItches::Block *block READ block WRITE setBlock NOTIFY blockChanged FINAL)
+    Q_PROPERTY(QtItches::Core::Block *block READ block WRITE setBlock NOTIFY blockChanged FINAL)
     Q_PROPERTY(QQuickItem *shape READ shape NOTIFY shapeChanged FINAL)
 
     Q_PROPERTY(QColor baseColor READ baseColor NOTIFY baseColorChanged FINAL)
@@ -27,8 +29,8 @@ public:
     explicit BlockView(QQuickItem *parent = {});
     ~BlockView();
 
-    void setBlock(Block *block);
-    Block *block() const;
+    void setBlock(Core::Block *block);
+    Core::Block *block() const;
 
     QQuickItem *shape() const;
 
@@ -43,7 +45,7 @@ public:
     static BlockView *qmlAttachedProperties(QObject *object);
 
 signals:
-    void blockChanged(Block *block);
+    void blockChanged(Core::Block *block);
     void shapeChanged(QQuickItem *shape);
 
     void baseColorChanged(const QColor &baseColor);

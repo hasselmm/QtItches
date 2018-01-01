@@ -1,6 +1,7 @@
 #include "qtitchesstage.h"
 
 namespace QtItches {
+namespace Core {
 
 class Stage::Private
 {
@@ -38,4 +39,5 @@ QString Stage::name() const
     return d->m_name;
 }
 
+} // namespace Core
 } // namespace QtItches
