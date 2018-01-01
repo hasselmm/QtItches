@@ -30,7 +30,6 @@ public:
         qmlRegisterType<BooleanParameter>(uri, 1, 0, "BooleanParameter");
         qmlRegisterType<ChoiceParameter>(uri, 1, 0, "ChoiceParameter");
         qmlRegisterType<ConstantParameter>(uri, 1, 0, "ConstantParameter");
-//        qmlRegisterType<Contains>(uri, 1, 0, "Contains");
         qmlRegisterType<Divide>(uri, 1, 0, "Divide");
         qmlRegisterType<Equals>(uri, 1, 0, "Equals");
         qmlRegisterType<Expression>(uri, 1, 0, "Expression");
@@ -38,7 +37,7 @@ public:
         qmlRegisterType<LessThan>(uri, 1, 0, "LessThan");
         qmlRegisterType<Minus>(uri, 1, 0, "Minus");
         qmlRegisterType<Multiply>(uri, 1, 0, "Multiply");
-//        qmlRegisterType<Not>(uri, 1, 0, "Not");
+        qmlRegisterType<Not>(uri, 1, 0, "Not");
         qmlRegisterType<NumberParameter>(uri, 1, 0, "NumberParameter");
         qmlRegisterType<Or>(uri, 1, 0, "Or");
         qmlRegisterType<Plus>(uri, 1, 0, "Plus");

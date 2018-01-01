@@ -122,7 +122,7 @@ void Divide::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 LessThan::LessThan(QObject *parent)
-    : BinaryExpression{Parameter::BooleanType, tr("<"), parent}
+    : BinaryExpression{Parameter::NumberType, tr("<"), parent}
 {
     connect(this, &LessThan::leftChanged, this, &LessThan::evaluate);
     connect(this, &LessThan::rightChanged, this, &LessThan::evaluate);
@@ -137,7 +137,7 @@ void LessThan::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 GreaterThan::GreaterThan(QObject *parent)
-    : BinaryExpression{Parameter::BooleanType, tr(">"), parent}
+    : BinaryExpression{Parameter::NumberType, tr(">"), parent}
 {
     connect(this, &GreaterThan::leftChanged, this, &GreaterThan::evaluate);
     connect(this, &GreaterThan::rightChanged, this, &GreaterThan::evaluate);
@@ -152,7 +152,7 @@ void GreaterThan::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Equals::Equals(QObject *parent)
-    : BinaryExpression{Parameter::BooleanType, tr("="), parent}
+    : BinaryExpression{Parameter::StringType, tr("="), parent}
 {
     connect(this, &Equals::leftChanged, this, &Equals::evaluate);
     connect(this, &Equals::rightChanged, this, &Equals::evaluate);
@@ -181,7 +181,7 @@ void And::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Or::Or(QObject *parent)
-    : BinaryExpression{Parameter::BooleanType, tr("Or"), parent}
+    : BinaryExpression{Parameter::BooleanType, tr("or"), parent}
 {
     connect(this, &Or::leftChanged, this, &Or::evaluate);
     connect(this, &Or::rightChanged, this, &Or::evaluate);
@@ -191,6 +191,19 @@ void Or::evaluate()
 {
     setValue(leftParameter<BooleanParameter>()->boolean() ||
              rightParameter<BooleanParameter>()->boolean());
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Not::Not(QObject *parent)
+    : UnaryExpression{Parameter::BooleanType, tr("not"), parent}
+{
+    connect(this, &Not::argumentChanged, this, &Not::evaluate);
+}
+
+void Not::evaluate()
+{
+    setValue(!argumentParameter<BooleanParameter>()->boolean());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

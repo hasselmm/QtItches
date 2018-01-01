@@ -47,7 +47,7 @@ Expression *Parameter::expression() const
 
 void Parameter::setValue(const QVariant &value)
 {
-    if (m_value == value)
+    if (m_value.userType() == value.userType() && m_value == value)
         return;
 
     if (!acceptableValue(value)) {

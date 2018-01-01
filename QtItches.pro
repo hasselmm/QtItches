@@ -1,6 +1,11 @@
 TEMPLATE = subdirs
-SUBDIRS = src
+
+SUBDIRS = \
+    src \
+    tests
 
 OTHER_FILES += \
     .gitignore \
     .qmake.conf \
+
+tests.depends = src
