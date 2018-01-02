@@ -4,7 +4,7 @@ Stage {
     name: "Test 2"
 
     Actor {
-        name: "Evolution Robot"
+        name: "Cat"
 
         Script {
             WhenThisSpriteClicked {}
