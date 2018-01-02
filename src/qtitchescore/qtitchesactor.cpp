@@ -86,7 +86,7 @@ void Actor::think(const QString &text)
 {
     d->m_thinking = text;
     qCInfo(lcActor, "%ls thinks: `%ls'", qUtf16Printable(name()), qUtf16Printable(text));
-    emit said(d->m_thinking); // really always emit
+    emit thought(d->m_thinking); // really always emit
 }
 
 QQmlListProperty<Script> Actor::scripts()
