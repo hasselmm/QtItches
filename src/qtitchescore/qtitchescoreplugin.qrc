@@ -1,16 +1,16 @@
 <RCC>
     <qresource prefix="/imports/QtItches/Core">
-        <file>qml/control/Forever.qml</file>
-        <file>qml/control/Repeat.qml</file>
+        <file>qml/control/DoForever.qml</file>
+        <file>qml/control/DoIf.qml</file>
+        <file>qml/control/DoIfElse.qml</file>
+        <file>qml/control/DoRepeat.qml</file>
+        <file>qml/control/DoRepeatUntil.qml</file>
         <file>qml/control/Stop.qml</file>
         <file>qml/control/WaitSecs.qml</file>
+        <file>qml/control/WaitUntil.qml</file>
         <file>qml/events/WhenThisSpriteClicked.qml</file>
         <file>qml/looks/Say.qml</file>
         <file>qml/looks/Think.qml</file>
-        <file>qml/control/IfElse.qml</file>
-        <file>qml/control/If.qml</file>
-        <file>qml/control/WaitUntil.qml</file>
-        <file>qml/control/RepeatUntil.qml</file>
         <file>qmldir</file>
     </qresource>
 </RCC>

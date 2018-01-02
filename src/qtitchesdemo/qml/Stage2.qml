@@ -9,11 +9,11 @@ Stage {
         Script {
             WhenThisSpriteClicked {}
 
-            If {}
-            IfElse {}
-            Repeat {}
+            DoIf {}
+            DoIfElse {}
+            DoRepeat {}
 //            RepeatUntil {}
-            Forever {}
+            DoForever {}
 
 /*
             WaitSecs { seconds: 1.1 }
