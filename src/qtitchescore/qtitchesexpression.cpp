@@ -1,7 +1,4 @@
 #include "qtitchesexpression.h"
-#include "qtitchesexpression.h"
-#include "qtitchesexpression.h"
-#include "qtitchesexpression.h"
 
 namespace QtItches {
 namespace Core {

@@ -10,8 +10,6 @@
 #include <QQmlComponent>
 #include <QQmlExtensionPlugin>
 
-#include <QStaticPlugin>
-
 class qtitchescoreplugin : public QQmlExtensionPlugin
 {
     Q_OBJECT
