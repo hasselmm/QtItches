@@ -52,7 +52,7 @@ BlockShape {
         pathElements: {
             var path = [];
 
-            scriptViews.forEach(function(view) {
+            (scriptViews || []).forEach(function(view) {
                 var y0 = view.y + view.labelPadding + 0.5;
                 var y1 = view.y + view.height - 0.5;
 

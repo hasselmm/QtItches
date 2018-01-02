@@ -20,16 +20,16 @@ ColumnLayout {
     spacing: 0
 
     RowLayout {
-        Layout.alignment: shape.headerAlignment
-        Layout.leftMargin: shape.leftPadding
-        Layout.topMargin: shape.topPadding
-        Layout.rightMargin: shape.rightPadding
-        Layout.bottomMargin: shape.bottomPadding
+        Layout.alignment: shape && shape.headerAlignment || 0
+        Layout.leftMargin: shape && shape.leftPadding || 0
+        Layout.topMargin: shape && shape.topPadding || 0
+        Layout.rightMargin: shape && shape.rightPadding || 0
+        Layout.bottomMargin: shape && shape.bottomPadding || 0
 
         spacing: 5
 
         Repeater {
-            model: block.parameters
+            model: block && block.parameters
 
             Loader {
                 readonly property Parameter parameter: modelData
@@ -72,7 +72,7 @@ ColumnLayout {
     Repeater {
         id: scriptRepeater
 
-        model: block.scripts
+        model: block && block.scripts
 
         ColumnLayout {
             readonly property Script script: modelData
