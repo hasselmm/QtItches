@@ -10,7 +10,9 @@
         <file>qml/control/WaitUntil.qml</file>
         <file>qml/events/WhenThisSpriteClicked.qml</file>
         <file>qml/looks/Say.qml</file>
+        <file>qml/looks/SayForSecs.qml</file>
         <file>qml/looks/Think.qml</file>
+        <file>qml/looks/ThinkForSecs.qml</file>
         <file>qmldir</file>
     </qresource>
 </RCC>
