@@ -23,7 +23,6 @@ class Actor : public QObject
     Q_PROPERTY(QQmlListProperty<QtItches::Core::Script> scripts READ scripts CONSTANT FINAL)
     Q_PROPERTY(QtItches::Core::Stage *stage READ stage CONSTANT FINAL)
 
-
 public:
     explicit Actor(QObject *parent = {});
     ~Actor();
