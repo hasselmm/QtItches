@@ -6,6 +6,7 @@ SUBDIRS = \
 
 OTHER_FILES += \
     .gitignore \
+    .travis.yml \
     .qmake.conf \
 
 tests.depends = src
