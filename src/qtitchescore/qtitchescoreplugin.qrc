@@ -8,6 +8,7 @@
         <file>qml/control/Stop.qml</file>
         <file>qml/control/WaitSecs.qml</file>
         <file>qml/control/WaitUntil.qml</file>
+        <file>qml/events/WhenFlagClicked.qml</file>
         <file>qml/events/WhenThisSpriteClicked.qml</file>
         <file>qml/looks/Say.qml</file>
         <file>qml/looks/SayForSecs.qml</file>

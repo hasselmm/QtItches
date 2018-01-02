@@ -60,8 +60,9 @@ Rectangle {
                         Image {
                             Layout.column: 1
                             Layout.row: 0
-                            Layout.rowSpan: 3
+                            Layout.rowSpan: 4
 
+                            rotation: actor.direction - 90
                             source: actor.costumes[0] || ""
 
                             MouseArea {
@@ -79,15 +80,22 @@ Rectangle {
 
                         Text {
                             Layout.row: 2
-                            Layout.fillHeight: true
 
                             text: actor.thinking ? qsTr("thinks `%1'").arg(actor.thinking)
                                                  : qsTr("thinks nothing")
+                        }
+
+                        Text {
+                            Layout.row: 3
+                            Layout.fillHeight: true
+
                             bottomPadding: 10
+                            font.pixelSize: 9
+                            text: qsTr("x: %1; y: %2; direction: %3°").arg(actor.x.toFixed(1)).arg(actor.y.toFixed(1)).arg(actor.direction.toFixed(1))
                         }
 
                         Row {
-                            Layout.row: 3
+                            Layout.row: 4
                             Layout.columnSpan: 2
 
                             spacing: 5
