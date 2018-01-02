@@ -159,16 +159,6 @@ QFont BlockView::editorFont() const
     return font;
 }
 
-BlockView *BlockView::qmlAttachedProperties(QObject *object)
-{
-    for (auto item = dynamic_cast<QQuickItem *>(object); item; item = item->parentItem()) {
-        if (const auto blockView = dynamic_cast<BlockView *>(item))
-            return blockView;
-    }
-
-    return {};
-}
-
 QColor BlockView::Private::categoryColor() const
 {
     if (m_block) {
