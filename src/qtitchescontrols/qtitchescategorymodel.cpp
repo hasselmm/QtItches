@@ -60,7 +60,7 @@ CategoryModel::CategoryModel(QObject *parent)
     d->m_rows.emplace_back(Core::Block::OperatorsCategory);
     d->m_rows.emplace_back(Core::Block::UnknownCategory);
 
-    Q_ASSERT(d->m_rows.size() == QMetaEnum::fromType<Core::Block::Category>().keyCount());
+    Q_ASSERT(d->m_rows.size() == static_cast<size_t>(QMetaEnum::fromType<Core::Block::Category>().keyCount()));
 }
 
 CategoryModel::~CategoryModel()
