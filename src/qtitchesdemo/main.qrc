@@ -5,6 +5,7 @@
         <file>qml/BlockPicker.qml</file>
         <file>qml/Stage1.qml</file>
         <file>qml/Stage2.qml</file>
+        <file>qml/Stage3.qml</file>
         <file>qml/StageView.qml</file>
         <file>qml/main.qml</file>
     </qresource>
