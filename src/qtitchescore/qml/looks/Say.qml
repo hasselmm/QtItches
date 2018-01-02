@@ -1,7 +1,7 @@
 import QtItches.Core 1.0
 
 Block {
-    property alias text: textParameter.string
+    property alias text: textParameter.value
 
     category: Block.LooksCategory
     parameters: [
