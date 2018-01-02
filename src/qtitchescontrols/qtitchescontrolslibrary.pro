@@ -5,10 +5,12 @@ CONFIG += create_prf
 QT = quick
 
 HEADERS += \
-    qtitchesblockview.h
+    qtitchesblockview.h \
+    qtitchescategorymodel.h
 
 SOURCES += \
-    qtitchesblockview.cpp
+    qtitchesblockview.cpp \
+    qtitchescategorymodel.cpp
 
 OTHER_FILES += \
     qtitchescontrolslibrary.pri

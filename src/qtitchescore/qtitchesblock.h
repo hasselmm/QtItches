@@ -34,13 +34,13 @@ public:
         UnknownCategory = 0,
         ControlCategory = 1,
         EventsCategory,
-        ListsCategory,
         LooksCategory,
-        MotionsCategory,
+        MotionCategory,
         OperatorsCategory,
+        PenCategory,
         SensingCategory,
-        SoundsCategory,
-        VariablesCategory,
+        SoundCategory,
+        DataCategory,
     };
 
     Q_ENUM(Category)
