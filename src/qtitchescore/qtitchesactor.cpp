@@ -4,6 +4,8 @@
 
 #include <QLoggingCategory>
 
+#include <cmath>
+
 namespace QtItches {
 namespace Core {
 
@@ -18,6 +20,8 @@ public:
     QString m_name;
     QString m_saying;
     QString m_thinking;
+    QPointF m_position = {0, 0};
+    double m_direction = 90;
 
     QList<Script *> m_scripts;
 };
@@ -30,6 +34,59 @@ Actor::Actor(QObject *parent)
 Actor::~Actor()
 {
     delete d;
+}
+
+void Actor::setX(double x)
+{
+    setPosition({x, y()});
+}
+
+double Actor::x() const
+{
+    return d->m_position.x();
+}
+
+void Actor::setY(double y)
+{
+    setPosition({x(), y});
+}
+
+double Actor::y() const
+{
+    return d->m_position.y();
+}
+
+void Actor::setPosition(const QPointF &position)
+{
+    if (d->m_position == position)
+        return;
+
+    d->m_position = position;
+    emit positionChanged(d->m_position);
+}
+
+QPointF Actor::position() const
+{
+    return d->m_position;
+}
+
+void Actor::setDirection(double direction)
+{
+    if (d->m_direction == direction)
+        return;
+
+    while (direction > 180)
+        direction -= 360;
+    while (direction < -180)
+        direction += 360;
+
+    d->m_direction = direction;
+    emit directionChanged(d->m_direction);
+}
+
+double Actor::direction() const
+{
+    return d->m_direction;
 }
 
 void Actor::setCostumes(const QList<QUrl> &costumes)
@@ -91,6 +148,17 @@ void Actor::think(const QString &text)
 
     d->m_thinking = text;
     emit thought(d->m_thinking); // really always emit
+}
+
+void Actor::goForward(int steps)
+{
+    if (steps > 0) {
+        // MIT Scratch has a very special idea of basic trigonometry
+        const auto dx = steps * cos(M_PI * (90 - direction()) / 180);
+        const auto dy = steps * sin(M_PI * (90 - direction()) / 180);
+        d->m_position += {dx, dy};
+        emit positionChanged(d->m_position);
+    }
 }
 
 QQmlListProperty<Script> Actor::scripts()

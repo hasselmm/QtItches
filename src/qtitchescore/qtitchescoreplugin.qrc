@@ -13,6 +13,14 @@
         <file>qml/looks/SayForSecs.qml</file>
         <file>qml/looks/Think.qml</file>
         <file>qml/looks/ThinkForSecs.qml</file>
+        <file>qml/motion/Direction.qml</file>
+        <file>qml/motion/GoForward.qml</file>
+        <file>qml/motion/GotoXY.qml</file>
+        <file>qml/motion/TurnLeft.qml</file>
+        <file>qml/motion/TurnRight.qml</file>
+        <file>qml/motion/TurnTo.qml</file>
+        <file>qml/motion/XPos.qml</file>
+        <file>qml/motion/YPos.qml</file>
         <file>qmldir</file>
     </qresource>
 </RCC>
