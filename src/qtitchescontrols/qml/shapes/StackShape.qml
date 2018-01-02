@@ -68,9 +68,6 @@ BlockShape {
                           pathLine.createObject(shapePath, {x: 16.5, y: y1}),
                           pathLine.createObject(shapePath, {x: startX - 2, y: y1}),
                           pathLine.createObject(shapePath, {x: startX, y: y1 + 2}));
-
-/*
-*/
             });
 
             path.push(br1, br2);
