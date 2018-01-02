@@ -47,15 +47,17 @@ ColumnLayout {
                     id: fallbackParameter
 
                     ConstantView {
-                        text: "(unsupported: type=%1; value=%2)".arg(parent.parameter.type).arg(parent.parameter.value)
+                        text: parent.parameter
+                              ? "(unsupported: type=%1; value=%2)".arg(parent.parameter.type).arg(parent.parameter.value)
+                              : ""
                     }
                 }
 
                 sourceComponent: {
-                    if (parameter.expression)
+                    if (parameter && parameter.expression)
                         return expressionView;
 
-                    switch (parameter.type) {
+                    switch (parameter && parameter.type) {
                     case Parameter.BooleanType: return booleanView;
                     case Parameter.ChoiceType: return choiceView;
                     case Parameter.ConstantType: return constantView;
