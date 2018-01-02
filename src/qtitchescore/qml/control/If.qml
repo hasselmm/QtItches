@@ -17,12 +17,14 @@ Block {
     function run() {
         if (condition)
             onTrue.run();
+        else
+            finished();
     }
 
     Connections {
         id: scriptMonitor
 
         target: onTrue
-        onFinished: finished();
+        onFinished: finished()
     }
 }
