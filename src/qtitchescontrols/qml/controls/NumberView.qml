@@ -16,14 +16,14 @@ Rectangle {
         anchors.centerIn: parent
         font: parent.font
         inputMethodHints: Qt.ImhDigitsOnly
-        text: parameter.number
+        text: parameter && parameter.number
 
         validator: DoubleValidator {
             id: validator
 
-            decimals: parameter.decimals
-            bottom: parameter.lowestNumber
-            top: parameter.highestNumber
+            decimals: parameter && parameter.decimals || 0
+            bottom: parameter && parameter.lowestNumber || 0
+            top: parameter && parameter.highestNumber || 0
         }
 
         onEditingFinished: parameter.number = parseFloat(text)

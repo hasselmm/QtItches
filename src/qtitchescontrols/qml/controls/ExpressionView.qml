@@ -11,6 +11,6 @@ Item {
 
     BlockView {
         id: expressionView
-        block: parameter.expression
+        block: parameter && parameter.expression
     }
 }

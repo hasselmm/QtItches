@@ -16,8 +16,8 @@ Rectangle {
         anchors.centerIn: parent
         font: parent.font
 
-        maximumLength: parameter.maximumLength
-        text: parameter.string
+        maximumLength: parameter && parameter.maximumLength || 0
+        text: parameter && parameter.string
 
         onEditingFinished: parameter.string = text
     }

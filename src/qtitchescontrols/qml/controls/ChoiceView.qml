@@ -18,7 +18,7 @@ Rectangle {
         anchors.centerIn: parent
         color: parent.textColor
         font.pixelSize: 12
-        text: parameter.model[parameter.currentIndex] || ""
+        text: parameter && parameter.model[parameter.currentIndex] || ""
     }
 
     MouseArea {
