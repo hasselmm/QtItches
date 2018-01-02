@@ -4,7 +4,7 @@ Stage {
     name: "Test 1"
 
     Actor {
-        name: "Evolution Robot"
+        name: "Cat"
 
         costumes: [
             "qrc:/assets/cat1.svg",
