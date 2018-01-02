@@ -34,7 +34,6 @@ public:
             return;
         }
 
-        qCInfo(lcScript, "Block #%d has finished", m_currentIndex);
         runBlock(m_stopped ? -1 : m_currentIndex + 1);
     }
 
