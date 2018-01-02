@@ -1,8 +1,8 @@
-CONFIG *= link_prf
+include(../qtitchescore/qtitchescorelibrary.pri)
+
 QT *= quick
 
 DEPENDPATH *= $$PWD
 INCLUDEPATH *= $$PWD
 
-LIBS *= -L$$PROJECT_LIBRARY_DIR
 LIBS *= -lQtItchesControls
