@@ -24,24 +24,33 @@ namespace Core {
 class Expression : public Block
 {
     Q_OBJECT
+    Q_PROPERTY(int type READ type WRITE setType NOTIFY typeChanged FINAL)
     Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged FINAL)
 
 public:
     using Block::Block;
 
+    void setType(Parameter::Type type);
+    Parameter::Type type() const { return m_type; }
+
     void setValue(const QVariant &value);
     QVariant value() const { return m_value; }
 
 signals:
+    void typeChanged(int type);
     void valueChanged(const QVariant &value);
 
 private:
+    void setType(int type) { setType(static_cast<Parameter::Type>(type)); }
+
+    Parameter::Type m_type = Parameter::InvalidType;
     QVariant m_value;
 };
 
 class BinaryExpression : public Expression
 {
     Q_OBJECT
+
     Q_PROPERTY(QVariant left READ left WRITE setLeft NOTIFY leftChanged FINAL)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged FINAL)
     Q_PROPERTY(QVariant right READ right WRITE setRight NOTIFY rightChanged FINAL)
@@ -71,6 +80,9 @@ protected:
     template<class T = Parameter> T *leftParameter() const { return parameter<T>(0); }
     ConstantParameter *nameParameter() const { return parameter<ConstantParameter>(1); }
     template<class T = Parameter> T *rightParameter() const { return parameter<T>(2); }
+
+private:
+    void onTypeChanged(int type);
 };
 
 class UnaryExpression : public Expression
@@ -99,6 +111,9 @@ signals:
 protected:
     ConstantParameter *nameParameter() const { return parameter<ConstantParameter>(0); }
     template<class T = Parameter> T *argumentParameter() const { return parameter<T>(1); }
+
+private:
+    void onTypeChanged(int type);
 };
 
 QTITCHES_DECLARE_BINARY_EXPRESSION(Plus);
