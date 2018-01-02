@@ -1,4 +1,5 @@
 #include "qtitchesblockview.h"
+#include "qtitchescategorymodel.h"
 
 #include <QDirIterator>
 #include <QQmlComponent>
@@ -17,6 +18,7 @@ public:
         using namespace QtItches::Controls;
 
         qmlRegisterType<BlockView>(uri, 1, 0, "BlockView");
+        qmlRegisterType<CategoryModel>(uri, 1, 0, "CategoryModel");
 
         for (QDirIterator it{":/imports/QtItches/Controls", {"*.qml"},
              QDir::Files, QDirIterator::Subdirectories}; it.hasNext(); ) {

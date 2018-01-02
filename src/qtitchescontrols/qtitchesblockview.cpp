@@ -1,6 +1,7 @@
 #include "qtitchesblockview.h"
 
 #include "qtitchesblock.h"
+#include "qtitchescategorymodel.h"
 #include "qtitchesscript.h"
 
 #include <QQmlInfo>
@@ -31,17 +32,6 @@ const auto s_qmlContent = QByteArrayLiteral("import QtItches.Controls 1.0\n"
                                             "    block: _qtItches_blockView_.block\n"
                                             "    shape: _qtItches_blockView_.shape\n"
                                             "}");
-
-const QColor s_controlCategoryColor{"#e1a91a"};
-const QColor s_eventsCategoryColor{"#c88330"};
-const QColor s_listsCategoryColor{"#ca5c2c"};
-const QColor s_looksCategoryColor{"#8a55d7"};
-const QColor s_motionsCategoryColor{"#4a6cd4"};
-const QColor s_operatorsCategoryColor{"#5cb712"};
-const QColor s_sensingCategoryColor{"#2ca5e2"};
-const QColor s_soundsCategoryColor{"#bb42c3"};
-const QColor s_unknownCategoryColor{"#4d4b60"};
-const QColor s_variablesCategoryColor{"#ee7d16"};
 
 template<typename Object, typename Property>
 void updateProperty(Object *target, void (Object::*notify)(const Property &), Property *field, const Property &newValue)
@@ -161,32 +151,7 @@ QFont BlockView::editorFont() const
 
 QColor BlockView::Private::categoryColor() const
 {
-    if (m_block) {
-        switch (m_block->category()) {
-        case Block::ControlCategory:
-            return s_controlCategoryColor;
-        case Block::EventsCategory:
-            return s_eventsCategoryColor;
-        case Block::ListsCategory:
-            return s_listsCategoryColor;
-        case Block::LooksCategory:
-            return s_looksCategoryColor;
-        case Block::MotionsCategory:
-            return s_motionsCategoryColor;
-        case Block::OperatorsCategory:
-            return s_operatorsCategoryColor;
-        case Block::SensingCategory:
-            return s_sensingCategoryColor;
-        case Block::SoundsCategory:
-            return s_soundsCategoryColor;
-        case Block::VariablesCategory:
-            return s_variablesCategoryColor;
-        case Block::UnknownCategory:
-            break;
-        }
-    }
-
-    return s_unknownCategoryColor;
+    return CategoryModel::categoryColor(m_block ? m_block->category() : Block::UnknownCategory);
 }
 
 QByteArray BlockView::Private::shapeName() const
@@ -284,7 +249,7 @@ void BlockView::Private::updateShapeItem(BlockView *q)
 
 void BlockView::Private::updateImplicitWidth(BlockView *q)
 {
-    q->setImplicitWidth(m_contentItem ? m_contentItem->implicitWidth() : 0);
+    q->setImplicitWidth(m_contentItem ? qMax<qreal>(100, m_contentItem->implicitWidth()) : 0);
 }
 
 void BlockView::Private::updateImplicitHeight(BlockView *q)

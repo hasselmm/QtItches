@@ -46,12 +46,13 @@ class BinaryExpression : public Expression
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged FINAL)
     Q_PROPERTY(QVariant right READ right WRITE setRight NOTIFY rightChanged FINAL)
 
-public:
+protected:
     explicit BinaryExpression(QObject *parent = {})
         : BinaryExpression{Parameter::InvalidType, {}, parent} {}
 
     explicit BinaryExpression(Parameter::Type type, const QString &name, QObject *parent = {});
 
+public:
     void setLeft(const QVariant &left) { leftParameter()->setValue(left); }
     QVariant left() const { return leftParameter()->value(); }
 
@@ -78,12 +79,13 @@ class UnaryExpression : public Expression
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged FINAL)
     Q_PROPERTY(QVariant argument READ argument WRITE setArgument NOTIFY argumentChanged FINAL)
 
-public:
+protected:
     explicit UnaryExpression(QObject *parent = {})
         : UnaryExpression{Parameter::InvalidType, {}, parent} {}
 
     explicit UnaryExpression(Parameter::Type type, const QString &name, QObject *parent = {});
 
+public:
     void setName(const QString &name) { nameParameter()->setString(name); }
     QString name() const { return nameParameter()->string(); }
 
