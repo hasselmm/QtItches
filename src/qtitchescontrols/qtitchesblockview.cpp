@@ -53,7 +53,7 @@ public:
     QByteArray shapeName() const;
 
     void updateView(BlockView *q);
-    void updateHeaderRow(BlockView *q);
+    void updateContentItem(BlockView *q);
     void updateShapeItem(BlockView *q);
 
     void updateImplicitWidth(BlockView *q);
@@ -75,7 +75,11 @@ BlockView::BlockView(QQuickItem *parent)
     : QQuickItem{parent}
     , d{new Private}
 {
-    connect(this, &BlockView::blockChanged, this, [this] { d->updateView(this); });
+    connect(this, &BlockView::blockChanged, this, [this] {
+        delete d->m_contentItem;
+        d->updateView(this);
+    });
+
     d->updateView(this);
 }
 
@@ -97,6 +101,7 @@ void BlockView::setBlock(Block *block)
     if (d->m_block) {
         connect(d->m_block, &Block::destroyed, this, [this] { emit blockChanged({}); });
         connect(d->m_block, &Block::categoryChanged, this, [this] { d->updateView(this); });
+        connect(d->m_block, &Block::shapeChanged, this, [this] { d->updateShapeItem(this); });
 
         if (const auto script = d->m_block->script())
             connect(script, &Core::Script::currentBlockChanged, this, [this] { d->updateView(this); });
@@ -192,14 +197,17 @@ void BlockView::Private::updateView(BlockView *q)
         }
     }
 
-    if (m_context && m_context->engine()) {
+    if (m_shapeItem.isNull())
         updateShapeItem(q);
-        updateHeaderRow(q);
-    }
+    if (m_contentItem.isNull())
+        updateContentItem(q);
 }
 
-void BlockView::Private::updateHeaderRow(BlockView *q)
+void BlockView::Private::updateContentItem(BlockView *q)
 {
+    if (!m_context || !m_context->engine())
+        return;
+
     QQmlComponent component{m_context->engine()};
     component.setData(s_qmlContent, m_context->baseUrl());
     if (component.status() == QQmlComponent::Error) {
@@ -212,6 +220,7 @@ void BlockView::Private::updateHeaderRow(BlockView *q)
         delete std::exchange(m_contentItem, item);
         m_context->setContextProperty("_qtItches_blockViewContent_", m_contentItem.data());
         m_contentItem->setParentItem(q);
+        m_contentItem->setParent(q);
 
         connect(m_contentItem, &QQuickItem::implicitWidthChanged, q, [this, q] { updateImplicitWidth(q); });
         connect(m_contentItem, &QQuickItem::implicitHeightChanged, q, [this, q] { updateImplicitHeight(q); });
@@ -223,6 +232,9 @@ void BlockView::Private::updateHeaderRow(BlockView *q)
 
 void BlockView::Private::updateShapeItem(BlockView *q)
 {
+    if (!m_context || !m_context->engine())
+        return;
+
     const auto new_shapeName = shapeName();
     if (m_shapeName != new_shapeName) {
         QQmlComponent component{m_context->engine()};
@@ -235,9 +247,10 @@ void BlockView::Private::updateShapeItem(BlockView *q)
 
         const auto object = component.create(m_context);
         if (const auto item = dynamic_cast<QQuickItem *>(object)) {
+            m_shapeName = new_shapeName;
             delete std::exchange(m_shapeItem, item);
             m_shapeItem->setParentItem(q);
-            m_shapeName = new_shapeName;
+            m_shapeItem->setParent(q);
 
             updateImplicitWidth(q);
             updateImplicitHeight(q);
@@ -249,7 +262,9 @@ void BlockView::Private::updateShapeItem(BlockView *q)
 
 void BlockView::Private::updateImplicitWidth(BlockView *q)
 {
-    q->setImplicitWidth(m_contentItem ? qMax<qreal>(100, m_contentItem->implicitWidth()) : 0);
+    const qreal implicitWidth = m_contentItem ? m_contentItem->implicitWidth() : 0;
+    const qreal minimumWidth = m_block && m_block->shape() == Core::Block::StackShape ? 100 : 0;
+    q->setImplicitWidth(qMax(implicitWidth, minimumWidth));
 }
 
 void BlockView::Private::updateImplicitHeight(BlockView *q)
