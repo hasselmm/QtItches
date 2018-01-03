@@ -4,7 +4,10 @@ import QtQml 2.2
 Block {
     category: Block.EventsCategory
     connectors: Block.BottomConnector
-    parameters: ConstantParameter { string: qsTr("when this sprite is clicked") }
+
+    ConstantParameter {
+        string: qsTr("when green flag clicked")
+    }
 
     Connections {
         target: actor

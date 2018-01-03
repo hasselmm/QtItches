@@ -4,7 +4,7 @@ import QtQuick 2.9
 import QtQuick.Window 2.3
 
 Window {
-    width: 800
+    width: 1200
     height: 600
     visible: true
 
@@ -19,6 +19,7 @@ Window {
         BlockPicker {}
         StageView { stage: Stage1 {} }
         StageView { stage: Stage2 {} }
+        StageView { stage: Stage3 {} }
     }
 
     PopupOverlay { id: popupOverlay }

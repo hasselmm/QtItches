@@ -110,6 +110,20 @@ Parameter *Block::parameter(int index) const
     return d->m_parameters.at(index);
 }
 
+void Block::resetParameters(QList<Parameter *> &&parameters)
+{
+    if (d->m_parameters == parameters)
+        return;
+
+    for (const auto p: d->m_parameters) {
+        if (p && p->parent() == this && !parameters.contains(p))
+            delete p;
+    }
+
+    d->m_parameters = std::move(parameters);
+    emit parametersChanged();
+}
+
 void Block::classBegin()
 {
 }

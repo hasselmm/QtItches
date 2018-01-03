@@ -4,16 +4,16 @@ Stage {
     name: "Test 2"
 
     Actor {
-        name: "Evolution Robot"
+        name: "Cat"
 
         Script {
             WhenThisSpriteClicked {}
 
-            If {}
-            IfElse {}
-            Repeat {}
+            DoIf {}
+            DoIfElse {}
+            DoRepeat {}
 //            RepeatUntil {}
-            Forever {}
+            DoForever {}
 
 /*
             WaitSecs { seconds: 1.1 }

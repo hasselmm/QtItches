@@ -1,16 +1,27 @@
 <RCC>
     <qresource prefix="/imports/QtItches/Core">
-        <file>qml/control/Forever.qml</file>
-        <file>qml/control/Repeat.qml</file>
+        <file>qml/control/DoForever.qml</file>
+        <file>qml/control/DoIf.qml</file>
+        <file>qml/control/DoIfElse.qml</file>
+        <file>qml/control/DoRepeat.qml</file>
+        <file>qml/control/DoRepeatUntil.qml</file>
         <file>qml/control/Stop.qml</file>
         <file>qml/control/WaitSecs.qml</file>
+        <file>qml/control/WaitUntil.qml</file>
+        <file>qml/events/WhenFlagClicked.qml</file>
         <file>qml/events/WhenThisSpriteClicked.qml</file>
         <file>qml/looks/Say.qml</file>
+        <file>qml/looks/SayForSecs.qml</file>
         <file>qml/looks/Think.qml</file>
-        <file>qml/control/IfElse.qml</file>
-        <file>qml/control/If.qml</file>
-        <file>qml/control/WaitUntil.qml</file>
-        <file>qml/control/RepeatUntil.qml</file>
+        <file>qml/looks/ThinkForSecs.qml</file>
+        <file>qml/motion/Direction.qml</file>
+        <file>qml/motion/GoForward.qml</file>
+        <file>qml/motion/GotoXY.qml</file>
+        <file>qml/motion/TurnLeft.qml</file>
+        <file>qml/motion/TurnRight.qml</file>
+        <file>qml/motion/TurnTo.qml</file>
+        <file>qml/motion/XPos.qml</file>
+        <file>qml/motion/YPos.qml</file>
         <file>qmldir</file>
     </qresource>
 </RCC>

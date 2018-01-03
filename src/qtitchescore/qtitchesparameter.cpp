@@ -56,7 +56,14 @@ void Parameter::setValue(const QVariant &value)
         return;
     }
 
+    if (const auto e = expression())
+        e->disconnect(this);
+
     m_value = value;
+
+    if (const auto e = expression())
+        connect(e, &Expression::valueChanged, this, &Parameter::valueChanged);
+
     emit valueChanged(value);
 }
 
