@@ -6,5 +6,6 @@ RESOURCES = qtitchescontrolsplugin.qrc
 OBJECTS_DIR = qtitchescontrolsplugin
 MOC_DIR = $$OBJECTS_DIR
 
+QMAKE_RPATHDIR += ../../../lib
 buildQmlPlugin(QtItches.Controls, 1.0)
 include(qtitchescontrolslibrary.pri)
