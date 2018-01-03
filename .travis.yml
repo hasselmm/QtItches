@@ -1,36 +1,52 @@
-language: cpp
-
-compiler:
-  - gcc
+addons:
+    apt:
+        sources: ubuntu-toolchain-r-test
+        packages:
+          - libxml2-utils
+          - p7zip
 
 matrix:
-  include:
-    - os: linux
-      addons:
-        apt:
-          sources: ubuntu-toolchain-r-test
-          packages:
-            - g++-6
-            - p7zip
+    include:
+      - language: cpp
+        os: linux
         env:
-          - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+          - QT_HOST="linux_x64"
+          - QT_TARGET="desktop"
+          - QT_TOOLCHAIN="gcc_64"
+          - QT_PACKAGES="qtbase qtdeclarative icu"
+          - QMAKE_FLAGS="QMAKE_CC=gcc-6 QMAKE_CXX=g++-6"
+
+        addons:
+            apt:
+                sources: ubuntu-toolchain-r-test
+                packages:
+                  - g++-6
+                  - libxml2-utils
+                  - p7zip
+
+      - language: android
+        os: linux
+        env:
+          - ANDROID_PLATFORM="android-19"
+          - ANDROID_SDK_ROOT="/usr/local/android-sdk"
+          - ANDROID_NDK_ROOT="${ANDROID_SDK_ROOT}/ndk-bundle"
+          - QT_HOST="linux_x64"
+          - QT_TARGET="android"
+          - QT_TOOLCHAIN="android_armv7"
+          - QT_PACKAGES="qtbase qtdeclarative"
+
+        android:
+            components:
+              - ndk-bundle
 
 before_install:
-  - curl -LO http://download.qt.io/online/qtsdkrepository/linux_x64/desktop/qt5_5100/qt.qt5.5100.gcc_64/5.10.0-0-201712041203qtbase-Linux-RHEL_7_4-GCC-Linux-RHEL_7_4-X86_64.7z
-  - p7zip -d *qtbase-*.7z
-
-  - curl -LO http://download.qt.io/online/qtsdkrepository/linux_x64/desktop/qt5_5100/qt.qt5.5100.gcc_64/5.10.0-0-201712041203qtdeclarative-Linux-RHEL_7_4-GCC-Linux-RHEL_7_4-X86_64.7z
-  - p7zip -d *qtdeclarative-*.7z
-
-  - curl -LO http://download.qt.io/online/qtsdkrepository/linux_x64/desktop/qt5_5100/qt.qt5.5100.gcc_64/5.10.0-0-201712041203icu-linux-Rhel7.2-x64.7z
-  - p7zip -d *icu-*.7z
-
-  - cp .travis/qt.conf 5.10.0/gcc_64/bin/
-  - cp .travis/qconfig.pri 5.10.0/gcc_64/mkspecs/
-
-  - eval "${MATRIX_EVAL}"
+  - .travis/install_qt.sh "${QT_HOST}" "${QT_TARGET}" "${QT_TOOLCHAIN}" 5.10.0 ${QT_PACKAGES}
 
 script:
+  - echo "ANDROID_SDK_ROOT='${ANDROID_SDK_ROOT}'"
+  - ls "${ANDROID_SDK_ROOT}"
+  - echo "ANDROID_NDK_ROOT='${ANDROID_NDK_ROOT}'"
+  - ls "${ANDROID_NDK_ROOT}"
   - mkdir build && cd build &&
-    ../5.10.0/gcc_64/bin/qmake .. QMAKE_CC=gcc-6 QMAKE_CXX=g++-6 &&
-    make && LD_LIBRARY_PATH=$PWD/lib make check
+    "../5.10.0/${QT_TOOLCHAIN}/bin/qmake" ${QMAKE_FLAGS} .. &&
+    make && make check
