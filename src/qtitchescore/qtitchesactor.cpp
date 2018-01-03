@@ -77,15 +77,19 @@ Stage *Actor::stage() const
 
 void Actor::say(const QString &text)
 {
+    if (!text.isEmpty())
+        qCInfo(lcActor, "%ls says: `%ls'", qUtf16Printable(name()), qUtf16Printable(text));
+
     d->m_saying = text;
-    qCInfo(lcActor, "%ls says: `%ls'", qUtf16Printable(name()), qUtf16Printable(text));
     emit said(d->m_saying); // really always emit
 }
 
 void Actor::think(const QString &text)
 {
+    if (!text.isEmpty())
+        qCInfo(lcActor, "%ls thinks: `%ls'", qUtf16Printable(name()), qUtf16Printable(text));
+
     d->m_thinking = text;
-    qCInfo(lcActor, "%ls thinks: `%ls'", qUtf16Printable(name()), qUtf16Printable(text));
     emit thought(d->m_thinking); // really always emit
 }
 
