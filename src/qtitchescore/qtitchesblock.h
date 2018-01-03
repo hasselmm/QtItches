@@ -27,7 +27,7 @@ class Block : public QObject, public QQmlParserStatus
     Q_PROPERTY(int shape READ shape WRITE setShape NOTIFY shapeChanged FINAL)
 
     Q_PROPERTY(QQmlListProperty<QObject> data READ data CONSTANT FINAL)
-    Q_PROPERTY(QQmlListProperty<QtItches::Core::Parameter> parameters READ parameters CONSTANT FINAL)
+    Q_PROPERTY(QQmlListProperty<QtItches::Core::Parameter> parameters READ parameters NOTIFY parametersChanged FINAL)
 
 public:
     enum Category {
@@ -92,11 +92,13 @@ signals:
     void categoryChanged(int category);
     void connectorsChanged(int connectors);
     void shapeChanged(int shape);
+    void parametersChanged();
     void finished();
 
 protected:
     Parameter *parameter(int index) const;
     template<class T> T *parameter(int index) const { return dynamic_cast<T *>(parameter(index)); }
+    void resetParameters(QList<Parameter *> &&parameters);
 
 private:
     void setCategory(int category) { setCategory(static_cast<Category>(category)); }

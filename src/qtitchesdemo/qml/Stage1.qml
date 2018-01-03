@@ -4,7 +4,7 @@ Stage {
     name: "Test 1"
 
     Actor {
-        name: "Evolution Robot"
+        name: "Cat"
 
         costumes: [
             "qrc:/assets/cat1.svg",
@@ -15,14 +15,14 @@ Stage {
             WhenThisSpriteClicked {}
             WaitSecs { seconds: Multiply { left: Plus { left: 1.2; right: 1.3 } right: 3 } }
 
-            Forever {
+            DoForever {
                 loop: Script {
                     Say { text: "Hello World!" }
                     WaitSecs { seconds: 1.2 }
                     Say { text: "How are you?" }
                     WaitSecs { seconds: 1.3 }
 
-                    IfElse {
+                    DoIfElse {
                         //condition: LessThan { left: 1; right: 2 }
                         onTrue: Script { Say { text: "Yes!" } }
                         onFalse: Script { Say { text: "No!" } }
@@ -36,7 +36,7 @@ Stage {
         Script {
             WhenThisSpriteClicked {}
 
-            Repeat {
+            DoRepeat {
                 count: Plus { left: 1; right: 2 }
                 loop: Script {
                     Say { text: "Hello World!" }

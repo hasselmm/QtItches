@@ -5,9 +5,18 @@ namespace Core {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void Expression::setType(Parameter::Type type)
+{
+    if (m_type == type)
+        return;
+
+    m_type = type;
+    emit typeChanged(m_type);
+}
+
 void Expression::setValue(const QVariant &value)
 {
-    if (m_value == value)
+    if (m_value.userType() == value.userType() && m_value == value)
         return;
 
     m_value = value;
@@ -19,21 +28,29 @@ void Expression::setValue(const QVariant &value)
 BinaryExpression::BinaryExpression(Parameter::Type type, const QString &name, QObject *parent)
     : Expression{parent}
 {
+    const auto center = new ConstantParameter{name, this};
+    resetParameters({nullptr, center, nullptr});
+
+    connect(center, &ConstantParameter::stringChanged, this, &BinaryExpression::nameChanged);
+    connect(this, &BinaryExpression::typeChanged, this, &BinaryExpression::onTypeChanged);
+
     setCategory(OperatorsCategory);
+    setType(type);
+}
+
+void BinaryExpression::onTypeChanged(int type)
+{
     setShape(type == Parameter::BooleanType ? BooleanShape : ReporterShape);
 
-    const auto left = Parameter::create(type, this);
-    const auto center = new ConstantParameter{name, this};
-    const auto right = Parameter::create(type, this);
+    const auto left = Parameter::create(static_cast<Parameter::Type>(type), this);
+    const auto right = Parameter::create(static_cast<Parameter::Type>(type), this);
 
-    connect(left, &Parameter::valueChanged, this, &BinaryExpression::leftChanged);
-    connect(center, &ConstantParameter::stringChanged, this, &BinaryExpression::nameChanged);
-    connect(right, &Parameter::valueChanged, this, &BinaryExpression::rightChanged);
+    if (left)
+        connect(left, &Parameter::valueChanged, this, &BinaryExpression::leftChanged);
+    if (right)
+        connect(right, &Parameter::valueChanged, this, &BinaryExpression::rightChanged);
 
-    auto parameterList = parameters();
-    parameterList.append(&parameterList, left);
-    parameterList.append(&parameterList, center);
-    parameterList.append(&parameterList, right);
+    resetParameters({left, nameParameter(), right});
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,18 +58,23 @@ BinaryExpression::BinaryExpression(Parameter::Type type, const QString &name, QO
 UnaryExpression::UnaryExpression(Parameter::Type type, const QString &name, QObject *parent)
     : Expression{parent}
 {
-    setCategory(OperatorsCategory);
-    setShape(type == Parameter::BooleanType ? BooleanShape : ReporterShape);
-
     const auto left = new ConstantParameter{name, this};
-    const auto right = Parameter::create(type, this);
+    resetParameters({left, nullptr});
 
     connect(left, &ConstantParameter::stringChanged, this, &UnaryExpression::nameChanged);
-    connect(right, &Parameter::valueChanged, this, &UnaryExpression::argumentChanged);
+    connect(this, &UnaryExpression::typeChanged, this, &UnaryExpression::onTypeChanged);
 
-    auto parameterList = parameters();
-    parameterList.append(&parameterList, left);
-    parameterList.append(&parameterList, right);
+    setCategory(OperatorsCategory);
+    setType(type);
+}
+
+void UnaryExpression::onTypeChanged(int type)
+{
+    setShape(type == Parameter::BooleanType ? BooleanShape : ReporterShape);
+
+    const auto right = Parameter::create(static_cast<Parameter::Type>(type), this);
+    connect(right, &Parameter::valueChanged, this, &UnaryExpression::argumentChanged);
+    resetParameters({nameParameter(), right});
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

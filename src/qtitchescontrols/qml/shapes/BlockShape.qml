@@ -20,6 +20,9 @@ Shape {
     property color fillColor: _qtItches_blockView_.shapeColor
     property color strokeColor: _qtItches_blockView_.borderColor
 
+    Behavior on fillColor { ColorAnimation {} }
+    Behavior on strokeColor { ColorAnimation {} }
+
     /*
     Rectangle {
         anchors.fill: parent
