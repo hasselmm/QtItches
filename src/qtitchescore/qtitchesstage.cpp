@@ -1,5 +1,7 @@
 #include "qtitchesstage.h"
 
+#include "qtitchesactor.h"
+
 namespace QtItches {
 namespace Core {
 
@@ -37,6 +39,12 @@ void Stage::setName(const QString &name)
 QString Stage::name() const
 {
     return d->m_name;
+}
+
+void Stage::stop()
+{
+    for (const auto a: d->m_actors)
+        a->stop();
 }
 
 } // namespace Core

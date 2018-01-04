@@ -61,6 +61,8 @@ public slots:
     void say(const QString &text);
     void think(const QString &text);
     void goForward(int steps);
+    void stopAllButThis(QtItches::Core::Script *script);
+    void stop();
 
 signals:
     void clicked(QObject *source);

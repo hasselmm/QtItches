@@ -2,6 +2,8 @@ import QtItches.Core 1.0
 import QtQml 2.2
 
 Block {
+    id: doIfElse
+
     property alias condition: conditionParameter.value
 
     property Script onTrue: Script {}
@@ -18,15 +20,25 @@ Block {
 
     function run() {
         scriptMonitor.target = condition ? onTrue : onFalse;
+        scriptMonitor.enabled = true;
         scriptMonitor.target.run();
+    }
+
+    function stop() {
+        if (scriptMonitor.target && scriptMonitor.target.running)
+            scriptMonitor.target.stop();
+        else
+            finished();
     }
 
     Connections {
         id: scriptMonitor
 
+        enabled: false
+
         onFinished: {
-            target = null;
-            finished();
+            enabled = false;
+            doIfElse.finished();
         }
     }
 }

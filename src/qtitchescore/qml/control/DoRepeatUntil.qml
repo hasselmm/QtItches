@@ -2,6 +2,8 @@ import QtItches.Core 1.0
 import QtQml 2.2
 
 Block {
+    id: doRepeatUntil
+
     property alias condition: conditionParameter.value
     property Script loop: Script {}
     readonly property var scripts: loop
@@ -14,7 +16,14 @@ Block {
     ]
 
     function run() {
-        loopMonitor.iterate(0);
+        loopMonitor.enabled = true;
+        loopMonitor.iterate();
+    }
+
+    function stop() {
+        loopMonitor.enabled = false;
+        loop.stop();
+        finished();
     }
 
     Connections {
@@ -24,10 +33,12 @@ Block {
             if (!condition.boolean)
                 loop.run();
             else
-                finished();
+                doRepeatUntil.finished();
         }
 
+        enabled: false
         target: loop
+
         onFinished: iterate()
     }
 }

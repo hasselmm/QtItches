@@ -12,15 +12,22 @@ Block {
     ]
 
     function run() {
-        expression.enabled = !expressionParameter.boolean;
-        if (!expression.enabled)
+        expressionMonitor.enabled = !expressionParameter.boolean;
+        if (!expressionMonitor.enabled)
             finished();
+    }
+
+    function stop() {
+        expressionMonitor.enabled = false;
+        finished();
     }
 
     Connections {
         id: expressionMonitor
 
+        enabled: false
         target: expressionParameter
+
         onBooleanChanged: run()
     }
 }
