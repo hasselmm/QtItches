@@ -28,7 +28,7 @@ Block {
 
         onTriggered: {
             actor.say("");
-            thinkForSecs.finished();
+            sayForSecs.finished();
         }
     }
 }
