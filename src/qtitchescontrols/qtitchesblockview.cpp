@@ -154,6 +154,20 @@ QFont BlockView::editorFont() const
     return font;
 }
 
+BlockView *BlockView::qmlAttachedProperties(QObject *object)
+{
+    if (const auto blockView = qmlContext(object)->contextProperty("_qtItches_blockView_").value<BlockView *>())
+        return blockView;
+
+    static const auto fallback = [] {
+        auto blockView = new BlockView{};
+        blockView->setParent(qApp);
+        return blockView;
+    }();
+
+    return fallback;
+}
+
 QColor BlockView::Private::categoryColor() const
 {
     return CategoryModel::categoryColor(m_block ? m_block->category() : Block::UnknownCategory);

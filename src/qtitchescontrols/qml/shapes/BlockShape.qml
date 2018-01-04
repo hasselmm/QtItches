@@ -1,4 +1,5 @@
 import QtItches.Core 1.0
+import QtItches.Controls 1.0
 
 import QtQuick 2.9
 import QtQuick.Shapes 1.0
@@ -17,8 +18,8 @@ Shape {
 
     property int headerAlignment: Qt.AlignLeft | Qt.AlignVCenter
 
-    property color fillColor: _qtItches_blockView_.shapeColor
-    property color strokeColor: _qtItches_blockView_.borderColor
+    property color fillColor: BlockView.shapeColor
+    property color strokeColor: BlockView.borderColor
 
     Behavior on fillColor { ColorAnimation {} }
     Behavior on strokeColor { ColorAnimation {} }

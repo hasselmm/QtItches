@@ -1,10 +1,12 @@
 import QtItches.Core 1.0
+import QtItches.Controls 1.0
+
 import QtQuick 2.9
 
 Text {
     property ConstantParameter parameter
 
-    color: _qtItches_blockView_.textColor
-    font: _qtItches_blockView_.font
+    color: BlockView.textColor
+    font: BlockView.font
     text: parameter ? parameter.string : ""
 }
