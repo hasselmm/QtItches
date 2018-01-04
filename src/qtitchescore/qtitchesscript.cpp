@@ -134,10 +134,10 @@ bool Script::run()
 
 void Script::stop()
 {
-    if (const auto block = currentBlock()) {
+    d->m_stopped = true;
+
+    if (const auto block = currentBlock())
         block->metaObject()->invokeMethod(block, "stop");
-        d->m_stopped = true;
-    }
 }
 
 } // namespace Core

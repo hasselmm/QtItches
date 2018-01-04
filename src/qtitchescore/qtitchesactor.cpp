@@ -1,5 +1,6 @@
 #include "qtitchesactor.h"
 
+#include "qtitchesscript.h"
 #include "qtitchesstage.h"
 
 #include <QLoggingCategory>
@@ -159,6 +160,19 @@ void Actor::goForward(int steps)
         d->m_position += {dx, dy};
         emit positionChanged(d->m_position);
     }
+}
+
+void Actor::stopAllButThis(Script *script)
+{
+    for (const auto s: d->m_scripts) {
+        if (s != script)
+            s->stop();
+    }
+}
+
+void Actor::stop()
+{
+    stopAllButThis({});
 }
 
 QQmlListProperty<Script> Actor::scripts()

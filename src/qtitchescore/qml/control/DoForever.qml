@@ -10,11 +10,22 @@ Block {
     parameters: ConstantParameter { string: qsTr("forever") }
 
     function run() {
-        return loop.run();
+        loopMonitor.enabled = true;
+        loop.run();
+    }
+
+    function stop() {
+        loopMonitor.enabled = false;
+        loop.stop();
+        finished();
     }
 
     Connections {
+        id: loopMonitor
+
+        enabled: false
         target: loop
+
         onFinished: loop.run()
     }
 }

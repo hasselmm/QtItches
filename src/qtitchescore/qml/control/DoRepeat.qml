@@ -2,6 +2,8 @@ import QtItches.Core 1.0
 import QtQml 2.2
 
 Block {
+    id: doRepeat
+
     property alias count: countParameter.value
     property int currentIteration: 0
     property Script loop: Script {}
@@ -15,7 +17,14 @@ Block {
     ]
 
     function run() {
+        loopMonitor.enabled = true;
         loopMonitor.iterate(0);
+    }
+
+    function stop() {
+        loopMonitor.enabled = false;
+        loop.stop();
+        finished();
     }
 
     Connections {
@@ -27,10 +36,12 @@ Block {
             if (currentIteration < countParameter.number)
                 loop.run();
             else
-                finished();
+                doRepeat.finished();
         }
 
+        enabled: false
         target: loop
+
         onFinished: iterate(currentIteration + 1)
     }
 }

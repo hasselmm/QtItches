@@ -28,7 +28,7 @@ Block {
     function run() {
         switch (target) {
         case 0:
-            actor.stop();
+            stage.stop();
             break;
 
         case 1:
@@ -36,7 +36,7 @@ Block {
             break;
 
         case 2:
-            actor.stopAllExceptThis(script);
+            actor.stopAllButThis(script);
             break;
 
         default:
