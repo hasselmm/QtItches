@@ -6,5 +6,5 @@ Expression {
     type: Parameter.NumberType
     value: actor && actor.x || 0
 
-    ConstantParameter { string: qsTr("x") }
+    ConstantParameter { string: qsTr("x position") }
 }
