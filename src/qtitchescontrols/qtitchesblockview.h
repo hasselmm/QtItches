@@ -42,6 +42,8 @@ public:
     QFont font() const;
     QFont editorFont() const;
 
+    static BlockView *qmlAttachedProperties(QObject *object);
+
 signals:
     void blockChanged(Core::Block *block);
     void shapeChanged(QQuickItem *shape);
@@ -58,5 +60,7 @@ private:
 
 } // namespace Controls
 } // namespace QtItches
+
+QML_DECLARE_TYPEINFO(QtItches::Controls::BlockView, QML_HAS_ATTACHED_PROPERTIES)
 
 #endif // QTITCHESBLOCKVIEW_H

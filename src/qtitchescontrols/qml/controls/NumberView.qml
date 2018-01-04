@@ -1,9 +1,11 @@
 import QtItches.Core 1.0
+import QtItches.Controls 1.0
+
 import QtQuick 2.9
 
 Rectangle {
     property NumberParameter parameter
-    property font font: _qtItches_blockView_.font
+    property font font: BlockView.font
 
     color: "#eeffffff"
     implicitWidth: Math.max(input.implicitWidth + 4, implicitHeight)
