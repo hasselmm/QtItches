@@ -20,6 +20,11 @@ Block {
         timer.start();
     }
 
+    function stop() {
+        timer.stop();
+        finished();
+    }
+
     Timer {
         id: timer
 
