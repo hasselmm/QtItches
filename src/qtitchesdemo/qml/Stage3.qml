@@ -61,7 +61,7 @@ Stage {
                         }
 
                         onTrue: Script {
-                            ThinkForSecs { text: "Omm!"; seconds: 1 }
+                            SayForSecs { text: "Omm!"; seconds: 1 }
                             TurnRight {}
                         }
                     }
