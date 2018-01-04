@@ -10,8 +10,8 @@ Block {
     }
 
     Connections {
-        target: actor
-        onClicked: script.run()
+        target: stage
+        onFlagClicked: script.run()
     }
 
     function run() {

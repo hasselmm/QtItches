@@ -24,7 +24,11 @@ public:
     void setName(const QString &name);
     QString name() const;
 
+public:
+    void stop();
+
 signals:
+    void flagClicked(QObject *source);
     void nameChanged(const QString &name);
 
 private:
