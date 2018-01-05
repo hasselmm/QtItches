@@ -1,3 +1,0 @@
-add_subdirectory(qtitchescontrols)
-add_subdirectory(qtitchescore)
-add_subdirectory(qtitchesdemo)
