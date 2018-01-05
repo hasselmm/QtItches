@@ -28,7 +28,7 @@ Project {
                             right: Equals { left: Direction {} right: 90 }
                         }
 
-                        onTrue: Script {
+                        then: Script {
                             ThinkForSecs { text: "Uch..."; seconds: 1 }
                             TurnRight {}
                         }
@@ -40,7 +40,7 @@ Project {
                             right: Equals { left: Direction {} right: 180 }
                         }
 
-                        onTrue: Script {
+                        then: Script {
                             ThinkForSecs { text: "Ach..."; seconds: 1 }
                             TurnRight {}
                         }
@@ -52,7 +52,7 @@ Project {
                             right: Equals { left: Direction {} right: -90 }
                         }
 
-                        onTrue: Script {
+                        then: Script {
                             ThinkForSecs { text: "Eh..."; seconds: 1 }
                             TurnRight {}
                         }
@@ -64,7 +64,7 @@ Project {
                             right: Equals { left: Direction {} right: 0 }
                         }
 
-                        onTrue: Script {
+                        then: Script {
                             SayForSecs { text: "Omm!"; seconds: 1 }
                             TurnRight {}
                         }
