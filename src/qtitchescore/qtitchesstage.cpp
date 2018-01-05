@@ -1,6 +1,6 @@
 #include "qtitchesstage.h"
 
-#include "qtitchesactor.h"
+#include "qtitchessprite.h"
 
 namespace QtItches {
 namespace Core {
@@ -8,7 +8,7 @@ namespace Core {
 class Stage::Private
 {
 public:
-    QList<Actor *> m_actors;
+    QList<Sprite *> m_sprites;
     QString m_name;
 };
 
@@ -22,9 +22,9 @@ Stage::~Stage()
     delete d;
 }
 
-QQmlListProperty<Actor> Stage::actors()
+QQmlListProperty<Sprite> Stage::sprites()
 {
-    return {this, d->m_actors};
+    return {this, d->m_sprites};
 }
 
 void Stage::setName(const QString &name)
@@ -43,8 +43,8 @@ QString Stage::name() const
 
 void Stage::stop()
 {
-    for (const auto a: d->m_actors)
-        a->stop();
+    for (const auto s: d->m_sprites)
+        s->stop();
 }
 
 } // namespace Core

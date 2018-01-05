@@ -2,6 +2,7 @@
 
 #include "qtitchesparameter.h"
 #include "qtitchesscript.h"
+#include "qtitchessprite.h"
 
 #include <QMetaMethod>
 
@@ -29,12 +30,18 @@ Block::~Block()
     delete d;
 }
 
-Actor *Block::actor() const
+ScriptContext *Block::context() const
 {
     if (const auto s = script())
-        return s->actor();
+        return s->context();
 
     return {};
+
+}
+
+Sprite *Block::sprite() const
+{
+    return dynamic_cast<Sprite *>(context());
 }
 
 Script *Block::script() const
