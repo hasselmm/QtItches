@@ -1,9 +1,9 @@
 import QtItches.Core 1.0
 
-Stage {
+Project {
     name: "Run in Square"
 
-    Actor {
+    Sprite {
         name: "Cat"
 
         costumes: [
@@ -61,7 +61,7 @@ Stage {
                         }
 
                         onTrue: Script {
-                            ThinkForSecs { text: "Omm!"; seconds: 1 }
+                            SayForSecs { text: "Omm!"; seconds: 1 }
                             TurnRight {}
                         }
                     }

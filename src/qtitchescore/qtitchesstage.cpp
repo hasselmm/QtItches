@@ -1,50 +1,22 @@
 #include "qtitchesstage.h"
 
-#include "qtitchesactor.h"
+#include "qtitchessprite.h"
 
 namespace QtItches {
 namespace Core {
 
-class Stage::Private
+void Stage::setBackdrops(const QList<QUrl> &backdrops)
 {
-public:
-    QList<Actor *> m_actors;
-    QString m_name;
-};
-
-Stage::Stage(QObject *parent)
-    : QObject{parent}
-    , d{new Private}
-{}
-
-Stage::~Stage()
-{
-    delete d;
-}
-
-QQmlListProperty<Actor> Stage::actors()
-{
-    return {this, d->m_actors};
-}
-
-void Stage::setName(const QString &name)
-{
-    if (d->m_name == name)
+    if (m_backdrops == backdrops)
         return;
 
-    d->m_name = name;
-    emit nameChanged(d->m_name);
+    m_backdrops = backdrops;
+    emit backdropsChanged(m_backdrops);
 }
 
-QString Stage::name() const
+QList<QUrl> Stage::backdrops() const
 {
-    return d->m_name;
-}
-
-void Stage::stop()
-{
-    for (const auto a: d->m_actors)
-        a->stop();
+    return m_backdrops;
 }
 
 } // namespace Core

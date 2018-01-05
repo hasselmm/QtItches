@@ -1,8 +1,9 @@
-#include "qtitchesactor.h"
+#include "qtitchessprite.h"
 #include "qtitchesblock.h"
 #include "qtitchesexpression.h"
 #include "qtitchesblocklibrary.h"
 #include "qtitchesparameter.h"
+#include "qtitchesproject.h"
 #include "qtitchesscript.h"
 #include "qtitchesstage.h"
 
@@ -22,7 +23,6 @@ public:
         Q_ASSERT(uri == QLatin1String("QtItches.Core"));
         using namespace QtItches::Core;
 
-        qmlRegisterType<Actor>(uri, 1, 0, "Actor");
         qmlRegisterType<And>(uri, 1, 0, "And");
         qmlRegisterType<BinaryExpression>(uri, 1, 0, "BinaryExpression");
         qmlRegisterType<BlockLibrary>(uri, 1, 0, "Library");
@@ -41,13 +41,16 @@ public:
         qmlRegisterType<NumberParameter>(uri, 1, 0, "NumberParameter");
         qmlRegisterType<Or>(uri, 1, 0, "Or");
         qmlRegisterType<Plus>(uri, 1, 0, "Plus");
+        qmlRegisterType<Project>(uri, 1, 0, "Project");
         qmlRegisterType<Script>(uri, 1, 0, "Script");
+        qmlRegisterType<Sprite>(uri, 1, 0, "Sprite");
         qmlRegisterType<Stage>(uri, 1, 0, "Stage");
         qmlRegisterType<StringParameter>(uri, 1, 0, "StringParameter");
         qmlRegisterType<UnaryExpression>(uri, 1, 0, "UnaryExpression");
 
         const auto abstractBaseClass = tr("This is an abstract base class");
         qmlRegisterUncreatableType<Parameter>(uri, 1, 0, "Parameter", abstractBaseClass);
+        qmlRegisterUncreatableType<ScriptContext>(uri, 1, 0, "ScriptContext", abstractBaseClass);
 
         for (QDirIterator it{":/imports/QtItches/Core", {"*.qml"},
              QDir::Files, QDirIterator::Subdirectories}; it.hasNext(); ) {

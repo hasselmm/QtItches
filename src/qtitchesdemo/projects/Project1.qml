@@ -1,9 +1,9 @@
 import QtItches.Core 1.0
 
-Stage {
+Project {
     name: "Test 1"
 
-    Actor {
+    Sprite {
         name: "Cat"
 
         costumes: [

@@ -10,7 +10,7 @@ Block {
     ConstantParameter { string: qsTr("degrees") }
 
     function run() {
-        actor.direction -= angle;
+        sprite.direction -= angle;
         finished();
     }
 }

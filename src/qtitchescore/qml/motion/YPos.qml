@@ -4,7 +4,7 @@ Expression {
     category: Expression.MotionCategory
     shape: Expression.ReporterShape
     type: Parameter.NumberType
-    value: actor && actor.y || 0
+    value: sprite && sprite.y || 0
 
-    ConstantParameter { string: qsTr("y") }
+    ConstantParameter { string: qsTr("y  position") }
 }
