@@ -1,6 +1,6 @@
 import QtItches.Core 1.0
 
-Stage {
+Project {
     name: "Run in Square"
 
     Sprite {

@@ -3,6 +3,7 @@
 #include "qtitchesexpression.h"
 #include "qtitchesblocklibrary.h"
 #include "qtitchesparameter.h"
+#include "qtitchesproject.h"
 #include "qtitchesscript.h"
 #include "qtitchesstage.h"
 
@@ -40,6 +41,7 @@ public:
         qmlRegisterType<NumberParameter>(uri, 1, 0, "NumberParameter");
         qmlRegisterType<Or>(uri, 1, 0, "Or");
         qmlRegisterType<Plus>(uri, 1, 0, "Plus");
+        qmlRegisterType<Project>(uri, 1, 0, "Project");
         qmlRegisterType<Script>(uri, 1, 0, "Script");
         qmlRegisterType<Sprite>(uri, 1, 0, "Sprite");
         qmlRegisterType<Stage>(uri, 1, 0, "Stage");

@@ -5,7 +5,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 
 ColumnLayout {
-    spacing: 15
+    spacing: 0//15
 
     width: 150
     height: parent.height
@@ -95,7 +95,6 @@ ColumnLayout {
             BlockView {
                 id: blockView
 
-                anchors.horizontalCenter: parent.horizontalCenter
                 block: model.prototype
                 enabled: false
             }

@@ -6,21 +6,21 @@
 namespace QtItches {
 namespace Core {
 
+class Project;
 class Script;
-class Stage;
 
 class ScriptContext : public QObject
 {
     Q_OBJECT
     Q_CLASSINFO("DefaultProperty", "scripts")
     Q_PROPERTY(QQmlListProperty<QtItches::Core::Script> scripts READ scripts CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Core::Stage *stage READ stage CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Project *project READ project CONSTANT FINAL)
 
 public:
     using QObject::QObject;
 
     QQmlListProperty<Script> scripts();
-    Stage *stage() const;
+    Project *project() const;
 
 public slots:
     void stopAllButThis(QtItches::Core::Script *script);

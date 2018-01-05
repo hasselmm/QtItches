@@ -3,6 +3,8 @@ import QtItches.Controls 1.0
 import QtQuick 2.9
 import QtQuick.Window 2.3
 
+import "../projects"
+
 Window {
     width: 1200
     height: 600
@@ -17,9 +19,9 @@ Window {
         spacing: 30
 
         BlockPicker {}
-        StageView { stage: Stage1 {} }
-        StageView { stage: Stage2 {} }
-        StageView { stage: Stage3 {} }
+        StageView { project: Project1 {} }
+        StageView { project: Project2 {} }
+        StageView { project: Project3 {} }
     }
 
     PopupOverlay { id: popupOverlay }
