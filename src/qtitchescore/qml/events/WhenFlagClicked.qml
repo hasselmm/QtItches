@@ -10,7 +10,7 @@ Block {
     }
 
     Connections {
-        target: stage
+        target: project
         onFlagClicked: script.run()
     }
 

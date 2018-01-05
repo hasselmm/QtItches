@@ -4,7 +4,7 @@ Expression {
     category: Expression.MotionCategory
     shape: Expression.ReporterShape
     type: Parameter.NumberType
-    value: actor && actor.direction || 0
+    value: sprite && sprite.direction || 0
 
     ConstantParameter { string: qsTr("direction") }
 }

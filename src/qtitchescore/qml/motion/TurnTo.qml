@@ -22,7 +22,7 @@ Block {
     }
 
     function run() {
-        actor.direction = direction;
+        sprite.direction = direction;
         finished();
     }
 }

@@ -7,7 +7,7 @@ Block {
     parameters: ConstantParameter { string: qsTr("when this sprite is clicked") }
 
     Connections {
-        target: actor
+        target: sprite
         onClicked: script.run()
     }
 

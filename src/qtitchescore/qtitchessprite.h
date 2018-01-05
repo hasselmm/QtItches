@@ -1,17 +1,15 @@
-#ifndef QTITCHESACTOR_H
-#define QTITCHESACTOR_H
+#ifndef QTITCHESSPRITE_H
+#define QTITCHESSPRITE_H
+
+#include "qtitchesscriptcontext.h"
 
 #include <QPointF>
-#include <QQmlListProperty>
 #include <QUrl>
 
 namespace QtItches {
 namespace Core {
 
-class Script;
-class Stage;
-
-class Actor : public QObject
+class Sprite : public ScriptContext
 {
     Q_OBJECT
     Q_CLASSINFO("DefaultProperty", "scripts")
@@ -26,12 +24,8 @@ class Actor : public QObject
     Q_PROPERTY(QString saying READ saying NOTIFY said FINAL)
     Q_PROPERTY(QString thinking READ thinking NOTIFY thought FINAL)
 
-    Q_PROPERTY(QQmlListProperty<QtItches::Core::Script> scripts READ scripts CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Core::Stage *stage READ stage CONSTANT FINAL)
-
 public:
-    explicit Actor(QObject *parent = {});
-    ~Actor();
+    using ScriptContext::ScriptContext;
 
     void setX(double x);
     double x() const;
@@ -54,15 +48,10 @@ public:
     QString saying() const;
     QString thinking() const;
 
-    QQmlListProperty<Script> scripts();
-    Stage *stage() const;
-
 public slots:
     void say(const QString &text);
     void think(const QString &text);
     void goForward(int steps);
-    void stopAllButThis(QtItches::Core::Script *script);
-    void stop();
 
 signals:
     void clicked(QObject *source);
@@ -75,11 +64,15 @@ signals:
     void thought(const QString &text);
 
 private:
-    class Private;
-    Private *const d;
+    QString m_name;
+    QString m_saying;
+    QString m_thinking;
+    QPointF m_position = {0, 0};
+    double m_direction = 90;
+    QList<QUrl> m_costumes;
 };
 
 } // namespace Core
 } // namespace QtItches
 
-#endif // QTITCHESACTOR_H
+#endif // QTITCHESSPRITE_H

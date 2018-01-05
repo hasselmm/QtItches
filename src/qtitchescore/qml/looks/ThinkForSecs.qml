@@ -16,7 +16,7 @@ Block {
     ConstantParameter { string: qsTr("secs") }
 
     function run() {
-        actor.think(text);
+        sprite.think(text);
         timer.start();
     }
 
@@ -32,7 +32,7 @@ Block {
         repeat: false
 
         onTriggered: {
-            actor.think("");
+            sprite.think("");
             thinkForSecs.finished();
         }
     }
