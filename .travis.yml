@@ -24,6 +24,26 @@ matrix:
                   - libxml2-utils
                   - p7zip
 
+      - language: cpp
+        os: osx
+        osx_image: xcode8.3
+        env:
+          - QT_HOST="mac_x64"
+          - QT_TARGET="ios"
+          - QT_TOOLCHAIN="ios"
+          - QT_PACKAGES="qtbase qtdeclarative"
+          - SKIP_TESTS=1
+
+      - language: cpp
+        os: osx
+        osx_image: xcode9.2
+        env:
+          - QT_HOST="mac_x64"
+          - QT_TARGET="ios"
+          - QT_TOOLCHAIN="ios"
+          - QT_PACKAGES="qtbase qtdeclarative"
+          - SKIP_TESTS=1
+
       - language: android
         os: linux
         env:
@@ -38,6 +58,7 @@ matrix:
           - QT_TARGET="android"
           - QT_TOOLCHAIN="android_armv7"
           - QT_PACKAGES="qtbase qtdeclarative"
+          - SKIP_TESTS=1
 
         android:
             components:
@@ -45,10 +66,11 @@ matrix:
               - build-tools-25.0.2
 
 before_install:
-  - test -z "${ANDROID_NDK_ROOT}" || .travis/install_ndk.sh "${ANDROID_NDK_HOST}" "${ANDROID_NDK_VERSION}" "${ANDROID_NDK_PLATFORM}"
+  - if [ "${QT_HOST}" == "mac_x64" ]; then brew update && brew install p7zip; fi
+  - if [ -n "${ANDROID_NDK_ROOT}" ]; then .travis/install_ndk.sh "${ANDROID_NDK_HOST}" "${ANDROID_NDK_VERSION}" "${ANDROID_NDK_PLATFORM}"; fi
   - .travis/install_qt.sh "${QT_HOST}" "${QT_TARGET}" "${QT_TOOLCHAIN}" 5.10.0 ${QT_PACKAGES}
 
 script:
   - mkdir build && cd build &&
     "../5.10.0/${QT_TOOLCHAIN}/bin/qmake" ${QMAKE_FLAGS} .. &&
-    make && make check
+    make && { [ -n "${SKIP_TESTS}" ] || make check; }

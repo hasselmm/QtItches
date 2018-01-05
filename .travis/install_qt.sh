@@ -30,7 +30,7 @@ android|desktop|ios|winrt);;
 esac
 
 case "${QT_TOOLCHAIN}" in
-android_armv7|android_x86|gcc|gcc_64|win32_mingw*|win32_msvc*|ioswin64_msvc2015_winrt_armv|7win64_msvc2015_winrt_x64|win64_msvc2017_winrt_x86);;
+android_armv7|android_x86|gcc|gcc_64|ios|win32_mingw*|win32_msvc*|win64_msvc2015_winrt_armv|win64_msvc2015_winrt_x64|win64_msvc2017_winrt_x86);;
 *) print_usage "Invalid SDK toolchain" >&2; exit 2;;
 esac
 
@@ -41,6 +41,9 @@ esac
 
 QT_VERSION_CODE="${QT_VERSION//./}"
 QT_BASEURL="${QT_REPOSITORY}${QT_HOST}/${QT_TARGET}/qt5_${QT_VERSION_CODE}/"
+QT_CONFIG="${QT_VERSION}/${QT_TOOLCHAIN}/mkspecs/qconfig.pri"
+
+P7ZIP=$(which 7zr || which 7za || which 7z) || { echo "Could not find any 7zip extractor. Aborting." >&2; exit 1; }
 
 download "${QT_BASEURL}Updates.xml"
 
@@ -59,8 +62,12 @@ do
     package_suffix=$(xmllint Updates.xml --xpath "substring-before(substring-after(concat(${package_node}/DownloadableArchives/text(), ','), '${package_name}-'), ',')")
     package_filename="${package_prefix}${package_name}-${package_suffix}"
     download "${QT_BASEURL}${package_folder}/${package_filename}"
-    p7zip -d "${package_filename}"
+    "${P7ZIP}" x "${package_filename}"
 done
 
-sed -ie "s/^\(QT_EDITION\\s*=\\s*\).*/\1${QT_EDITION}/" "${QT_VERSION}/${QT_TOOLCHAIN}/mkspecs/qconfig.pri"
+echo "Activating '${QT_EDITION}' license in '${QT_CONFIG}'..."
+sed -ie "s/^\(QT_EDITION[[:space:]]*=[[:space:]]*\).*/\1${QT_EDITION}/" "${QT_CONFIG}"
+cat "${QT_CONFIG}"
+
+echo "Enabling relocating of Qt..."
 cp "$(dirname "$0")/qt.conf" "${QT_VERSION}/${QT_TOOLCHAIN}/bin/"
