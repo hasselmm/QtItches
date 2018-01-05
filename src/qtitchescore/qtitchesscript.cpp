@@ -2,6 +2,7 @@
 
 #include "qtitchessprite.h"
 #include "qtitchesblock.h"
+#include "qtitchesstage.h"
 
 #include <QLoggingCategory>
 #include <QTimer>
@@ -76,6 +77,14 @@ ScriptContext *Script::context() const
     return dynamic_cast<ScriptContext *>(parent());
 }
 
+Project *Script::project() const
+{
+    if (const auto c = context())
+        return c->project();
+
+    return {};
+}
+
 Sprite *Script::sprite() const
 {
     return dynamic_cast<Sprite *>(context());
@@ -91,10 +100,7 @@ Script *Script::parentScript() const
 
 Stage *Script::stage() const
 {
-    if (const auto c = context())
-        return c->stage();
-
-    return {};
+    return dynamic_cast<Stage *>(context());
 }
 
 QQmlListProperty<Block> Script::blocks()

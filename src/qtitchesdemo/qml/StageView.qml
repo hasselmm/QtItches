@@ -7,23 +7,23 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 
 Rectangle {
-    property Core.Stage stage
+    property Core.Project project
 
     border { color: "#40200020"; width: 1 }
     color: "#10200000"
     radius: 11
 
-    implicitWidth: stageColumn.implicitWidth + 10
-    implicitHeight: stageColumn.implicitHeight + 10
+    implicitWidth: projectColumn.implicitWidth + 10
+    implicitHeight: projectColumn.implicitHeight + 10
 
     Column {
-        id: stageColumn
+        id: projectColumn
 
         anchors.centerIn: parent
 
         Text {
             font.bold: true
-            text: stage.name
+            text: project.name
             bottomPadding: 5
         }
 
@@ -31,7 +31,7 @@ Rectangle {
             spacing: 10
 
             Repeater {
-                model: stage.sprites
+                model: project.sprites
 
                 Rectangle {
                     readonly property Core.Sprite sprite: modelData

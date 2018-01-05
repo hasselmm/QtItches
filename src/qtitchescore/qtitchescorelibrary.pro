@@ -9,6 +9,7 @@ HEADERS += \
     qtitchesblocklibrary.h \
     qtitchesexpression.h \
     qtitchesparameter.h \
+    qtitchesproject.h \
     qtitchesscriptcontext.h \
     qtitchesscript.h \
     qtitchessprite.h \
@@ -20,6 +21,7 @@ SOURCES += \
     qtitchesblocklibrary.cpp \
     qtitchesexpression.cpp \
     qtitchesparameter.cpp \
+    qtitchesproject.cpp \
     qtitchesscriptcontext.cpp \
     qtitchesscript.cpp \
     qtitchessprite.cpp \

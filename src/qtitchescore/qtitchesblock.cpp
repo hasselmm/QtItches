@@ -3,6 +3,7 @@
 #include "qtitchesparameter.h"
 #include "qtitchesscript.h"
 #include "qtitchessprite.h"
+#include "qtitchesstage.h"
 
 #include <QMetaMethod>
 
@@ -39,6 +40,14 @@ ScriptContext *Block::context() const
 
 }
 
+Project *Block::project() const
+{
+    if (const auto s = script())
+        return s->project();
+
+    return {};
+}
+
 Sprite *Block::sprite() const
 {
     return dynamic_cast<Sprite *>(context());
@@ -54,10 +63,7 @@ Script *Block::script() const
 
 Stage *Block::stage() const
 {
-    if (const auto s = script())
-        return s->stage();
-
-    return {};
+    return dynamic_cast<Stage *>(context());
 }
 
 void Block::setCategory(Block::Category category)

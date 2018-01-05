@@ -1,14 +1,14 @@
 #include "qtitchesscriptcontext.h"
 
+#include "qtitchesproject.h"
 #include "qtitchesscript.h"
-#include "qtitchesstage.h"
 
 namespace QtItches {
 namespace Core {
 
-Stage *ScriptContext::stage() const
+Project *ScriptContext::project() const
 {
-    return dynamic_cast<Stage *>(parent());
+    return dynamic_cast<Project *>(parent());
 }
 
 void ScriptContext::stopAllButThis(Script *script)

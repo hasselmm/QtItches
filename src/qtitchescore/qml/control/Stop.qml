@@ -28,7 +28,7 @@ Block {
     function run() {
         switch (target) {
         case 0:
-            stage.stop();
+            project.stop();
             break;
 
         case 1:

@@ -8,6 +8,7 @@ namespace QtItches {
 namespace Core {
 
 class Parameter;
+class Project;
 class Script;
 class ScriptContext;
 class Sprite;
@@ -20,6 +21,7 @@ class Block : public QObject, public QQmlParserStatus
     Q_INTERFACES(QQmlParserStatus)
 
     Q_PROPERTY(QtItches::Core::ScriptContext *context READ context CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Project *project READ project CONSTANT FINAL)
     Q_PROPERTY(QtItches::Core::Sprite *sprite READ sprite CONSTANT FINAL)
     Q_PROPERTY(QtItches::Core::Script *script READ script CONSTANT FINAL)
     Q_PROPERTY(QtItches::Core::Stage *stage READ stage CONSTANT FINAL)
@@ -67,6 +69,7 @@ public:
     ~Block();
 
     ScriptContext *context() const;
+    Project *project() const;
     Sprite *sprite() const;
     Script *script() const;
     Stage *stage() const;

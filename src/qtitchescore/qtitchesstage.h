@@ -1,39 +1,31 @@
 #ifndef QTITCHESSTAGE_H
 #define QTITCHESSTAGE_H
 
-#include <QQmlListProperty>
+#include "qtitchesscriptcontext.h"
+
+#include <QUrl>
 
 namespace QtItches {
 namespace Core {
 
 class Sprite;
 
-class Stage : public QObject
+class Stage : public ScriptContext
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged FINAL)
-    Q_PROPERTY(QQmlListProperty<QtItches::Core::Sprite> sprites READ sprites CONSTANT FINAL)
-    Q_CLASSINFO("DefaultProperty", "sprites")
+    Q_PROPERTY(QList<QUrl> backdrops READ backdrops WRITE setBackdrops NOTIFY backdropsChanged FINAL)
 
 public:
-    Stage(QObject *parent = {});
-    ~Stage();
+    using ScriptContext::ScriptContext;
 
-    QQmlListProperty<Sprite> sprites();
-
-    void setName(const QString &name);
-    QString name() const;
-
-public:
-    void stop();
+    void setBackdrops(const QList<QUrl> &backdrops);
+    QList<QUrl> backdrops() const;
 
 signals:
-    void flagClicked(QObject *source);
-    void nameChanged(const QString &name);
+    void backdropsChanged(const QList<QUrl> &backdrops);
 
 private:
-    class Private;
-    Private *const d;
+    QList<QUrl> m_backdrops;
 };
 
 } // namespace Core

@@ -3,10 +3,10 @@
         <file>assets/cat1.svg</file>
         <file>assets/cat2.svg</file>
         <file>qml/BlockPicker.qml</file>
-        <file>qml/Stage1.qml</file>
-        <file>qml/Stage2.qml</file>
-        <file>qml/Stage3.qml</file>
         <file>qml/StageView.qml</file>
         <file>qml/main.qml</file>
+        <file>projects/Project1.qml</file>
+        <file>projects/Project2.qml</file>
+        <file>projects/Project3.qml</file>
     </qresource>
 </RCC>
