@@ -3,7 +3,7 @@ import QtItches.Core 1.0
 Stage {
     name: "Run in Square"
 
-    Actor {
+    Sprite {
         name: "Cat"
 
         costumes: [

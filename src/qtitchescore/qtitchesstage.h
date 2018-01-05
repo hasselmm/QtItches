@@ -6,20 +6,20 @@
 namespace QtItches {
 namespace Core {
 
-class Actor;
+class Sprite;
 
 class Stage : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<QtItches::Core::Actor> actors READ actors CONSTANT FINAL)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged FINAL)
-    Q_CLASSINFO("DefaultProperty", "actors")
+    Q_PROPERTY(QQmlListProperty<QtItches::Core::Sprite> sprites READ sprites CONSTANT FINAL)
+    Q_CLASSINFO("DefaultProperty", "sprites")
 
 public:
     Stage(QObject *parent = {});
     ~Stage();
 
-    QQmlListProperty<Actor> actors();
+    QQmlListProperty<Sprite> sprites();
 
     void setName(const QString &name);
     QString name() const;

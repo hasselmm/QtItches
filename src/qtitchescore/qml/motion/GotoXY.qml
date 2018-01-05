@@ -14,7 +14,7 @@ Block {
     NumberParameter { id: yParameter  }
 
     function run() {
-        actor.position = Qt.point(x, y);
+        sprite.position = Qt.point(x, y);
         gotoXY.finished();
     }
 }

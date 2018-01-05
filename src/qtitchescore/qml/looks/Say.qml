@@ -10,7 +10,7 @@ Block {
     ]
 
     function run() {
-        actor.say(text);
+        sprite.say(text);
         finished();
     }
 }

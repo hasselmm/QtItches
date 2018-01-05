@@ -1,4 +1,4 @@
-import QtItches.Core 1.0
+import QtItches.Core 1.0 as Core
 import QtItches.Controls 1.0
 
 import QtQml.Models 2.3
@@ -7,7 +7,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 
 Rectangle {
-    property Stage stage
+    property Core.Stage stage
 
     border { color: "#40200020"; width: 1 }
     color: "#10200000"
@@ -31,20 +31,20 @@ Rectangle {
             spacing: 10
 
             Repeater {
-                model: stage.actors
+                model: stage.sprites
 
                 Rectangle {
-                    readonly property Actor actor: modelData
+                    readonly property Core.Sprite sprite: modelData
 
                     border { color: "#40000020"; width: 1 }
                     color: "#10000020"
                     radius: 7
 
-                    implicitWidth: actorGrid.implicitWidth + 10
-                    implicitHeight: actorGrid.implicitHeight + 10
+                    implicitWidth: spriteGrid.implicitWidth + 10
+                    implicitHeight: spriteGrid.implicitHeight + 10
 
                     GridLayout {
-                        id: actorGrid
+                        id: spriteGrid
 
                         anchors.centerIn: parent
 
@@ -53,7 +53,7 @@ Rectangle {
                             Layout.fillWidth: true
 
                             font.bold: true
-                            text: actor.name
+                            text: sprite.name
                             bottomPadding: 5
                         }
 
@@ -62,27 +62,27 @@ Rectangle {
                             Layout.row: 0
                             Layout.rowSpan: 4
 
-                            rotation: actor.direction - 90
-                            source: actor.costumes[0] || ""
+                            rotation: sprite.direction - 90
+                            source: sprite.costumes[0] || ""
 
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: actor.clicked(parent)
+                                onClicked: sprite.clicked(parent)
                             }
                         }
 
                         Text {
                             Layout.row: 1
 
-                            text: actor.saying ? qsTr("says `%1'").arg(actor.saying)
-                                               : qsTr("says nothing")
+                            text: sprite.saying ? qsTr("says `%1'").arg(sprite.saying)
+                                                : qsTr("says nothing")
                         }
 
                         Text {
                             Layout.row: 2
 
-                            text: actor.thinking ? qsTr("thinks `%1'").arg(actor.thinking)
-                                                 : qsTr("thinks nothing")
+                            text: sprite.thinking ? qsTr("thinks `%1'").arg(sprite.thinking)
+                                                  : qsTr("thinks nothing")
                         }
 
                         Text {
@@ -91,7 +91,7 @@ Rectangle {
 
                             bottomPadding: 10
                             font.pixelSize: 9
-                            text: qsTr("x: %1; y: %2; direction: %3°").arg(actor.x.toFixed(1)).arg(actor.y.toFixed(1)).arg(actor.direction.toFixed(1))
+                            text: qsTr("x: %1; y: %2; direction: %3°").arg(sprite.x.toFixed(1)).arg(sprite.y.toFixed(1)).arg(sprite.direction.toFixed(1))
                         }
 
                         Row {
@@ -101,10 +101,10 @@ Rectangle {
                             spacing: 5
 
                             Repeater {
-                                model: actor.scripts
+                                model: sprite.scripts
 
                                 Rectangle {
-                                    readonly property Script script: modelData
+                                    readonly property Core.Script script: modelData
 
                                     border { color: "#40002000"; width: 1 }
                                     color: "#10020000"

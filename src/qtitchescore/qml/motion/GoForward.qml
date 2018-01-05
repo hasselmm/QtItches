@@ -10,7 +10,7 @@ Block {
     ConstantParameter { string: qsTr("steps") }
 
     function run() {
-        actor.goForward(steps);
+        sprite.goForward(steps);
         finished();
     }
 }

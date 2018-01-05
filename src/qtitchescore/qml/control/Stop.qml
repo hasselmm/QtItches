@@ -36,7 +36,7 @@ Block {
             break;
 
         case 2:
-            actor.stopAllButThis(script);
+            context.stopAllButThis(script);
             break;
 
         default:

@@ -10,7 +10,7 @@ Block {
     ]
 
     function run() {
-        actor.think(text);
+        sprite.think(text);
         finished();
     }
 }

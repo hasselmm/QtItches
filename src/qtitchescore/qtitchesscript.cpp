@@ -1,6 +1,6 @@
 #include "qtitchesscript.h"
 
-#include "qtitchesactor.h"
+#include "qtitchessprite.h"
 #include "qtitchesblock.h"
 
 #include <QLoggingCategory>
@@ -68,15 +68,20 @@ Script::~Script()
     delete d;
 }
 
-Actor *Script::actor() const
+ScriptContext *Script::context() const
 {
-    if (const auto s = scope())
-        return s->actor();
+    if (const auto s = parentScript())
+        return s->context();
 
-    return dynamic_cast<Actor *>(parent());
+    return dynamic_cast<ScriptContext *>(parent());
 }
 
-Script *Script::scope() const
+Sprite *Script::sprite() const
+{
+    return dynamic_cast<Sprite *>(context());
+}
+
+Script *Script::parentScript() const
 {
     if (const auto b = dynamic_cast<Block *>(parent()))
         return b->script();
@@ -86,8 +91,8 @@ Script *Script::scope() const
 
 Stage *Script::stage() const
 {
-    if (const auto a = actor())
-        return a->stage();
+    if (const auto c = context())
+        return c->stage();
 
     return {};
 }

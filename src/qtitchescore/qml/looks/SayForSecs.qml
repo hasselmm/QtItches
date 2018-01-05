@@ -16,7 +16,7 @@ Block {
     ConstantParameter { string: qsTr("secs") }
 
     function run() {
-        actor.say(text);
+        sprite.say(text);
         timer.start();
     }
 
@@ -32,7 +32,7 @@ Block {
         repeat: false
 
         onTriggered: {
-            actor.say("");
+            sprite.say("");
             sayForSecs.finished();
         }
     }
