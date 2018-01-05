@@ -1,13 +1,28 @@
 <RCC>
     <qresource prefix="/">
-        <file>assets/cat1.svg</file>
-        <file>assets/cat2.svg</file>
-        <file>qml/BlockPicker.qml</file>
-        <file>qml/main.qml</file>
+        <file>assets/bluecreature-1.svg</file>
+        <file>assets/bluecreature-2.svg</file>
+        <file>assets/johnny-1.svg</file>
+        <file>assets/magnesus-1.svg</file>
+        <file>assets/magnesus-2.svg</file>
+        <file>assets/magnesus-3.svg</file>
+        <file>assets/magnesus-4.svg</file>
+        <file>assets/magnesus-5.svg</file>
+        <file>assets/magnesus-6.svg</file>
+        <file>assets/martin-1.svg</file>
+        <file>assets/martin-2.svg</file>
+        <file>assets/martin-3.svg</file>
+        <file>assets/martin-4.svg</file>
+        <file>assets/martin-5.svg</file>
+        <file>assets/orangedroid.svg</file>
+        <file>assets/reteg.svg</file>
+        <file>assets/robobike.svg</file>
         <file>projects/Project1.qml</file>
         <file>projects/Project2.qml</file>
         <file>projects/Project3.qml</file>
+        <file>qml/BlockPicker.qml</file>
         <file>qml/ScriptView.qml</file>
         <file>qml/StageView.qml</file>
+        <file>qml/main.qml</file>
     </qresource>
 </RCC>

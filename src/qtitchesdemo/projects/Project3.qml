@@ -4,11 +4,15 @@ Project {
     name: "Run in Square"
 
     Sprite {
-        name: "Cat"
+        name: "Magnesus"
 
         costumes: [
-            "qrc:/assets/cat1.svg",
-            "qrc:/assets/cat2.svg",
+            "qrc:/assets/magnesus-1.svg",
+            "qrc:/assets/magnesus-2.svg",
+            "qrc:/assets/magnesus-3.svg",
+            "qrc:/assets/magnesus-4.svg",
+            "qrc:/assets/magnesus-5.svg",
+            "qrc:/assets/magnesus-6.svg",
         ]
 
         Script {
