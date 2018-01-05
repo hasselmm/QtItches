@@ -6,9 +6,12 @@ Block {
 
     property alias condition: conditionParameter.value
 
-    property Script onTrue: Script {}
-    property Script onFalse: Script {}
-    readonly property var scripts: [onTrue, onFalse]
+    property Script then: Script {}
+    property Script otherwise: Script {}
+    property alias elseways: doIfElse.otherwise
+    property alias _else: doIfElse.otherwise
+
+    readonly property var scripts: [then, otherwise]
     property var scriptNames: [qsTr("else")]
 
     category: Block.ControlCategory
@@ -19,7 +22,7 @@ Block {
     ]
 
     function run() {
-        scriptMonitor.target = condition ? onTrue : onFalse;
+        scriptMonitor.target = condition ? then : otherwise;
         scriptMonitor.enabled = true;
         scriptMonitor.target.run();
     }
