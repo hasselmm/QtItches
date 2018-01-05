@@ -24,8 +24,8 @@ Project {
 
                     DoIfElse {
                         //condition: LessThan { left: 1; right: 2 }
-                        onTrue: Script { Say { text: "Yes!" } }
-                        onFalse: Script { Say { text: "No!" } }
+                        then: Script { Say { text: "Yes!" } }
+                        otherwise: Script { Say { text: "No!" } }
                     }
 
                     WaitSecs { seconds: 1.4 }
