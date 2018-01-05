@@ -6,8 +6,8 @@ Block {
 
     property alias condition: conditionParameter.value
 
-    property Script onTrue: Script {}
-    readonly property var scripts: onTrue
+    property Script then: Script {}
+    readonly property var scripts: then
 
     category: Block.ControlCategory
 
@@ -19,15 +19,15 @@ Block {
     function run() {
         if (condition) {
             scriptMonitor.enabled = true;
-            onTrue.run();
+            then.run();
         } else {
             finished();
         }
     }
 
     function stop() {
-        if (onTrue.running)
-            onTrue.stop();
+        if (then.running)
+            then.stop();
         else
             finished();
     }
@@ -36,7 +36,7 @@ Block {
         id: scriptMonitor
 
         enabled: false
-        target: onTrue
+        target: then
 
         onFinished: {
             enabled = false;
