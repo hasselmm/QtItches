@@ -81,9 +81,7 @@ ColumnLayout {
         clip: true
         spacing: 0
 
-        model: Library {
-            id: blocks
-        }
+        model: Library {}
 
         delegate: Item {
             width: libraryView.width
