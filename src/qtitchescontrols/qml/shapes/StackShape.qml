@@ -9,8 +9,8 @@ BlockShape {
     topPadding: hasTopConnector ? 5 : 15
 
     // top left corner
-    PathLine { id: tl1; x: 0; y: 2 }
-    PathLine { id: tl2; x: 2; y: 0 }
+    PathLine { id: tl1; x: 0.5; y: 2.5 }
+    PathLine { id: tl2; x: 2.5; y: 0.5 }
     // top connector
     PathLine { id: tc1; x: 12.5; y: 0.5 }
     PathLine { id: tc2; x: 15.5; y: 3.5 }
