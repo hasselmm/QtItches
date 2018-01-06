@@ -11,9 +11,11 @@ Block {
     }
 
     Connections {
-        enabled: sprite && sprite.script || false
         target: sprite
 
-        onClicked: script.run()
+        onClicked: {
+            if (script)
+                script.run();
+        }
     }
 }
