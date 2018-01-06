@@ -32,6 +32,7 @@ public:
 
 protected:
     explicit Parameter(QObject *parent = {});
+    explicit Parameter(const QVariant &initialValue, QObject *parent = {});
 
 public:
     static Parameter *create(Type type, QObject *parent = {});
@@ -43,11 +44,15 @@ public:
     void setValue(const QVariant &value);
     QVariant value() const;
 
+public slots:
+    QString toPlainText();
+
 signals:
     void valueChanged(const QVariant &value);
 
 private:
     bool acceptableValue(const QVariant &value) const;
+    static Q_DECL_RELAXED_CONSTEXPR std::pair<QChar, QChar> delimiters(Type type);
 
     QVariant m_value;
 };

@@ -84,6 +84,7 @@ Plus::Plus(QObject *parent)
 {
     connect(this, &Plus::leftChanged, this, &Plus::evaluate);
     connect(this, &Plus::rightChanged, this, &Plus::evaluate);
+    evaluate();
 }
 
 void Plus::evaluate()
@@ -99,6 +100,7 @@ Minus::Minus(QObject *parent)
 {
     connect(this, &Minus::leftChanged, this, &Minus::evaluate);
     connect(this, &Minus::rightChanged, this, &Minus::evaluate);
+    evaluate();
 }
 
 void Minus::evaluate()
@@ -114,6 +116,7 @@ Multiply::Multiply(QObject *parent)
 {
     connect(this, &Multiply::leftChanged, this, &Multiply::evaluate);
     connect(this, &Multiply::rightChanged, this, &Multiply::evaluate);
+    evaluate();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,6 +134,7 @@ Divide::Divide(QObject *parent)
 {
     connect(this, &Divide::leftChanged, this, &Divide::evaluate);
     connect(this, &Divide::rightChanged, this, &Divide::evaluate);
+    evaluate();
 }
 
 void Divide::evaluate()
@@ -146,6 +150,7 @@ LessThan::LessThan(QObject *parent)
 {
     connect(this, &LessThan::leftChanged, this, &LessThan::evaluate);
     connect(this, &LessThan::rightChanged, this, &LessThan::evaluate);
+    evaluate();
 }
 
 void LessThan::evaluate()
@@ -161,6 +166,7 @@ GreaterThan::GreaterThan(QObject *parent)
 {
     connect(this, &GreaterThan::leftChanged, this, &GreaterThan::evaluate);
     connect(this, &GreaterThan::rightChanged, this, &GreaterThan::evaluate);
+    evaluate();
 }
 
 void GreaterThan::evaluate()
@@ -176,6 +182,7 @@ Equals::Equals(QObject *parent)
 {
     connect(this, &Equals::leftChanged, this, &Equals::evaluate);
     connect(this, &Equals::rightChanged, this, &Equals::evaluate);
+    evaluate();
 }
 
 void Equals::evaluate()
@@ -190,6 +197,7 @@ And::And(QObject *parent)
 {
     connect(this, &And::leftChanged, this, &And::evaluate);
     connect(this, &And::rightChanged, this, &And::evaluate);
+    evaluate();
 }
 
 void And::evaluate()
@@ -205,6 +213,7 @@ Or::Or(QObject *parent)
 {
     connect(this, &Or::leftChanged, this, &Or::evaluate);
     connect(this, &Or::rightChanged, this, &Or::evaluate);
+    evaluate();
 }
 
 void Or::evaluate()
@@ -219,6 +228,7 @@ Not::Not(QObject *parent)
     : UnaryExpression{Parameter::BooleanType, QT_TR_NOOP("not"), parent}
 {
     connect(this, &Not::argumentChanged, this, &Not::evaluate);
+    evaluate();
 }
 
 void Not::evaluate()

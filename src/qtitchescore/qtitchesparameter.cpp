@@ -10,7 +10,12 @@ namespace Core {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Parameter::Parameter(QObject *parent)
+    : Parameter{{}, parent}
+{}
+
+Parameter::Parameter(const QVariant &initialValue, QObject *parent)
     : QObject{parent}
+    , m_value{initialValue}
 {}
 
 Parameter *Parameter::create(Type type, QObject *parent)
@@ -75,6 +80,26 @@ QVariant Parameter::value() const
     return m_value;
 }
 
+QString Parameter::toPlainText()
+{
+    const auto delimiters = Parameter::delimiters(type());
+
+    QString plainText;
+
+    if (!delimiters.first.isNull())
+        plainText += delimiters.first;
+
+    if (const auto e = expression())
+        plainText += e->toPlainText();
+    else
+        plainText += m_value.toString();
+
+    if (!delimiters.second.isNull())
+        plainText += delimiters.second;
+
+    return plainText;
+}
+
 bool Parameter::acceptableValue(const QVariant &value) const
 {
     if (value.canConvert(qMetaTypeId<Expression *>())) {
@@ -100,10 +125,29 @@ bool Parameter::acceptableValue(const QVariant &value) const
     return false;
 }
 
+Q_DECL_RELAXED_CONSTEXPR std::pair<QChar, QChar> Parameter::delimiters(Parameter::Type type)
+{
+    switch (type) {
+    case BooleanType:
+        return {'<', '>'};
+    case ChoiceType:
+    case NumberType:
+        return {'(', ')'};
+    case StringType:
+        return {'[', ']'};
+
+    case ConstantType:
+    case InvalidType:
+        break;
+    }
+
+    return {};
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 BooleanParameter::BooleanParameter(QObject *parent)
-    : Parameter{parent}
+    : Parameter{false, parent}
 {
     connect(this, &Parameter::valueChanged, [this](const auto &value) {
         emit this->booleanChanged(value.toBool());
@@ -148,7 +192,7 @@ ConstantParameter::ConstantParameter(const QString &string, QObject *parent)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 NumberParameter::NumberParameter(QObject *parent)
-    : Parameter{parent}
+    : Parameter{0.0, parent}
 {
     connect(this, &Parameter::valueChanged, [this](const auto &value) {
         emit this->numberChanged(value.toDouble());
