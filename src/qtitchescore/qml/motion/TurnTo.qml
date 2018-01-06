@@ -6,7 +6,7 @@ SpriteBlock {
     category: Block.MotionCategory
 
     ConstantParameter {
-        string: qsTr("point in direction")
+        string: qsTr("point into direction")
     }
 
     NumberParameter {
