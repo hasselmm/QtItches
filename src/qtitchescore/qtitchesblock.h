@@ -20,12 +20,14 @@ class Block : public QObject, public QQmlParserStatus
     Q_CLASSINFO("DefaultProperty", "data")
     Q_INTERFACES(QQmlParserStatus)
 
-    Q_PROPERTY(QtItches::Core::ScriptContext *context READ context CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Core::Project *project READ project CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Core::Sprite *sprite READ sprite CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Core::Script *script READ script CONSTANT FINAL)
-    Q_PROPERTY(QtItches::Core::Stage *stage READ stage CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::ScriptContext *context READ context NOTIFY contextChanged FINAL)
+    Q_PROPERTY(QtItches::Core::Sprite *sprite READ sprite NOTIFY contextChanged FINAL)
+    Q_PROPERTY(QtItches::Core::Stage *stage READ stage NOTIFY contextChanged FINAL)
 
+    Q_PROPERTY(QtItches::Core::Project *project READ project CONSTANT FINAL)
+    Q_PROPERTY(QtItches::Core::Script *script READ script CONSTANT FINAL)
+
+    Q_PROPERTY(bool available READ available WRITE setAvailable NOTIFY availableChanged FINAL)
     Q_PROPERTY(int category READ category WRITE setCategory NOTIFY categoryChanged FINAL)
     Q_PROPERTY(int connectors READ connectors WRITE setConnectors NOTIFY connectorsChanged FINAL)
     Q_PROPERTY(int shape READ shape WRITE setShape NOTIFY shapeChanged FINAL)
@@ -68,11 +70,15 @@ public:
     explicit Block(QObject *parent = {});
     ~Block();
 
+    void setContext(ScriptContext *context);
     ScriptContext *context() const;
     Project *project() const;
     Sprite *sprite() const;
     Script *script() const;
     Stage *stage() const;
+
+    void setAvailable(bool available);
+    bool available() const;
 
     void setCategory(Category category);
     Category category() const;
@@ -95,10 +101,12 @@ public slots:
     virtual void stop();
 
 signals:
+    void availableChanged(bool available);
     void categoryChanged(int category);
     void connectorsChanged(int connectors);
     void shapeChanged(int shape);
     void parametersChanged();
+    void contextChanged();
     void finished();
 
 protected:

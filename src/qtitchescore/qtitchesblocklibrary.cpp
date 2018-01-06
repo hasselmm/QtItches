@@ -2,6 +2,7 @@
 
 #include "qtitchesblock.h"
 #include "qtitchesexpression.h"
+#include "qtitchesscriptcontext.h"
 
 #include <private/qhashedstring_p.h>
 #include <private/qqmlmetatype_p.h>
@@ -29,6 +30,7 @@ public:
 
     std::vector<Row> m_rows;
     QStringList m_modules = {"QtItches.Core"};
+    QPointer<ScriptContext> m_context;
 };
 
 BlockLibrary::BlockLibrary(QObject *parent)
@@ -53,6 +55,26 @@ void BlockLibrary::setModules(const QStringList &modules)
 QStringList BlockLibrary::modules() const
 {
     return d->m_modules;
+}
+
+void BlockLibrary::setContext(ScriptContext *context)
+{
+    if (d->m_context == context)
+        return;
+
+    d->m_context = context;
+
+    for (const auto &row: d->m_rows) {
+        if (row.prototype)
+            row.prototype->setContext(d->m_context);
+    }
+
+    emit contextChanged(d->m_context);
+}
+
+ScriptContext *BlockLibrary::context() const
+{
+    return d->m_context;
 }
 
 int BlockLibrary::rowCount(const QModelIndex &parent) const
@@ -109,6 +131,7 @@ void BlockLibrary::reload()
         if (type.metaObject() && type.metaObject()->inherits(&Block::staticMetaObject)) {
             if (const auto prototype = dynamic_cast<Block *>(type.create())) {
                 d->m_rows.emplace_back(type, prototype);
+                d->m_rows.back().prototype->setContext(d->m_context);
                 continue;
             }
         }
@@ -118,6 +141,7 @@ void BlockLibrary::reload()
             if (std::unique_ptr<QObject> object{component.create()}) {
                 if (object->metaObject()->inherits(&Block::staticMetaObject)) {
                     d->m_rows.emplace_back(type, static_cast<Block *>(object.release()));
+                    d->m_rows.back().prototype->setContext(d->m_context);
                     continue;
                 }
             }
@@ -128,6 +152,7 @@ void BlockLibrary::reload()
         return std::make_tuple(lhs.type.elementName(), lhs.type.module())
                 < std::make_tuple(rhs.type.elementName(), rhs.type.module());
     };
+
     std::sort(begin(d->m_rows), end(d->m_rows), lessByName);
 
     endResetModel();

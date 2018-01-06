@@ -1,6 +1,6 @@
 import QtItches.Core 1.0
 
-Expression {
+SpriteExpression {
     category: Expression.MotionCategory
     shape: Expression.ReporterShape
     type: Parameter.NumberType

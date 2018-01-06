@@ -1,6 +1,6 @@
 import QtItches.Core 1.0
 
-Block {
+SpriteBlock {
     property alias steps: stepsParameter.value
 
     category: Block.MotionCategory
