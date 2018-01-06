@@ -32,6 +32,9 @@ Window {
     StageView {
         id: stageView
 
+        currentContext: !maximizeCanvas.checked && project && !project.running && contextChooser.currentContext || null
+        project: currentProject
+
         width: (parent.width - blockPicker.width * scriptView.opacity) / (1 + Math.pow(scriptView.opacity, 0.8))
         height: parent.height - inch(0.6) * Math.pow(contextChooser.opacity, 0.8)
 
@@ -42,8 +45,6 @@ Window {
         z: scriptView.opacity < 1 ? 1 : 0
 
         Behavior on opacity { NumberAnimation {} }
-
-        project: currentProject
 
         Button {
             id: maximizeCanvas

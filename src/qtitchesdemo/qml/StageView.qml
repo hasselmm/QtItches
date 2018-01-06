@@ -3,6 +3,7 @@ import QtQuick 2.9
 
 Rectangle {
     readonly property real spriteScale: Math.min(width / 500, height / 500)
+    property Core.ScriptContext currentContext
     property Core.Project project
 
     Repeater {
@@ -14,9 +15,12 @@ Rectangle {
             x: (stageView.width - width)/2 + sprite.x * stageView.spriteScale
             y: (stageView.height - height)/2 - sprite.y * stageView.spriteScale
 
+            opacity: !currentContext || sprite === currentContext ? 1 : 0.3
             rotation: sprite.direction - 90
             source: sprite.costumes[0] || ""
             scale: stageView.spriteScale
+
+            Behavior on opacity { NumberAnimation { duration: 100 } }
 
             Rectangle {
                 border { width: 1; color: "#dd000000" }
