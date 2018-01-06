@@ -71,6 +71,8 @@ Project {
                     }
 
                     GoForward { steps: 10 }
+                    WaitSecs { seconds: Divide { left: 1; right: 30 } }
+                    // Comment { text: "Slow down until issue #18 got resolved" }
                 }
             }
         }
