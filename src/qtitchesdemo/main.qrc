@@ -20,6 +20,7 @@
         <file>projects/Project2.qml</file>
         <file>projects/Project3.qml</file>
         <file>qml/BlockPicker.qml</file>
+        <file>qml/ContextChooser.qml</file>
         <file>qml/ScriptView.qml</file>
         <file>qml/StageView.qml</file>
         <file>qml/main.qml</file>
