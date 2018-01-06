@@ -19,14 +19,21 @@ Rectangle {
             scale: stageView.spriteScale
 
             Rectangle {
-                visible: thinkingLabel.text
+                border { width: 1; color: "#dd000000" }
                 color: "#ddffffff"
                 radius: sprite.thinking ? 8 : 2
-                border { width: 1; color: "#dd000000" }
+                visible: thinkingLabel.text
+                rotation: - parent.rotation
+
                 implicitWidth: thinkingLabel.width + 6
                 implicitHeight: thinkingLabel.height + 6
-                rotation: - parent.rotation
-                Text { id: thinkingLabel; text: sprite.saying || sprite.thinking || ""; anchors.centerIn: parent }
+
+                Text {
+                    id: thinkingLabel
+
+                    anchors.centerIn: parent
+                    text: sprite.saying || sprite.thinking || ""
+                }
             }
 
             MouseArea {
