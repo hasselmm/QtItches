@@ -10,9 +10,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="154.93944"
-   height="160"
-   viewBox="0 0 40.994392 42.333332"
+   width="77.469719"
+   height="80"
+   viewBox="0 0 20.497196 21.166666"
    version="1.1"
    id="svg4925"
    sodipodi:docname="magnesus-4.svg"
@@ -271,15 +271,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4296815"
-     inkscape:cx="241.01865"
-     inkscape:cy="17.986992"
+     inkscape:cx="95.881425"
+     inkscape:cy="17.986995"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="838"
-     inkscape:window-x="0"
-     inkscape:window-y="34"
+     inkscape:window-width="1920"
+     inkscape:window-height="1052"
+     inkscape:window-x="1368"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -294,7 +294,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -302,9 +302,9 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-65.946673,-98.015489)">
+     transform="translate(-65.946674,-119.18216)">
     <g
-       transform="matrix(0.67830231,0,0,0.67830231,-167.8643,-141.29218)"
+       transform="matrix(0.33915116,0,0,0.33915116,-50.958814,-0.47168)"
        id="g6870">
       <ellipse
          ry="1.5178572"
