@@ -55,12 +55,16 @@ Window {
             anchors.right: parent.right
 
             Button {
+                checked: currentProject && currentProject.running
                 text: "start"
+
                 onClicked: currentProject.flagClicked(this);
             }
 
             Button {
+                enabled: currentProject && currentProject.running
                 text: "stop"
+
                 onClicked: currentProject.stop()
             }
         }

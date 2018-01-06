@@ -11,6 +11,20 @@ Project *ScriptContext::project() const
     return dynamic_cast<Project *>(parent());
 }
 
+bool ScriptContext::running() const
+{
+    return m_running;
+}
+
+void ScriptContext::classBegin()
+{}
+
+void ScriptContext::componentComplete()
+{
+    for (auto s: m_scripts)
+        connect(s, &Script::runningChanged, this, &ScriptContext::updateRunningState);
+}
+
 void ScriptContext::stopAllButThis(Script *script)
 {
     for (const auto s: m_scripts) {
@@ -22,6 +36,23 @@ void ScriptContext::stopAllButThis(Script *script)
 void ScriptContext::stop()
 {
     stopAllButThis({});
+}
+
+void ScriptContext::updateRunningState()
+{
+    const auto running = [this] {
+        for (auto s: m_scripts) {
+            if (s->running())
+                return true;
+        }
+
+        return false;
+    }();
+
+    if (m_running != running) {
+        m_running = running;
+        emit runningChanged(m_running);
+    }
 }
 
 QQmlListProperty<Script> ScriptContext::scripts()
