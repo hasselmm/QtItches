@@ -9,6 +9,15 @@ Rectangle {
     property Project project
     readonly property ScriptContext currentContext: project && project.contextes[currentIndex]
 
+    function indexOf(context) {
+        for (var i = 0, c = contextRepeater.count; i < c; ++i) {
+            if (contextRepeater.itemAt(i).context === context)
+                return i;
+        }
+
+        return -1;
+    }
+
     color: "#10200000"
 
     Flow {
@@ -20,6 +29,8 @@ Rectangle {
         spacing: milc(50)
 
         Repeater {
+            id: contextRepeater
+
             model: contextChooser.project && contextChooser.project.contextes
 
             Rectangle {
