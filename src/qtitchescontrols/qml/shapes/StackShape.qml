@@ -34,7 +34,7 @@ BlockShape {
 
     // top hat
     PathLine { id: th1; x: 0.5; y: 10.5 }
-    PathArc  { id: th2; x: 80.5; y: 10.5; radiusX: 40; radiusY: 10/*; direction: PathArc.Counterclockwise*/ }
+    PathArc  { id: th2; x: 80.5; y: 10.5; radiusX: 40; radiusY: 10 }
     PathLine { id: th3; x: width - 2.5; y: 10.5 }
     PathLine { id: th4; x: width - 0.5; y: 12.5 }
 
