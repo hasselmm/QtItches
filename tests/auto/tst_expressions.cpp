@@ -64,18 +64,17 @@ struct ExpressionState
         , valueChanges{toSignalList(std::move(valueChanges))}
     {}
 
-    QList<QVariantList> argumentChanges;
-    QList<QVariantList> leftChanges;
-    QList<QVariantList> rightChanges;
-    QList<QVariantList> valueChanges;
+    const QList<QVariantList> argumentChanges;
+    const QList<QVariantList> leftChanges;
+    const QList<QVariantList> rightChanges;
+    const QList<QVariantList> valueChanges;
 
-    QVariant argument() const { return lastValue(argumentChanges); }
-    QVariant left() const { return lastValue(leftChanges); }
-    QVariant right() const { return lastValue(rightChanges); }
-    QVariant value() const { return lastValue(valueChanges); }
+    QVariant argument() const { return argumentChanges.last().first(); }
+    QVariant left() const { return leftChanges.last().first(); }
+    QVariant right() const { return rightChanges.last().first(); }
+    QVariant value() const { return valueChanges.last().first(); }
 
 private:
-    static QVariant lastValue(const QList<QVariantList> &list) { return !list.isEmpty() ? list.last().first() : QVariant{}; }
     static QVariantList toVariantList(const QVariant &value) { return {value}; }
 
     static QList<QVariantList> toSignalList(QVariantList &&list)
@@ -87,7 +86,8 @@ private:
     }
 };
 
-template<typename T> class VerifyExpression
+template<typename T>
+class VerifyExpression
 {
 public:
     VerifyExpression(const BinaryExpression &actualExpression,
@@ -96,15 +96,15 @@ public:
     {
         QTITCHES_COMPARE(actualExpression.left().typeName(), expected.left().typeName(), line);
         QTITCHES_COMPARE(actualExpression.left().value<T>(), expected.left().value<T>(), line);
-        QTITCHES_COMPARE(actualChanges.left, expected.leftChanges, line);
+        QTITCHES_COMPARE(actualChanges.left, expected.leftChanges.mid(1), line);
 
         QTITCHES_COMPARE(actualExpression.right().typeName(), expected.right().typeName(), line);
         QTITCHES_COMPARE(actualExpression.right().value<T>(), expected.right().value<T>(), line);
-        QTITCHES_COMPARE(actualChanges.right, expected.rightChanges, line);
+        QTITCHES_COMPARE(actualChanges.right, expected.rightChanges.mid(1), line);
 
         QTITCHES_COMPARE(actualExpression.value().typeName(), expected.value().typeName(), line);
         QTITCHES_COMPARE(actualExpression.value().value<T>(), expected.value().value<T>(), line);
-        QTITCHES_COMPARE(actualChanges.value, expected.valueChanges, line);
+        QTITCHES_COMPARE(actualChanges.value, expected.valueChanges.mid(1), line);
     }
 
     VerifyExpression(const UnaryExpression &actualExpression,
@@ -113,11 +113,11 @@ public:
     {
         QTITCHES_COMPARE(actualExpression.argument().typeName(), expected.argument().typeName(), line);
         QTITCHES_COMPARE(actualExpression.argument().value<T>(), expected.argument().value<T>(), line);
-        QTITCHES_COMPARE(actualChanges.argument, expected.argumentChanges, line);
+        QTITCHES_COMPARE(actualChanges.argument, expected.argumentChanges.mid(1), line);
 
         QTITCHES_COMPARE(actualExpression.value().typeName(), expected.value().typeName(), line);
         QTITCHES_COMPARE(actualExpression.value().value<T>(), expected.value().value<T>(), line);
-        QTITCHES_COMPARE(actualChanges.value, expected.valueChanges, line);
+        QTITCHES_COMPARE(actualChanges.value, expected.valueChanges.mid(1), line);
     }
 
     explicit operator bool() const { return !QTest::currentTestFailed(); }
@@ -136,172 +136,175 @@ private slots:
     void testPlus()
     {
         Plus expr; BinaryExpressionSpy spy{&expr};
-        VERIFY_EXPRESSION(double, expr, spy, {}, {}, {});
+        VERIFY_EXPRESSION(double, expr, spy, {0.0}, {0.0}, {0.0});
 
         expr.setLeft(1);
-        VERIFY_EXPRESSION(double, expr, spy, {1}, {}, {1.0});
+        VERIFY_EXPRESSION(double, expr, spy, {0.0, 1}, {0.0}, {0.0, 1.0});
 
         expr.setRight(2.3);
-        VERIFY_EXPRESSION(double, expr, spy, {1}, {2.3}, {1.0, 3.3});
+        VERIFY_EXPRESSION(double, expr, spy, {0.0, 1}, {0.0, 2.3}, {0.0, 1.0, 3.3});
     }
 
     void testMinus()
     {
         Minus expr; BinaryExpressionSpy spy{&expr};
-        VERIFY_EXPRESSION(double, expr, spy, {}, {}, {});
+        VERIFY_EXPRESSION(double, expr, spy, {0.0}, {0.0}, {0.0});
 
         expr.setLeft(1);
-        VERIFY_EXPRESSION(double, expr, spy, {1}, {}, {1.0});
+        VERIFY_EXPRESSION(double, expr, spy, {0.0, 1}, {0.0}, {0.0, 1.0});
 
         expr.setRight(2.3);
-        VERIFY_EXPRESSION(double, expr, spy, {1}, {2.3}, {1.0, -1.3});
+        VERIFY_EXPRESSION(double, expr, spy, {0.0, 1}, {0.0, 2.3}, {0.0, 1.0, -1.3});
     }
 
     void testMultiply()
     {
         Multiply expr; BinaryExpressionSpy spy{&expr};
-        VERIFY_EXPRESSION(double, expr, spy, {}, {}, {});
+        VERIFY_EXPRESSION(double, expr, spy, {0.0}, {0.0}, {0.0});
 
         expr.setLeft(2);
-        VERIFY_EXPRESSION(double, expr, spy, {2}, {}, {0.0});
+        VERIFY_EXPRESSION(double, expr, spy, {0.0, 2}, {0.0}, {0.0});
 
         expr.setRight(2.3);
-        VERIFY_EXPRESSION(double, expr, spy, {2}, {2.3}, {0.0, 4.6});
+        VERIFY_EXPRESSION(double, expr, spy, {0.0, 2}, {0.0, 2.3}, {0.0, 4.6});
+
+        expr.setRight(4.5);
+        VERIFY_EXPRESSION(double, expr, spy, {0.0, 2}, {0.0, 2.3, 4.5}, {0.0, 4.6, 9.0});
     }
 
     void testDivide()
     {
-        Divide expr; BinaryExpressionSpy spy{&expr};
-        VERIFY_EXPRESSION(double, expr, spy, {}, {}, {});
-
-        expr.setRight(2);
-        VERIFY_EXPRESSION(double, expr, spy, {}, {2}, {0.0});
+        Divide expr; expr.setRight(1.0); BinaryExpressionSpy spy{&expr};
+        VERIFY_EXPRESSION(double, expr, spy, {0.0}, {1.0}, {0.0});
 
         expr.setLeft(1.5);
-        VERIFY_EXPRESSION(double, expr, spy, {1.5}, {2}, {0.0, 0.75});
+        VERIFY_EXPRESSION(double, expr, spy, {0.0, 1.5}, {1.0}, {0.0, 1.5});
+
+        expr.setRight(2);
+        VERIFY_EXPRESSION(double, expr, spy, {0.0, 1.5}, {0.0, 2}, {0.0, 1.5, 0.75});
     }
 
     void testAnd()
     {
         And expr; BinaryExpressionSpy spy{&expr};
-        VERIFY_EXPRESSION(bool, expr, spy, {}, {}, {});
+        VERIFY_EXPRESSION(bool, expr, spy, {false}, {false}, {false});
 
         expr.setLeft(true);
-        VERIFY_EXPRESSION(bool, expr, spy, {true}, {}, {false});
+        VERIFY_EXPRESSION(bool, expr, spy, {false, true}, {false}, {false});
 
         expr.setRight(2);
-        VERIFY_EXPRESSION(bool, expr, spy, {true}, {2}, {false, true});
+        VERIFY_EXPRESSION(bool, expr, spy, {false, true}, {false, 2}, {false, true});
 
         expr.setRight(0);
-        VERIFY_EXPRESSION(bool, expr, spy, {true}, {2, 0}, {false, true, false});
+        VERIFY_EXPRESSION(bool, expr, spy, {false, true}, {false, 2, 0}, {false, true, false});
 
         expr.setLeft(false);
-        VERIFY_EXPRESSION(bool, expr, spy, {true, false}, {2, 0}, {false, true, false});
+        VERIFY_EXPRESSION(bool, expr, spy, {false, true, false}, {false, 2, 0}, {false, true, false});
     }
 
     void testOr()
     {
         Or expr; BinaryExpressionSpy spy{&expr};
-        VERIFY_EXPRESSION(bool, expr, spy, {}, {}, {});
+        VERIFY_EXPRESSION(bool, expr, spy, {false}, {false}, {false});
 
         expr.setLeft(true);
-        VERIFY_EXPRESSION(bool, expr, spy, {true}, {}, {true});
+        VERIFY_EXPRESSION(bool, expr, spy, {false, true}, {false}, {false, true});
 
         expr.setRight(2);
-        VERIFY_EXPRESSION(bool, expr, spy, {true}, {2}, {true});
+        VERIFY_EXPRESSION(bool, expr, spy, {false, true}, {false, 2}, {false, true});
 
         expr.setLeft(false);
-        VERIFY_EXPRESSION(bool, expr, spy, {true, false}, {2}, {true});
+        VERIFY_EXPRESSION(bool, expr, spy, {false, true, false}, {false, 2}, {false, true});
 
         expr.setRight(0);
-        VERIFY_EXPRESSION(bool, expr, spy, {true, false}, {2, 0}, {true, false});
+        VERIFY_EXPRESSION(bool, expr, spy, {false, true, false}, {false, 2, 0}, {false, true, false});
     }
 
     void testEquals()
     {
         Equals expr; BinaryExpressionSpy spy{&expr};
-        VERIFY_EXPRESSION(bool, expr, spy, {}, {}, {});
+        VERIFY_EXPRESSION(bool, expr, spy, {{}}, {{}}, {true});
 
         expr.setLeft(1);
-        VERIFY_EXPRESSION(bool, expr, spy, {1}, {}, {false});
+        VERIFY_EXPRESSION(bool, expr, spy, {{}, 1}, {{}}, {true, false});
 
         expr.setRight(2.0);
-        VERIFY_EXPRESSION(bool, expr, spy, {1}, {2.0}, {false});
+        VERIFY_EXPRESSION(bool, expr, spy, {{}, 1}, {{}, 2.0}, {true, false});
 
         expr.setRight(1.0);
-        VERIFY_EXPRESSION(bool, expr, spy, {1}, {2.0, 1.0}, {false, true});
+        VERIFY_EXPRESSION(bool, expr, spy, {{}, 1}, {{}, 2.0, 1.0}, {true, false, true});
 
         expr.setLeft(true);
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true}, {2.0, 1.0}, {false, true});
+        VERIFY_EXPRESSION(bool, expr, spy, {{}, 1, true}, {{}, 2.0, 1.0}, {true, false, true});
 
         expr.setRight("foo");
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true}, {2.0, 1.0, "foo"}, {false, true});
+        VERIFY_EXPRESSION(bool, expr, spy, {{}, 1, true}, {{}, 2.0, 1.0, "foo"}, {true, false, true});
 
         expr.setLeft("foo");
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true, "foo"}, {2.0, 1.0, "foo"}, {false, true});
+        VERIFY_EXPRESSION(bool, expr, spy, {{}, 1, true, "foo"}, {{}, 2.0, 1.0, "foo"}, {true, false, true});
 
         expr.setLeft("bar");
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true, "foo", "bar"}, {2.0, 1.0, "foo"}, {false, true, false});
+        VERIFY_EXPRESSION(bool, expr, spy, {{}, 1, true, "foo", "bar"}, {{}, 2.0, 1.0, "foo"}, {true, false, true, false});
     }
 
     void testLessThan()
     {
         LessThan expr; BinaryExpressionSpy spy{&expr};
-        VERIFY_EXPRESSION(bool, expr, spy, {}, {}, {});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0}, {0.0}, {false});
 
         expr.setLeft(1);
-        VERIFY_EXPRESSION(bool, expr, spy, {1}, {}, {false});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1}, {0.0}, {false});
 
         expr.setRight(2.0);
-        VERIFY_EXPRESSION(bool, expr, spy, {1}, {2.0}, {false, true});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1}, {0.0, 2.0}, {false, true});
 
         expr.setLeft(true);
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true}, {2.0}, {false, true});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1, true}, {0.0, 2.0}, {false, true});
 
         expr.setRight("foo");
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true}, {2.0, "foo"}, {false, true, false});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1, true}, {0.0, 2.0, "foo"}, {false, true, false});
 
         expr.setLeft("foo");
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true, "foo"}, {2.0, "foo"}, {false, true, false});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1, true, "foo"}, {0.0, 2.0, "foo"}, {false, true, false});
 
         expr.setLeft("bar");
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true, "foo", "bar"}, {2.0, "foo"}, {false, true, false});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1, true, "foo", "bar"}, {0.0, 2.0, "foo"}, {false, true, false});
     }
 
     void testGreaterThan()
     {
         GreaterThan expr; BinaryExpressionSpy spy{&expr};
-        VERIFY_EXPRESSION(bool, expr, spy, {}, {}, {});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0}, {0.0}, {false});
 
         expr.setLeft(1);
-        VERIFY_EXPRESSION(bool, expr, spy, {1}, {}, {true});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1}, {0.0}, {false, true});
 
         expr.setRight(0.5);
-        VERIFY_EXPRESSION(bool, expr, spy, {1}, {0.5}, {true});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1}, {0.0, 0.5}, {false, true});
 
         expr.setLeft(true);
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true}, {0.5}, {true});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1, true}, {0.0, 0.5}, {false, true});
 
         expr.setRight("foo");
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true}, {0.5, "foo"}, {true});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1, true}, {0.0, 0.5, "foo"}, {false, true});
 
         expr.setLeft("foo");
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true, "foo"}, {0.5, "foo"}, {true, false});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1, true, "foo"}, {0.0, 0.5, "foo"}, {false, true, false});
 
         expr.setLeft("bar");
-        VERIFY_EXPRESSION(bool, expr, spy, {1, true, "foo", "bar"}, {0.5, "foo"}, {true, false});
+        VERIFY_EXPRESSION(bool, expr, spy, {0.0, 1, true, "foo", "bar"}, {0.0, 0.5, "foo"}, {false, true, false});
     }
 
     void testNot()
     {
         Not expr; UnaryExpressionSpy spy{&expr};
-        VERIFY_EXPRESSION(bool, expr, spy, {}, {}, {});
-
-        expr.setArgument(false);
         VERIFY_EXPRESSION(bool, expr, spy, {false}, {true});
 
         expr.setArgument(true);
         VERIFY_EXPRESSION(bool, expr, spy, {false, true}, {true, false});
+
+        expr.setArgument(false);
+        VERIFY_EXPRESSION(bool, expr, spy, {false, true, false}, {true, false, true});
     }
 };
 

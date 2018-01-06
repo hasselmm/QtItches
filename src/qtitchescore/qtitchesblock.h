@@ -100,6 +100,8 @@ public slots:
     virtual void run();
     virtual void stop();
 
+    QString toPlainText();
+
 signals:
     void availableChanged(bool available);
     void categoryChanged(int category);
@@ -118,6 +120,7 @@ private:
     void setCategory(int category) { setCategory(static_cast<Category>(category)); }
     void setConnectors(int connectors) { setConnectors(static_cast<Connectors>(connectors)); }
     void setShape(int shape) { setShape(static_cast<Shape>(shape)); }
+    static Q_DECL_RELAXED_CONSTEXPR std::pair<QChar, QChar> delimiters(Shape shape);
 
     class Private;
     Private *const d;
