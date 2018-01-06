@@ -69,6 +69,17 @@ Window {
                 onClicked: currentProject.stop()
             }
         }
+
+        onSpriteClicked: {
+            if (project.running) {
+                sprite.clicked(stageView);
+                return;
+            }
+
+            var i = contextChooser.indexOf(sprite);
+            if (i >= 0)
+                contextChooser.currentIndex = i;
+        }
     }
 
     ContextChooser {

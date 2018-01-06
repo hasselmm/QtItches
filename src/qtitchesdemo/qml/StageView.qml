@@ -6,6 +6,8 @@ Rectangle {
     property Core.ScriptContext currentContext
     property Core.Project project
 
+    signal spriteClicked(Core.Sprite sprite)
+
     Repeater {
         model: project && project.sprites
 
@@ -42,7 +44,7 @@ Rectangle {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: sprite.clicked(parent)
+                onClicked: spriteClicked(sprite)
             }
         }
     }
