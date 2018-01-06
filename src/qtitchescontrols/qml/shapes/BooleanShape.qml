@@ -11,6 +11,11 @@ BlockShape {
     rightPadding: height/2
     bottomPadding: 2
 
+    layer {
+        enabled: true
+        samples: 4
+    }
+
     PathLine { id: tl; x: height/2; y: 0.5 }
     PathLine { id: bl; x: height/2; y: height - 0.5 }
 
