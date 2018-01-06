@@ -11,6 +11,27 @@ Project::Project(QObject *parent)
     , m_stage{new Stage{this}}
 {}
 
+QQmlListProperty<ScriptContext> Project::contextes()
+{
+    static const auto count = [](auto list) {
+        const auto project = static_cast<Project *>(list->object);
+        return project->m_sprites.size() + 1;
+    };
+
+    static const auto at = [](auto list, int index) -> ScriptContext * {
+        const auto project = static_cast<Project *>(list->object);
+
+        if (index-- == 0)
+            return project->m_stage;
+        if (index >= 0 && index < project->m_sprites.size())
+            return project->m_sprites.at(index);
+
+        return {};
+    };
+
+    return {this, nullptr, count, at};
+}
+
 QQmlListProperty<Sprite> Project::sprites()
 {
     return {this, m_sprites};

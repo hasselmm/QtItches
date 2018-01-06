@@ -1,6 +1,6 @@
 import QtItches.Core 1.0
 
-Block {
+SpriteBlock {
     id: gotoXY
 
     property alias x: xParameter.value

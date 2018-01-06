@@ -1,6 +1,6 @@
 import QtItches.Core 1.0
 
-Block {
+SpriteBlock {
     property alias text: textParameter.value
 
     category: Block.LooksCategory
