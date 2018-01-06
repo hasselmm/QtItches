@@ -6,6 +6,7 @@
 #include "qtitchesstage.h"
 
 #include <QMetaMethod>
+#include <QPointer>
 
 namespace QtItches {
 namespace Core {
@@ -13,12 +14,14 @@ namespace Core {
 class Block::Private
 {
 public:
+    bool m_available = true;
     Category m_category = UnknownCategory;
     Connectors m_connectors = TopConnector | BottomConnector;
     Shape m_shape = StackShape;
 
     QList<QObject *> m_data;
     QList<Parameter *> m_parameters;
+    QPointer<ScriptContext> m_context;
 };
 
 Block::Block(QObject *parent)
@@ -31,8 +34,26 @@ Block::~Block()
     delete d;
 }
 
+void Block::setContext(ScriptContext *context)
+{
+    if (d->m_context == context)
+        return;
+
+    if (d->m_context)
+        d->m_context->disconnect(this);
+
+    d->m_context = context;
+
+    if (d->m_context)
+        connect(d->m_context, &ScriptContext::destroyed, this, &Block::contextChanged);
+
+    emit contextChanged();
+}
+
 ScriptContext *Block::context() const
 {
+    if (d->m_context)
+        return d->m_context;
     if (const auto s = script())
         return s->context();
 
@@ -64,6 +85,20 @@ Script *Block::script() const
 Stage *Block::stage() const
 {
     return dynamic_cast<Stage *>(context());
+}
+
+void Block::setAvailable(bool available)
+{
+    if (d->m_available == available)
+        return;
+
+    d->m_available = available;
+    emit availableChanged(d->m_available);
+}
+
+bool Block::available() const
+{
+    return d->m_available;
 }
 
 void Block::setCategory(Block::Category category)

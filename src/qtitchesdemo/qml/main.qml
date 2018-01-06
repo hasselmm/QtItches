@@ -122,6 +122,8 @@ Window {
         enabled: scriptView.enabled
         opacity: scriptView.opacity
         visible: opacity > 0
+
+        context: contextChooser.currentContext
     }
 
     PopupOverlay { id: popupOverlay }

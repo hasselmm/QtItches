@@ -1,7 +1,7 @@
 import QtItches.Core 1.0
 import QtQml 2.2
 
-Block {
+SpriteBlock {
     id: sayForSecs
 
     property alias text: textParameter.value
