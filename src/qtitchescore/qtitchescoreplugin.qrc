@@ -22,6 +22,8 @@
         <file>qml/motion/TurnTo.qml</file>
         <file>qml/motion/XPos.qml</file>
         <file>qml/motion/YPos.qml</file>
+        <file>qml/SpriteBlock.qml</file>
+        <file>qml/SpriteExpression.qml</file>
         <file>qmldir</file>
     </qresource>
 </RCC>

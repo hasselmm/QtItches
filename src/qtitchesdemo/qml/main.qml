@@ -1,4 +1,3 @@
-import QtItches.Core 1.0 as Core
 import QtItches.Controls 1.0
 
 import QtQuick 2.9
@@ -8,25 +7,41 @@ import QtQuick.Window 2.3
 import "../projects" as Projects
 
 Window {
-    readonly property alias currentProject: scriptView.project
-
     function mm(x) { return x * Screen.pixelDensity; }
-    function mil(x) { return mm(x) * 0.0254; }
+    function mmc(x) { return Math.ceil(mm(x)); }
 
+    function inch(x) { return mm(x * 25.4); }
+    function inchc(x) { return Math.ceil(inch(x)); }
+
+    function mil(x) { return inch(x / 1000); }
+    function milc(x) { return Math.ceil(mil(x)); }
+
+    title: currentProject.name
     width: 1200
     height: 600
     visible: true
 
+    Timer {
+        id: delayBehaviorsOnStartup
+
+        interval: 150
+        repeat: false
+        running: true
+    }
+
     StageView {
         id: stageView
 
-        width: parent.width - (scriptView.width + blockPicker.width) * Math.pow(scriptView.opacity, 0.8)
-        height: parent.height
+        width: (parent.width - blockPicker.width * scriptView.opacity) / (1 + Math.pow(scriptView.opacity, 0.8))
+        height: parent.height - inch(0.6) * Math.pow(contextChooser.opacity, 0.8)
 
+        clip: true
         enabled: !maximizeScriptView.checked
         opacity: enabled ? 1 : 0
         visible: opacity > 0
         z: scriptView.opacity < 1 ? 1 : 0
+
+        Behavior on opacity { NumberAnimation {} }
 
         project: currentProject
 
@@ -49,22 +64,44 @@ Window {
                 onClicked: currentProject.stop()
             }
         }
-
-        Behavior on opacity { NumberAnimation {} }
     }
 
-    ScriptView {
-        id: scriptView
+    ContextChooser {
+        id: contextChooser
 
-        anchors.right: blockPicker.left
-        width: (parent.width - blockPicker.width)/(stageView.opacity + 1)
+        anchors.bottom: parent.bottom
+        width: maximizeScriptView.checked ? inch(0.6) : (parent.width - blockPicker.width)/2
+        height: maximizeScriptView.checked ? parent.height : inch(0.6)
+
+        Behavior on width { NumberAnimation {} enabled: !delayBehaviorsOnStartup.running }
+        Behavior on height { NumberAnimation {} enabled: !delayBehaviorsOnStartup.running }
 
         enabled: !maximizeCanvas.checked
         opacity: enabled ? 1 : 0
         visible: opacity > 0
         z: stageView.opacity < 1 ? 1 : 0
 
-        project: Projects.Project3 {}
+        Behavior on opacity { NumberAnimation {} }
+
+        project: currentProject
+    }
+
+    ScriptView {
+        id: scriptView
+
+        anchors.right: blockPicker.left
+        width: parent.width - blockPicker.width - contextChooser.width
+        height: parent.height
+
+        enabled: !maximizeCanvas.checked
+        opacity: enabled ? 1 : 0
+        visible: opacity > 0
+        z: stageView.opacity < 1 ? 1 : 0
+
+        Behavior on opacity { NumberAnimation {} }
+
+        scriptContext: contextChooser.currentContext
+        Projects.Project3 { id: currentProject } // FIXME: figure out why the project must be instantiated within ScriptView
 
         Button {
             id: maximizeScriptView
@@ -74,7 +111,6 @@ Window {
             text: "maximize"
         }
 
-        Behavior on opacity { NumberAnimation {} }
     }
 
     BlockPicker {
@@ -86,6 +122,8 @@ Window {
         enabled: scriptView.enabled
         opacity: scriptView.opacity
         visible: opacity > 0
+
+        context: contextChooser.currentContext
     }
 
     PopupOverlay { id: popupOverlay }

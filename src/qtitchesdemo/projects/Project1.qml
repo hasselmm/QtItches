@@ -4,12 +4,8 @@ Project {
     name: "Test 1"
 
     Sprite {
-        name: "Cat"
-
-        costumes: [
-            "qrc:/assets/cat1.svg",
-            "qrc:/assets/cat2.svg",
-        ]
+        name: "Magnesus"
+        costumes: "qrc:/assets/magnesus-1.svg"
 
         Script {
             WhenThisSpriteClicked {}

@@ -5,6 +5,8 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 
 ColumnLayout {
+    property alias context: library.context
+
     spacing: 0//15
 
     width: 150
@@ -81,12 +83,15 @@ ColumnLayout {
         clip: true
         spacing: 0
 
-        model: Library {}
+        model: Library {
+            id: library
+        }
 
         delegate: Item {
             width: libraryView.width
             height: (blockView.implicitHeight + 4) * Math.pow(opacity, 1.2)
-            opacity: blockView.block.category === categorySelector.currentCategory ? 1 : 0
+            opacity: blockView.block.available &&
+                     blockView.block.category === categorySelector.currentCategory ? 1 : 0
 
             Behavior on opacity { NumberAnimation { duration: 100 } }
 
