@@ -29,7 +29,7 @@ public:
     void setName(const QString &name);
     QString name() const;
 
-public:
+public slots:
     void stop();
 
 signals:
