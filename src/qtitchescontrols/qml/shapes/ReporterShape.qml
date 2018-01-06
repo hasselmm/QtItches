@@ -11,14 +11,45 @@ BlockShape {
     rightPadding: height/2
     bottomPadding: 2
 
-    PathLine { id: t; x: width - height/2; y: 0.5 }
-    PathLine { id: b; x: height/2; y: height - 0.5 }
+    layer {
+        enabled: true
+        samples: 4
+    }
 
-    PathArc  { id: bl; x: 0.5; y: height/2; radiusX: height/2; radiusY: height/2 }
-    PathArc  { id: tr; x: width - 0.5; y: height/2; radiusX: height/2; radiusY: height/2 }
+    readonly property real __r: height/2
+    readonly property real __c: __r * 0.551915024494 // http://spencermortensen.com/articles/bezier-circle/
 
-    PathArc  { id: tl; x: height/2; y: 0.5; radiusX: height/2; radiusY: height/2 }
-    PathArc  { id: br; x: width - height/2; y: height - 0.5; radiusX: height/2; radiusY: height/2 }
+    PathLine { id: b; x: __r; y: height - 0.5 }
+    PathLine { id: t; x: width - __r; y: 0.5 }
+
+    PathCubic {
+        id: bl
+
+        control1X: b.x - __c; control2X: x; x: 1.0
+        control1Y: b.y; control2Y: y + __c; y: __r
+    }
+
+    PathCubic {
+        id: tl
+
+        control1X: bl.x; control2X: x - __c; x: b.x
+        control1Y: bl.y - __c; control2Y: y; y: t.y
+    }
+
+
+    PathCubic {
+        id: tr
+
+        control1X: t.x + __c; control2X: x; x: width - 1.0
+        control1Y: t.y; control2Y: y - __c; y: __r
+    }
+
+    PathCubic {
+        id: br
+
+        control1X: tr.x; control2X: x + __c; x: t.x
+        control1Y: tr.y + __c; control2Y: y; y: b.y
+    }
 
     ShapePath {
         fillColor: reporterShape.fillColor
