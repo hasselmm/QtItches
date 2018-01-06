@@ -6,12 +6,14 @@ Block {
     connectors: Block.BottomConnector
     parameters: ConstantParameter { string: qsTr("when this sprite is clicked") }
 
-    Connections {
-        target: sprite
-        onClicked: script.run()
-    }
-
     function run() {
         finished();
+    }
+
+    Connections {
+        enabled: sprite && sprite.script || false
+        target: sprite
+
+        onClicked: script.run()
     }
 }

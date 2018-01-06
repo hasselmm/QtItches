@@ -6,11 +6,39 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg13023"
    version="1.1"
-   viewBox="0 0 38.388279 42.333332"
-   height="42.333332mm"
-   width="38.388279mm">
+   viewBox="0 0 19.194139 21.166666"
+   height="21.166666mm"
+   width="19.194139mm"
+   sodipodi:docname="orangedroid.svg"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1052"
+     id="namedview41"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.475"
+     inkscape:cx="72.544779"
+     inkscape:cy="80.000004"
+     inkscape:window-x="1368"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg13023" />
   <defs
      id="defs13017">
     <radialGradient
@@ -80,12 +108,12 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(-57.56479,-84.148662)"
+     transform="matrix(0.5,0,0,0.5,-28.782395,-42.074331)"
      id="layer1">
     <g
        transform="matrix(0.72854297,0,0,0.72854297,15.626367,34.334427)"
@@ -106,7 +134,8 @@
         <path
            id="path21266"
            d="m 769.36818,700.00428 c -14.43545,0 -26.15625,7.70334 -26.15625,17.1875 0,2.61705 0.90637,5.09272 2.5,7.3125 17.70664,3.48444 32.95567,2.54521 47.3125,0 1.59257,-2.21918 2.46875,-4.69638 2.46875,-7.3125 0,-9.48416 -11.68955,-17.1875 -26.125,-17.1875 z"
-           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#e97f27;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" />
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#e97f27;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+           inkscape:connector-curvature="0" />
         <circle
            style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#radialGradient21589);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;enable-background:accumulate"
            id="path9199-4-5-5-8"
@@ -177,7 +206,8 @@
           <path
              id="rect9363-6-1"
              d="m 679.30798,736.2953 v 2.91524 c 1.50614,0.62886 3.63304,1.01292 6.00342,1.01292 2.08123,0 3.95812,-0.29108 5.4105,-0.79057 v -3.13759 z"
-             style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.14733546;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4;marker:none;enable-background:accumulate" />
+             style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.14733546;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4;marker:none;enable-background:accumulate"
+             inkscape:connector-curvature="0" />
           <rect
              y="736.28308"
              x="679.24567"
