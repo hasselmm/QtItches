@@ -119,8 +119,8 @@ Project {
     Sprite {
         name: "Orange Droid"
 
-        x: -180
-        y: -180
+        x: 180
+        y: 0
 
         costumes: [
             "qrc:/assets/orangedroid.svg",
@@ -131,7 +131,7 @@ Project {
         name: "Réteg"
 
         x: 180
-        y: 150
+        y: 180
 
         costumes: [
             "qrc:/assets/reteg.svg",
@@ -141,8 +141,8 @@ Project {
     Sprite {
         name: "Robot on a Bike"
 
-        x: 180
-        y: 0
+        x: -180
+        y: -180
 
         costumes: [
             "qrc:/assets/robobike.svg",
