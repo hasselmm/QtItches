@@ -67,6 +67,15 @@ public:
 
     Q_ENUM(Shape)
 
+    enum TypeCategory {
+        BlockTypeCategory = 1,
+        BooleanExpressionTypeCategory,
+        NumberExpressionTypeCategory,
+        StringExpressionTypeCategory,
+    };
+
+    Q_ENUM(TypeCategory)
+
     explicit Block(QObject *parent = {});
     ~Block();
 
@@ -88,6 +97,8 @@ public:
 
     void setShape(Shape shape);
     Shape shape() const;
+
+    virtual TypeCategory typeCategory() const;
 
     QQmlListProperty<QObject> data();
     QQmlListProperty<Parameter> parameters();

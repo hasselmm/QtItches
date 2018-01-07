@@ -143,6 +143,11 @@ Block::Shape Block::shape() const
     return d->m_shape;
 }
 
+Block::TypeCategory Block::typeCategory() const
+{
+    return BlockTypeCategory;
+}
+
 QQmlListProperty<QObject> Block::data()
 {
     return {this, d->m_data};

@@ -1,6 +1,7 @@
 #include "qtitchesparameter.h"
 
 #include "qtitchesexpression.h"
+#include "qtitchesutils.h"
 
 #include <QQmlInfo>
 
@@ -57,7 +58,13 @@ void Parameter::setValue(const QVariant &value)
         return;
 
     if (!acceptableValue(value)) {
-        qmlWarning(this) << "Ignoring unsupported value of type " << value.typeName();
+        if (const auto e = value.value<Expression *>()) {
+            qmlWarning(this) << "Ignoring expression with unsupported result type " << valueToKey(e->resultType())
+                             << " and a value of " << e->value();
+        } else {
+            qmlWarning(this) << "Ignoring value of unsupported type " << value.typeName();
+        }
+
         return;
     }
 
@@ -102,23 +109,24 @@ QString Parameter::toPlainText()
 
 bool Parameter::acceptableValue(const QVariant &value) const
 {
-    if (value.canConvert(qMetaTypeId<Expression *>())) {
-        qWarning("TODO: properly validate expressions");
+    if (value.isNull())
         return true;
-    }
+
+    if (const auto expression = value.value<Expression *>())
+        return acceptableValue(expression->value());
 
     switch (type()) {
-    case BooleanType:
+    case Parameter::BooleanType:
         return value.canConvert(QVariant::Bool);
-    case ChoiceType:
+    case Parameter::ChoiceType:
         return value.canConvert(QVariant::Int);
-    case ConstantType:
+    case Parameter::ConstantType:
         return value.canConvert(QVariant::String);
-    case NumberType:
+    case Parameter::NumberType:
         return value.canConvert(QVariant::Double);
-    case StringType:
+    case Parameter::StringType:
         return value.canConvert(QVariant::String);
-    case InvalidType:
+    case Parameter::InvalidType:
         break;
     }
 
