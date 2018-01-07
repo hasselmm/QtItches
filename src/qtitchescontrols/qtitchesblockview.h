@@ -7,6 +7,7 @@ namespace QtItches {
 
 namespace Core {
 class Block;
+class BlockLibrary;
 }
 
 namespace Controls {
@@ -14,6 +15,7 @@ namespace Controls {
 class BlockView : public QQuickItem
 {
     Q_OBJECT
+    Q_PROPERTY(QtItches::Core::BlockLibrary *library READ library WRITE setLibrary NOTIFY libraryChanged FINAL)
     Q_PROPERTY(QtItches::Core::Block *block READ block WRITE setBlock NOTIFY blockChanged FINAL)
     Q_PROPERTY(QQuickItem *shape READ shape NOTIFY shapeChanged FINAL)
 
@@ -28,6 +30,9 @@ class BlockView : public QQuickItem
 public:
     explicit BlockView(QQuickItem *parent = {});
     ~BlockView();
+
+    void setLibrary(Core::BlockLibrary *library);
+    Core::BlockLibrary *library() const;
 
     void setBlock(Core::Block *block);
     Core::Block *block() const;
@@ -44,8 +49,12 @@ public:
 
     static BlockView *qmlAttachedProperties(QObject *object);
 
+public slots:
+    QtItches::Core::Block *createBlock(const QByteArray &typeInfo);
+
 signals:
-    void blockChanged(Core::Block *block);
+    void libraryChanged(QtItches::Core::BlockLibrary *library);
+    void blockChanged(QtItches::Core::Block *block);
     void shapeChanged(QQuickItem *shape);
 
     void baseColorChanged(const QColor &baseColor);
