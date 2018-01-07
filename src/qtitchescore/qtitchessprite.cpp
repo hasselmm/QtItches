@@ -11,22 +11,22 @@ namespace {
 Q_LOGGING_CATEGORY(lcSprite, "qtitches.sprite")
 }
 
-void Sprite::setX(double x)
+void Sprite::setX(qreal x)
 {
     setPosition({x, y()});
 }
 
-double Sprite::x() const
+qreal Sprite::x() const
 {
     return m_position.x();
 }
 
-void Sprite::setY(double y)
+void Sprite::setY(qreal y)
 {
     setPosition({x(), y});
 }
 
-double Sprite::y() const
+qreal Sprite::y() const
 {
     return m_position.y();
 }
@@ -45,7 +45,7 @@ QPointF Sprite::position() const
     return m_position;
 }
 
-void Sprite::setDirection(double direction)
+void Sprite::setDirection(qreal direction)
 {
     if (m_direction == direction)
         return;
@@ -59,7 +59,7 @@ void Sprite::setDirection(double direction)
     emit directionChanged(m_direction);
 }
 
-double Sprite::direction() const
+qreal Sprite::direction() const
 {
     return m_direction;
 }

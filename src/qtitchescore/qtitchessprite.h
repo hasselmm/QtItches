@@ -14,10 +14,10 @@ class Sprite : public ScriptContext
     Q_OBJECT
     Q_CLASSINFO("DefaultProperty", "scripts")
 
-    Q_PROPERTY(double x READ x WRITE setX NOTIFY positionChanged FINAL)
-    Q_PROPERTY(double y READ y WRITE setY NOTIFY positionChanged FINAL)
+    Q_PROPERTY(qreal x READ x WRITE setX NOTIFY positionChanged FINAL)
+    Q_PROPERTY(qreal y READ y WRITE setY NOTIFY positionChanged FINAL)
     Q_PROPERTY(QPointF position READ position WRITE setPosition NOTIFY positionChanged FINAL)
-    Q_PROPERTY(double direction READ direction WRITE setDirection NOTIFY directionChanged FINAL)
+    Q_PROPERTY(qreal direction READ direction WRITE setDirection NOTIFY directionChanged FINAL)
     Q_PROPERTY(QList<QUrl> costumes READ costumes WRITE setCostumes NOTIFY costumesChanged FINAL)
 
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged FINAL)
@@ -27,17 +27,17 @@ class Sprite : public ScriptContext
 public:
     using ScriptContext::ScriptContext;
 
-    void setX(double x);
-    double x() const;
+    void setX(qreal x);
+    qreal x() const;
 
-    void setY(double y);
-    double y() const;
+    void setY(qreal y);
+    qreal y() const;
 
     void setPosition(const QPointF &position);
     QPointF position() const;
 
-    void setDirection(double direction);
-    double direction() const;
+    void setDirection(qreal direction);
+    qreal direction() const;
 
     void setCostumes(const QList<QUrl> &costumes);
     QList<QUrl> costumes() const;
@@ -57,7 +57,7 @@ signals:
     void clicked(QObject *source);
 
     void positionChanged(const QPointF &point);
-    void directionChanged(double direction);
+    void directionChanged(qreal direction);
     void costumesChanged(const QList<QUrl> &costumes);
     void nameChanged(const QString &name);
     void said(const QString &text);
@@ -68,7 +68,7 @@ private:
     QString m_saying;
     QString m_thinking;
     QPointF m_position = {0, 0};
-    double m_direction = 90;
+    qreal m_direction = 90;
     QList<QUrl> m_costumes;
 };
 
