@@ -75,9 +75,11 @@ public:
 };
 
 BlockView::BlockView(QQuickItem *parent)
-    : QQuickItem{parent}
+    : BlockDropArea{parent}
     , d{new Private}
 {
+    setFlag(ItemAcceptsDrops);
+
     connect(this, &BlockView::blockChanged, this, [this] {
         delete d->m_contentItem;
         d->updateView(this);
@@ -206,6 +208,16 @@ Core::Block *BlockView::createBlock(const QByteArray &typeInfo)
         return l->createBlock(typeInfo, this);
 
     return {};
+}
+
+QVariantMap BlockView::createMimeData(const QJsonObject &typeInfo) const
+{
+    auto mimeData = BlockDropArea::createMimeData(typeInfo);
+
+    if (d->m_block && !mimeData.isEmpty())
+        mimeData["text/plain"] = d->m_block->toPlainText();
+
+    return mimeData;
 }
 
 QColor BlockView::Private::categoryColor() const
