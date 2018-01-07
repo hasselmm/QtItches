@@ -24,26 +24,35 @@ namespace Core {
 class Expression : public Block
 {
     Q_OBJECT
-    Q_PROPERTY(int type READ type WRITE setType NOTIFY typeChanged FINAL)
+    Q_PROPERTY(int parameterType READ parameterType WRITE setParameterType NOTIFY parameterTypeChanged FINAL)
+    Q_PROPERTY(int resultType READ resultType WRITE setResultType NOTIFY resultTypeChanged FINAL)
     Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged FINAL)
 
 public:
     using Block::Block;
 
-    void setType(Parameter::Type type);
-    Parameter::Type type() const { return m_type; }
+    void setParameterType(Parameter::Type parameterType);
+    Parameter::Type parameterType() const { return m_parameterType; }
+
+    void setResultType(Parameter::Type resultType);
+    Parameter::Type resultType() const { return m_resultType; }
 
     void setValue(const QVariant &value);
     QVariant value() const { return m_value; }
 
+    TypeCategory typeCategory() const override;
+
 signals:
-    void typeChanged(int type);
+    void parameterTypeChanged(int parameterType);
+    void resultTypeChanged(int resultType);
     void valueChanged(const QVariant &value);
 
 private:
-    void setType(int type) { setType(static_cast<Parameter::Type>(type)); }
+    void setParameterType(int parameterType) { setParameterType(static_cast<Parameter::Type>(parameterType)); }
+    void setResultType(int resultType) { setResultType(static_cast<Parameter::Type>(resultType)); }
 
-    Parameter::Type m_type = Parameter::InvalidType;
+    Parameter::Type m_parameterType = Parameter::InvalidType;
+    Parameter::Type m_resultType = Parameter::InvalidType;
     QVariant m_value;
 };
 
@@ -57,9 +66,9 @@ class BinaryExpression : public Expression
 
 protected:
     explicit BinaryExpression(QObject *parent = {})
-        : BinaryExpression{Parameter::InvalidType, {}, parent} {}
-
-    explicit BinaryExpression(Parameter::Type type, const QString &name, QObject *parent = {});
+        : BinaryExpression{Parameter::InvalidType, Parameter::InvalidType, {}, parent} {}
+    explicit BinaryExpression(Parameter::Type resultType, Parameter::Type parameterType,
+                              const QString &name, QObject *parent = {});
 
 public:
     void setLeft(const QVariant &left) { leftParameter()->setValue(left); }
@@ -82,7 +91,8 @@ protected:
     template<class T = Parameter> T *rightParameter() const { return parameter<T>(2); }
 
 private:
-    void onTypeChanged(int type);
+    void onParameterTypeChanged(int parameterType);
+    void onResultTypeChanged(int resultType);
 };
 
 class UnaryExpression : public Expression
@@ -93,9 +103,9 @@ class UnaryExpression : public Expression
 
 protected:
     explicit UnaryExpression(QObject *parent = {})
-        : UnaryExpression{Parameter::InvalidType, {}, parent} {}
-
-    explicit UnaryExpression(Parameter::Type type, const QString &name, QObject *parent = {});
+        : UnaryExpression{Parameter::InvalidType, Parameter::InvalidType, {}, parent} {}
+    explicit UnaryExpression(Parameter::Type resultType, Parameter::Type parameterType,
+                             const QString &name, QObject *parent = {});
 
 public:
     void setName(const QString &name) { nameParameter()->setString(name); }
@@ -113,7 +123,8 @@ protected:
     template<class T = Parameter> T *argumentParameter() const { return parameter<T>(1); }
 
 private:
-    void onTypeChanged(int type);
+    void onParameterTypeChanged(int parameterType);
+    void onResultTypeChanged(int resultType);
 };
 
 QTITCHES_DECLARE_BINARY_EXPRESSION(Plus);
