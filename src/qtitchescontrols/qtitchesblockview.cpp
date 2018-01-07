@@ -45,6 +45,11 @@ void updateProperty(Object *target, void (Object::*notify)(const Property &), Pr
     (target->*notify)(*field);
 }
 
+#define UPDATE_PROPERTY_D(Property, Value) \
+    updateProperty(q, &BlockView::Property##Changed, &m_##Property, Value)
+#define UPDATE_PROPERTY_Q(Property, Value) \
+    updateProperty(this, &BlockView::Property##Changed, &d->m_##Property, Value)
+
 }
 
 class BlockView::Private
@@ -53,10 +58,12 @@ public:
     QColor categoryColor() const;
     bool isCurrentBlock() const;
     QByteArray shapeName() const;
+    QColor currentShapeColor(BlockView *q) const;
 
     void updateView(BlockView *q);
     void updateContentItem(BlockView *q);
     void updateShapeItem(BlockView *q);
+    void updateDropActions(BlockView *q);
 
     void updateImplicitWidth(BlockView *q);
     void updateImplicitHeight(BlockView *q);
@@ -72,6 +79,8 @@ public:
     QColor m_borderColor;
     QColor m_shapeColor;
     QColor m_textColor;
+
+    bool m_acceptedDropActionsAreExplicit = false;
 };
 
 BlockView::BlockView(QQuickItem *parent)
@@ -82,9 +91,23 @@ BlockView::BlockView(QQuickItem *parent)
 
     connect(this, &BlockView::blockChanged, this, [this] {
         delete d->m_contentItem;
+
         d->updateView(this);
+        d->updateDropActions(this);
     });
 
+    connect(this, &BlockView::acceptedDropActionsChanged, this, [this] {
+        // avoid that we overwrite explicitly changed drop actions
+        d->m_acceptedDropActionsAreExplicit = true;
+    });
+
+    connect(this, &BlockView::pendingDropActionChanged, this, [this] {
+        UPDATE_PROPERTY_Q(shapeColor, d->currentShapeColor(this));
+    });
+
+    connect(this, &BlockView::typeInfoDropped, this, &BlockView::onTypeInfoDropped);
+
+    d->updateDropActions(this);
     d->updateView(this);
 }
 
@@ -135,6 +158,7 @@ void BlockView::setBlock(Block *block)
         connect(d->m_block, &QObject::destroyed, this, [this] { emit blockChanged({}); });
         connect(d->m_block, &Block::categoryChanged, this, [this] { d->updateView(this); });
         connect(d->m_block, &Block::shapeChanged, this, [this] { d->updateShapeItem(this); });
+        connect(d->m_block, &Block::connectorsChanged, this, [this] { d->updateDropActions(this); });
 
         if (const auto script = d->m_block->script())
             connect(script, &Core::Script::currentBlockChanged, this, [this] { d->updateView(this); });
@@ -220,6 +244,18 @@ QVariantMap BlockView::createMimeData(const QJsonObject &typeInfo) const
     return mimeData;
 }
 
+void BlockView::onTypeInfoDropped(BlockDropArea::DropAction dropAction, const QByteArray &typeInfo)
+{
+    if (const auto b = block()) {
+        if (const auto s = b->script()) {
+            if (dropAction == PrependBlock)
+                s->insertBefore(b, createBlock(typeInfo));
+            else if (dropAction == AppendBlock)
+                s->insertAfter(b, createBlock(typeInfo));
+        }
+    }
+}
+
 QColor BlockView::Private::categoryColor() const
 {
     return CategoryModel::categoryColor(m_block ? m_block->category() : Block::UnknownCategory);
@@ -235,6 +271,14 @@ QByteArray BlockView::Private::shapeName() const
     return {};
 }
 
+QColor BlockView::Private::currentShapeColor(BlockView *q) const
+{
+    if (q->pendingDropAction())
+        return Qt::red; // FIXME: drop indication color
+
+    return categoryColor().lighter(isCurrentBlock() ? 120 : 100);
+}
+
 bool BlockView::Private::isCurrentBlock() const
 {
     const auto script = m_block ? m_block->script() : nullptr;
@@ -243,18 +287,12 @@ bool BlockView::Private::isCurrentBlock() const
 
 void BlockView::Private::updateView(BlockView *q)
 {
-    const auto newBaseColor = categoryColor();
-    const auto newShapeColor = newBaseColor.lighter(isCurrentBlock() ? 120 : 100);
+    const auto newShapeColor = currentShapeColor(q);
 
-#define UPDATE_PROPERTY(Property, Value) \
-    updateProperty(q, &BlockView::Property##Changed, &m_##Property, Value)
-
-    UPDATE_PROPERTY(baseColor, newBaseColor);
-    UPDATE_PROPERTY(borderColor, newShapeColor.darker());
-    UPDATE_PROPERTY(shapeColor, newShapeColor);
-    UPDATE_PROPERTY(textColor, QColor{Qt::white});
-
-#undef UPDATE_PROPERTY
+    UPDATE_PROPERTY_D(baseColor, categoryColor());
+    UPDATE_PROPERTY_D(borderColor, newShapeColor.darker());
+    UPDATE_PROPERTY_D(shapeColor, newShapeColor);
+    UPDATE_PROPERTY_D(textColor, QColor{Qt::white});
 
     if (m_context.isNull()) {
         if (const auto context = qmlContext(q)) {
@@ -324,6 +362,26 @@ void BlockView::Private::updateShapeItem(BlockView *q)
             emit q->shapeChanged(m_shapeItem);
         }
     }
+}
+
+void BlockView::Private::updateDropActions(BlockView *q)
+{
+    if (m_acceptedDropActionsAreExplicit)
+        return;
+
+    DropActions dropActions;
+
+    if (m_block) {
+        const auto connectors = m_block->connectors();
+
+        if (connectors & Block::TopConnector)
+            dropActions |= PrependBlock;
+        if (connectors & Block::BottomConnector)
+            dropActions |= AppendBlock;
+    }
+
+    q->setAcceptedDropActions(dropActions);
+    m_acceptedDropActionsAreExplicit = false;
 }
 
 void BlockView::Private::updateImplicitWidth(BlockView *q)

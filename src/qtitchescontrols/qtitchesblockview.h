@@ -63,6 +63,8 @@ signals:
     void textColorChanged(const QColor &textColor);
 
 private:
+    void onTypeInfoDropped(DropAction dropAction, const QByteArray &typeInfo);
+
     class Private;
     Private *const d;
 };

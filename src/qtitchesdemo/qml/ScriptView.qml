@@ -7,6 +7,9 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 
 Rectangle {
+    id: scriptView
+
+    property Core.BlockLibrary library
     property Core.ScriptContext scriptContext
 
     border { color: "#40000020"; width: 1 }
@@ -75,6 +78,7 @@ Rectangle {
                                 BlockView {
                                     Layout.fillWidth: true
                                     block: modelData
+                                    library: scriptView.library
                                 }
                             }
 
