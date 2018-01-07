@@ -2,6 +2,8 @@ import QtItches.Core 1.0 as Core
 import QtQuick 2.9
 
 Rectangle {
+    id: stageView
+
     readonly property real spriteScale: Math.min(width / 500, height / 500)
     property Core.ScriptContext currentContext
     property Core.Project project
@@ -14,8 +16,12 @@ Rectangle {
         Image {
             readonly property Core.Sprite sprite: modelData
 
-            x: (stageView.width - width)/2 + sprite.x * stageView.spriteScale
-            y: (stageView.height - height)/2 - sprite.y * stageView.spriteScale
+            readonly property real cx: (stageView.width - width)/2
+            readonly property real cy: (stageView.height - height)/2
+            readonly property bool dragActive: mouseArea.drag.active
+
+            x: cx + sprite.x * stageView.spriteScale
+            y: cy - sprite.y * stageView.spriteScale
 
             opacity: !currentContext || sprite === currentContext ? 1 : 0.3
             rotation: sprite.direction - 90
@@ -43,8 +49,20 @@ Rectangle {
             }
 
             MouseArea {
+                id: mouseArea
+
                 anchors.fill: parent
+                drag.target: project && !project.running ? parent : null
+
                 onClicked: spriteClicked(sprite)
+            }
+
+            onDragActiveChanged: {
+                if (dragActive)
+                    return;
+
+                sprite.position = Qt.point((x - cx)/stageView.spriteScale,
+                                           (cy - y)/stageView.spriteScale);
             }
         }
     }
