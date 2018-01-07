@@ -1,3 +1,4 @@
+import QtItches.Core 1.0
 import QtItches.Controls 1.0
 
 import QtQuick 2.9
@@ -27,6 +28,11 @@ Window {
         interval: 150
         repeat: false
         running: true
+    }
+
+    BlockLibrary {
+        id: blockLibrary
+        context: contextChooser.currentContext
     }
 
     StageView {
@@ -116,6 +122,7 @@ Window {
 
         Behavior on opacity { NumberAnimation {} }
 
+        library: blockLibrary
         scriptContext: contextChooser.currentContext
         Projects.Project3 { id: currentProject } // FIXME: figure out why the project must be instantiated within ScriptView
 
@@ -139,7 +146,7 @@ Window {
         opacity: scriptView.opacity
         visible: opacity > 0
 
-        context: contextChooser.currentContext
+        library: blockLibrary
     }
 
     PopupOverlay { id: popupOverlay }
