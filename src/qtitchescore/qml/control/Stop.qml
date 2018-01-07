@@ -10,7 +10,7 @@ Block {
 
     parameters: [
         ConstantParameter {
-            string: qsTr("stop")
+            string: QT_TR_NOOP("stop")
         },
 
         ChoiceParameter {
@@ -18,9 +18,9 @@ Block {
 
             currentIndex: 1
             model: [
-                qsTr("all"),
-                qsTr("this script"),
-                qsTr("other scripts in sprite")
+                QT_TR_NOOP("all"),
+                QT_TR_NOOP("this script"),
+                QT_TR_NOOP("other scripts in sprite")
             ]
         }
     ]

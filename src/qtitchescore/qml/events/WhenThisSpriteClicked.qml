@@ -4,7 +4,7 @@ import QtQml 2.2
 Block {
     category: Block.EventsCategory
     connectors: Block.BottomConnector
-    parameters: ConstantParameter { string: qsTr("when this sprite is clicked") }
+    parameters: ConstantParameter { string: QT_TR_NOOP("when this sprite is clicked") }
 
     function run() {
         finished();

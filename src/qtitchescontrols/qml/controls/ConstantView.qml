@@ -8,5 +8,5 @@ Text {
 
     color: BlockView.textColor
     font: BlockView.font
-    text: parameter ? parameter.string : ""
+    text: parameter ? qsTr(parameter.string) : ""
 }

@@ -12,7 +12,7 @@ Block {
     category: Block.ControlCategory
 
     parameters: [
-        ConstantParameter { string: qsTr("repeat") },
+        ConstantParameter { string: QT_TR_NOOP("repeat") },
         NumberParameter { id: countParameter; number: 10  }
     ]
 
