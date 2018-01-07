@@ -1,6 +1,7 @@
 #include "qtitchesblockview.h"
 
 #include "qtitchesblock.h"
+#include "qtitchesblocklibrary.h"
 #include "qtitchescategorymodel.h"
 #include "qtitchesscript.h"
 
@@ -14,6 +15,7 @@ namespace Controls {
 namespace {
 
 using Core::Block;
+using Core::BlockLibrary;
 
 const auto s_qmlShapePrefix = QByteArrayLiteral("import QtItches.Controls 1.0\n"
                                                 "\n");
@@ -60,6 +62,7 @@ public:
     void updateImplicitHeight(BlockView *q);
 
     QPointer<Block> m_block;
+    QPointer<BlockLibrary> m_library;
     QPointer<QQmlContext> m_context;
     QPointer<QQuickItem> m_contentItem;
     QPointer<QQuickItem> m_shapeItem;
@@ -88,6 +91,34 @@ BlockView::~BlockView()
     delete d;
 }
 
+void BlockView::setLibrary(Core::BlockLibrary *library)
+{
+    if (d->m_library == library)
+        return;
+
+    if (d->m_library)
+        d->m_library->disconnect(this);
+
+    d->m_library = library;
+
+    if (d->m_library)
+        connect(d->m_library, &QObject::destroyed, this, [this] { emit libraryChanged({}); });
+
+    emit libraryChanged(d->m_library);
+}
+
+Core::BlockLibrary *BlockView::library() const
+{
+    if (d->m_library)
+        return d->m_library;
+
+    for (auto item = parentItem(); item; item = item->parentItem())
+        if (const auto blockView = dynamic_cast<BlockView *>(item))
+            return blockView->library();
+
+    return {};
+}
+
 void BlockView::setBlock(Block *block)
 {
     if (d->m_block == block)
@@ -99,7 +130,7 @@ void BlockView::setBlock(Block *block)
     d->m_block = block;
 
     if (d->m_block) {
-        connect(d->m_block, &Block::destroyed, this, [this] { emit blockChanged({}); });
+        connect(d->m_block, &QObject::destroyed, this, [this] { emit blockChanged({}); });
         connect(d->m_block, &Block::categoryChanged, this, [this] { d->updateView(this); });
         connect(d->m_block, &Block::shapeChanged, this, [this] { d->updateShapeItem(this); });
 
@@ -156,8 +187,9 @@ QFont BlockView::editorFont() const
 
 BlockView *BlockView::qmlAttachedProperties(QObject *object)
 {
-    if (const auto blockView = qmlContext(object)->contextProperty("_qtItches_blockView_").value<BlockView *>())
-        return blockView;
+    if (const auto context = qmlContext(object))
+        if (const auto blockView = context->contextProperty("_qtItches_blockView_").value<BlockView *>())
+            return blockView;
 
     static const auto fallback = [] {
         auto blockView = new BlockView{};
@@ -166,6 +198,14 @@ BlockView *BlockView::qmlAttachedProperties(QObject *object)
     }();
 
     return fallback;
+}
+
+Core::Block *BlockView::createBlock(const QByteArray &typeInfo)
+{
+    if (const auto l = library())
+        return l->createBlock(typeInfo, this);
+
+    return {};
 }
 
 QColor BlockView::Private::categoryColor() const
