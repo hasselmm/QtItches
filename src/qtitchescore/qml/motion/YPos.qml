@@ -6,5 +6,5 @@ SpriteExpression {
     type: Parameter.NumberType
     value: sprite && sprite.y || 0
 
-    ConstantParameter { string: qsTr("y  position") }
+    ConstantParameter { string: QT_TR_NOOP("y  position") }
 }

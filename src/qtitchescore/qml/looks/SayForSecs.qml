@@ -9,11 +9,11 @@ SpriteBlock {
 
     category: Block.LooksCategory
 
-    ConstantParameter { string: qsTr("say") }
+    ConstantParameter { string: QT_TR_NOOP("say") }
     StringParameter { id: textParameter }
-    ConstantParameter { string: qsTr("for") }
+    ConstantParameter { string: QT_TR_NOOP("for") }
     NumberParameter { id: secondsParameter; decimals: 1; number: 5 }
-    ConstantParameter { string: qsTr("secs") }
+    ConstantParameter { string: QT_TR_NOOP("secs") }
 
     function run() {
         sprite.say(text);

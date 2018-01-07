@@ -11,7 +11,7 @@ Block {
     category: Block.ControlCategory
 
     parameters: [
-        ConstantParameter { string: qsTr("repeat until") },
+        ConstantParameter { string: QT_TR_NOOP("repeat until") },
         BooleanParameter { id: conditionParameter }
     ]
 
