@@ -14,8 +14,8 @@ class Sprite : public ScriptContext
     Q_OBJECT
     Q_CLASSINFO("DefaultProperty", "scripts")
 
-    Q_PROPERTY(qreal x READ x WRITE setX NOTIFY positionChanged FINAL)
-    Q_PROPERTY(qreal y READ y WRITE setY NOTIFY positionChanged FINAL)
+    Q_PROPERTY(qreal x READ x WRITE setX NOTIFY xChanged FINAL)
+    Q_PROPERTY(qreal y READ y WRITE setY NOTIFY yChanged FINAL)
     Q_PROPERTY(QPointF position READ position WRITE setPosition NOTIFY positionChanged FINAL)
     Q_PROPERTY(qreal direction READ direction WRITE setDirection NOTIFY directionChanged FINAL)
     Q_PROPERTY(QList<QUrl> costumes READ costumes WRITE setCostumes NOTIFY costumesChanged FINAL)
@@ -56,6 +56,8 @@ public slots:
 signals:
     void clicked(QObject *source);
 
+    void xChanged(qreal x);
+    void yChanged(qreal y);
     void positionChanged(const QPointF &point);
     void directionChanged(qreal direction);
     void costumesChanged(const QList<QUrl> &costumes);

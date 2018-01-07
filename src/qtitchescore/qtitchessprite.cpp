@@ -36,7 +36,16 @@ void Sprite::setPosition(const QPointF &position)
     if (m_position == position)
         return;
 
+    const auto changingX = (m_position.x() != position.x());
+    const auto changingY = (m_position.y() != position.y());
+
     m_position = position;
+
+    if (changingX)
+        emit xChanged(m_position.x());
+    if (changingY)
+        emit yChanged(m_position.y());
+
     emit positionChanged(m_position);
 }
 
