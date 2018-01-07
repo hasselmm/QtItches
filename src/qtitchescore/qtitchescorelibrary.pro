@@ -8,10 +8,11 @@ HEADERS += \
     qtitchesblock.h \
     qtitchesblocklibrary.h \
     qtitchesexpression.h \
+    qtitchesmetaenumiterator.h \
     qtitchesparameter.h \
     qtitchesproject.h \
-    qtitchesscriptcontext.h \
     qtitchesscript.h \
+    qtitchesscriptcontext.h \
     qtitchessprite.h \
     qtitchesstage.h \
     qtitchesutils.h
@@ -20,10 +21,11 @@ SOURCES += \
     qtitchesblock.cpp \
     qtitchesblocklibrary.cpp \
     qtitchesexpression.cpp \
+    qtitchesmetaenumiterator.cpp \
     qtitchesparameter.cpp \
     qtitchesproject.cpp \
-    qtitchesscriptcontext.cpp \
     qtitchesscript.cpp \
+    qtitchesscriptcontext.cpp \
     qtitchessprite.cpp \
     qtitchesstage.cpp \
     qtitchesutils.cpp
