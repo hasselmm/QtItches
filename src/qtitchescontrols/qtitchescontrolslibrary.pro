@@ -5,10 +5,12 @@ CONFIG += create_prf
 QT = quick
 
 HEADERS += \
+    qtitchesblockdroparea.h \
     qtitchesblockview.h \
     qtitchescategorymodel.h
 
 SOURCES += \
+    qtitchesblockdroparea.cpp \
     qtitchesblockview.cpp \
     qtitchescategorymodel.cpp
 

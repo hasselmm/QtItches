@@ -1,18 +1,17 @@
 #ifndef QTITCHESBLOCKVIEW_H
 #define QTITCHESBLOCKVIEW_H
 
-#include <QQuickItem>
+#include "qtitchesblockdroparea.h"
 
 namespace QtItches {
 
 namespace Core {
-class Block;
 class BlockLibrary;
 }
 
 namespace Controls {
 
-class BlockView : public QQuickItem
+class BlockView : public BlockDropArea
 {
     Q_OBJECT
     Q_PROPERTY(QtItches::Core::BlockLibrary *library READ library WRITE setLibrary NOTIFY libraryChanged FINAL)
@@ -51,6 +50,7 @@ public:
 
 public slots:
     QtItches::Core::Block *createBlock(const QByteArray &typeInfo);
+    QVariantMap createMimeData(const QJsonObject &typeInfo) const override;
 
 signals:
     void libraryChanged(QtItches::Core::BlockLibrary *library);
