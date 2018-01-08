@@ -88,6 +88,27 @@ Project {
 
         x: -180
         y: 0
+
+        Script {
+            WhenThisSpriteClicked {}
+            SayForSecs { text: "Gaggle..."; seconds: 2 }
+        }
+    }
+
+    Sprite {
+        name: "Orange Droid"
+
+        costumes: [
+            "qrc:/assets/orangedroid.svg",
+        ]
+
+        x: 180
+        y: 0
+
+        Script {
+            WhenThisSpriteClicked {}
+            SayForSecs { text: "Giggle..."; seconds: 2 }
+        }
     }
 
     Sprite {
@@ -114,17 +135,6 @@ Project {
 
         x: 180
         y: -180
-    }
-
-    Sprite {
-        name: "Orange Droid"
-
-        x: 180
-        y: 0
-
-        costumes: [
-            "qrc:/assets/orangedroid.svg",
-        ]
     }
 
     Sprite {

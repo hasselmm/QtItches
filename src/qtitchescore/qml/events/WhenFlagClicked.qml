@@ -11,7 +11,11 @@ Block {
 
     Connections {
         target: project
-        onFlagClicked: script.run()
+
+        onFlagClicked: {
+            script.stop();
+            script.run();
+        }
     }
 
     function run() {
