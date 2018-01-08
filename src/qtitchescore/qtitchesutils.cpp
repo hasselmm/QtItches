@@ -1,6 +1,6 @@
 #include "qtitchesutils.h"
 
-#include <QMetaEnum>
+#include "qtitchesmetaenumiterator.h"
 
 namespace QtItches {
 namespace Core {
@@ -13,19 +13,18 @@ const char *valueToKey(const QMetaObject *metaObject, const char *enumName, int 
 QHash<int, QByteArray> roleNamesFromEnum(const QMetaObject *metaObject, const char *enumName)
 {
     const auto metaEnum = metaObject->enumerator(metaObject->indexOfEnumerator(enumName));
-    const auto keyCount = metaEnum.keyCount();
 
     QHash<int, QByteArray> roleNames;
-    roleNames.reserve(keyCount);
+    roleNames.reserve(metaEnum.keyCount());
 
-    for (int i = 0; i < keyCount; ++i) {
-        QByteArray roleName{metaEnum.key(i)};
+    for (const auto &member: metaEnum) {
+        QByteArray roleName{member.key()};
         roleName[0] = std::tolower(roleName[0]);
 
         if (roleName.endsWith("Role"))
             roleName.resize(roleName.length() - 4);
 
-        roleNames.insert(metaEnum.value(i), roleName);
+        roleNames.insert(member.value(), roleName);
     }
 
     return roleNames;

@@ -32,16 +32,18 @@ ColumnLayout {
             model: block && block.parameters
 
             Loader {
+                id: viewLoader
+
                 readonly property Parameter parameter: modelData
 
                 Layout.alignment: Qt.AlignVCenter
 
-                Component { id: booleanView; BooleanView { parameter: parent.parameter } }
-                Component { id: choiceView; ChoiceView { parameter: parent.parameter } }
-                Component { id: constantView; ConstantView { parameter: parent.parameter } }
-                Component { id: expressionView; ExpressionView { parameter: parent.parameter } }
-                Component { id: numberView; NumberView { parameter: parent.parameter } }
-                Component { id: stringView; StringView { parameter: parent.parameter } }
+                Component { id: booleanView; BooleanView { parameter: viewLoader.parameter } }
+                Component { id: choiceView; ChoiceView { parameter: viewLoader.parameter } }
+                Component { id: constantView; ConstantView { parameter: viewLoader.parameter } }
+                Component { id: expressionView; ExpressionView { parameter: viewLoader.parameter } }
+                Component { id: numberView; NumberView { parameter: viewLoader.parameter } }
+                Component { id: stringView; StringView { parameter: viewLoader.parameter } }
 
                 Component {
                     id: fallbackParameter
