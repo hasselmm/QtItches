@@ -62,7 +62,7 @@ do
     package_suffix=$(xmllint Updates.xml --xpath "substring-before(substring-after(concat(${package_node}/DownloadableArchives/text(), ','), '${package_name}-'), ',')")
     package_filename="${package_prefix}${package_name}-${package_suffix}"
     download "${QT_BASEURL}${package_folder}/${package_filename}"
-    "${P7ZIP}" x "${package_filename}"
+    "${P7ZIP}" x -bd "${package_filename}"
 done
 
 echo "Activating '${QT_EDITION}' license in '${QT_CONFIG}'..."
