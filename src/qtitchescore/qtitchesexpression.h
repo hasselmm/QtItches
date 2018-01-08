@@ -29,7 +29,7 @@ class Expression : public Block
     Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged FINAL)
 
 public:
-    using Block::Block;
+    explicit Expression(QObject *parent = {});
 
     void setParameterType(Parameter::Type parameterType);
     Parameter::Type parameterType() const { return m_parameterType; }
