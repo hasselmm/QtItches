@@ -5,6 +5,12 @@ namespace Core {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+Expression::Expression(QObject *parent)
+    : Block{parent}
+{
+    setConnectors(Connectors{});
+}
+
 void Expression::setParameterType(Parameter::Type parameterType)
 {
     if (m_parameterType == parameterType)
