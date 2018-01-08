@@ -6,7 +6,7 @@ SpriteBlock {
     category: Block.MotionCategory
 
     ConstantParameter {
-        string: qsTr("point in direction")
+        string: QT_TR_NOOP("point into direction")
     }
 
     NumberParameter {
@@ -15,10 +15,10 @@ SpriteBlock {
         lowestNumber: -180
         highestNumber: 180
 
-//        ProposedValue { name: qsTr("right"); value: 90 }
-//        ProposedValue { name: qsTr("left"); value: -90 }
-//        ProposedValue { name: qsTr("up"); value: 0 }
-//        ProposedValue { name: qsTr("down"); value: 180 }
+//        ProposedValue { name: QT_TR_NOOP("right"); value: 90 }
+//        ProposedValue { name: QT_TR_NOOP("left"); value: -90 }
+//        ProposedValue { name: QT_TR_NOOP("up"); value: 0 }
+//        ProposedValue { name: QT_TR_NOOP("down"); value: 180 }
     }
 
     function run() {

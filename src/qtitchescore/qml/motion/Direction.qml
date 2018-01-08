@@ -6,5 +6,5 @@ SpriteExpression {
     type: Parameter.NumberType
     value: sprite && sprite.direction || 0
 
-    ConstantParameter { string: qsTr("direction") }
+    ConstantParameter { string: QT_TR_NOOP("direction") }
 }

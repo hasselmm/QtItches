@@ -80,7 +80,7 @@ void UnaryExpression::onTypeChanged(int type)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Plus::Plus(QObject *parent)
-    : BinaryExpression{Parameter::NumberType, tr("+"), parent}
+    : BinaryExpression{Parameter::NumberType, QT_TR_NOOP("+"), parent}
 {
     connect(this, &Plus::leftChanged, this, &Plus::evaluate);
     connect(this, &Plus::rightChanged, this, &Plus::evaluate);
@@ -95,7 +95,7 @@ void Plus::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Minus::Minus(QObject *parent)
-    : BinaryExpression{Parameter::NumberType, tr("-"), parent}
+    : BinaryExpression{Parameter::NumberType, QT_TR_NOOP("-"), parent}
 {
     connect(this, &Minus::leftChanged, this, &Minus::evaluate);
     connect(this, &Minus::rightChanged, this, &Minus::evaluate);
@@ -110,7 +110,7 @@ void Minus::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Multiply::Multiply(QObject *parent)
-    : BinaryExpression{Parameter::NumberType, tr("*"), parent}
+    : BinaryExpression{Parameter::NumberType, QT_TR_NOOP("*"), parent}
 {
     connect(this, &Multiply::leftChanged, this, &Multiply::evaluate);
     connect(this, &Multiply::rightChanged, this, &Multiply::evaluate);
@@ -127,7 +127,7 @@ void Multiply::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Divide::Divide(QObject *parent)
-    : BinaryExpression{Parameter::NumberType, tr("/"), parent}
+    : BinaryExpression{Parameter::NumberType, QT_TR_NOOP("/"), parent}
 {
     connect(this, &Divide::leftChanged, this, &Divide::evaluate);
     connect(this, &Divide::rightChanged, this, &Divide::evaluate);
@@ -142,7 +142,7 @@ void Divide::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 LessThan::LessThan(QObject *parent)
-    : BinaryExpression{Parameter::NumberType, tr("<"), parent}
+    : BinaryExpression{Parameter::NumberType, QT_TR_NOOP("<"), parent}
 {
     connect(this, &LessThan::leftChanged, this, &LessThan::evaluate);
     connect(this, &LessThan::rightChanged, this, &LessThan::evaluate);
@@ -157,7 +157,7 @@ void LessThan::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 GreaterThan::GreaterThan(QObject *parent)
-    : BinaryExpression{Parameter::NumberType, tr(">"), parent}
+    : BinaryExpression{Parameter::NumberType, QT_TR_NOOP(">"), parent}
 {
     connect(this, &GreaterThan::leftChanged, this, &GreaterThan::evaluate);
     connect(this, &GreaterThan::rightChanged, this, &GreaterThan::evaluate);
@@ -172,7 +172,7 @@ void GreaterThan::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Equals::Equals(QObject *parent)
-    : BinaryExpression{Parameter::StringType, tr("="), parent}
+    : BinaryExpression{Parameter::StringType, QT_TR_NOOP("="), parent}
 {
     connect(this, &Equals::leftChanged, this, &Equals::evaluate);
     connect(this, &Equals::rightChanged, this, &Equals::evaluate);
@@ -186,7 +186,7 @@ void Equals::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 And::And(QObject *parent)
-    : BinaryExpression{Parameter::BooleanType, tr("and"), parent}
+    : BinaryExpression{Parameter::BooleanType, QT_TR_NOOP("and"), parent}
 {
     connect(this, &And::leftChanged, this, &And::evaluate);
     connect(this, &And::rightChanged, this, &And::evaluate);
@@ -201,7 +201,7 @@ void And::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Or::Or(QObject *parent)
-    : BinaryExpression{Parameter::BooleanType, tr("or"), parent}
+    : BinaryExpression{Parameter::BooleanType, QT_TR_NOOP("or"), parent}
 {
     connect(this, &Or::leftChanged, this, &Or::evaluate);
     connect(this, &Or::rightChanged, this, &Or::evaluate);
@@ -216,7 +216,7 @@ void Or::evaluate()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Not::Not(QObject *parent)
-    : UnaryExpression{Parameter::BooleanType, tr("not"), parent}
+    : UnaryExpression{Parameter::BooleanType, QT_TR_NOOP("not"), parent}
 {
     connect(this, &Not::argumentChanged, this, &Not::evaluate);
 }

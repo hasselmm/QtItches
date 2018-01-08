@@ -7,7 +7,7 @@ Block {
     category: Block.ControlCategory
 
     parameters: [
-        ConstantParameter { string: qsTr("waitUntil") },
+        ConstantParameter { string: QT_TR_NOOP("waitUntil") },
         BooleanParameter { id: expressionParameter }
     ]
 
