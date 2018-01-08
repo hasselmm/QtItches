@@ -4,5 +4,4 @@ QT *= qml
 DEPENDPATH *= $$PWD
 INCLUDEPATH *= $$PWD
 
-LIBS *= -L$$PROJECT_LIBRARY_DIR
-LIBS *= -lQtItchesCore
+linkSharedLibrary(QtItchesCore)

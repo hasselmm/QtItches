@@ -1,3 +1,2 @@
-PRE_TARGETDEPS *= $$PROJECT_LIBRARY_DIR/$${QMAKE_PREFIX_STATICLIB}qtitchescontrolsstaticplugin.$$QMAKE_EXTENSION_STATICLIB
-LIBS *= -lqtitchescontrolsstaticplugin
+linkStaticLibrary(qtitchescontrolsstaticplugin)
 include(qtitchescontrolslibrary.pri)

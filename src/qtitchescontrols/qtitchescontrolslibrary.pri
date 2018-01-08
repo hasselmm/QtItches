@@ -5,4 +5,4 @@ QT *= quick
 DEPENDPATH *= $$PWD
 INCLUDEPATH *= $$PWD
 
-LIBS *= -lQtItchesControls
+linkSharedLibrary(QtItchesControls)
