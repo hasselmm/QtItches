@@ -28,3 +28,5 @@ this license doesn't work for you.
 
 Simply open QtItches.pro in QtCreator and follow the usual steps, or directly
 run your target platform's qmake on that file.
+
+[![Build Status](https://travis-ci.org/hasselmm/QtItches.svg?branch=master)](https://travis-ci.org/hasselmm/QtItches/builds)
