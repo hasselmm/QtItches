@@ -1,6 +1,7 @@
 #include "qtitchesparameter.h"
 
 #include "qtitchesexpression.h"
+#include "qtitchesutils.h"
 
 #include <QQmlInfo>
 
@@ -10,7 +11,12 @@ namespace Core {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Parameter::Parameter(QObject *parent)
+    : Parameter{{}, parent}
+{}
+
+Parameter::Parameter(const QVariant &initialValue, QObject *parent)
     : QObject{parent}
+    , m_value{initialValue}
 {}
 
 Parameter *Parameter::create(Type type, QObject *parent)
@@ -52,7 +58,13 @@ void Parameter::setValue(const QVariant &value)
         return;
 
     if (!acceptableValue(value)) {
-        qmlWarning(this) << "Ignoring unsupported value of type " << value.typeName();
+        if (const auto e = value.value<Expression *>()) {
+            qmlWarning(this) << "Ignoring expression with unsupported result type " << valueToKey(e->resultType())
+                             << " and a value of " << e->value();
+        } else {
+            qmlWarning(this) << "Ignoring value of unsupported type " << value.typeName();
+        }
+
         return;
     }
 
@@ -75,35 +87,75 @@ QVariant Parameter::value() const
     return m_value;
 }
 
+QString Parameter::toPlainText()
+{
+    const auto delimiters = Parameter::delimiters(type());
+
+    QString plainText;
+
+    if (!delimiters.first.isNull())
+        plainText += delimiters.first;
+
+    if (const auto e = expression())
+        plainText += e->toPlainText();
+    else
+        plainText += m_value.toString();
+
+    if (!delimiters.second.isNull())
+        plainText += delimiters.second;
+
+    return plainText;
+}
+
 bool Parameter::acceptableValue(const QVariant &value) const
 {
-    if (value.canConvert(qMetaTypeId<Expression *>())) {
-        qWarning("TODO: properly validate expressions");
+    if (value.isNull())
         return true;
-    }
+
+    if (const auto expression = value.value<Expression *>())
+        return acceptableValue(expression->value());
 
     switch (type()) {
-    case BooleanType:
+    case Parameter::BooleanType:
         return value.canConvert(QVariant::Bool);
-    case ChoiceType:
+    case Parameter::ChoiceType:
         return value.canConvert(QVariant::Int);
-    case ConstantType:
+    case Parameter::ConstantType:
         return value.canConvert(QVariant::String);
-    case NumberType:
+    case Parameter::NumberType:
         return value.canConvert(QVariant::Double);
-    case StringType:
+    case Parameter::StringType:
         return value.canConvert(QVariant::String);
-    case InvalidType:
+    case Parameter::InvalidType:
         break;
     }
 
     return false;
 }
 
+Q_DECL_RELAXED_CONSTEXPR std::pair<QChar, QChar> Parameter::delimiters(Parameter::Type type)
+{
+    switch (type) {
+    case BooleanType:
+        return {'<', '>'};
+    case ChoiceType:
+    case NumberType:
+        return {'(', ')'};
+    case StringType:
+        return {'[', ']'};
+
+    case ConstantType:
+    case InvalidType:
+        break;
+    }
+
+    return {};
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 BooleanParameter::BooleanParameter(QObject *parent)
-    : Parameter{parent}
+    : Parameter{false, parent}
 {
     connect(this, &Parameter::valueChanged, [this](const auto &value) {
         emit this->booleanChanged(value.toBool());
@@ -148,7 +200,7 @@ ConstantParameter::ConstantParameter(const QString &string, QObject *parent)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 NumberParameter::NumberParameter(QObject *parent)
-    : Parameter{parent}
+    : Parameter{0.0, parent}
 {
     connect(this, &Parameter::valueChanged, [this](const auto &value) {
         emit this->numberChanged(value.toDouble());

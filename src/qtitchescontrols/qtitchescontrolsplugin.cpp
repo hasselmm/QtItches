@@ -17,6 +17,7 @@ public:
         Q_ASSERT(uri == QLatin1String("QtItches.Controls"));
         using namespace QtItches::Controls;
 
+        qmlRegisterType<BlockDropArea>(uri, 1, 0, "BlockDropArea");
         qmlRegisterType<BlockView>(uri, 1, 0, "BlockView");
         qmlRegisterType<CategoryModel>(uri, 1, 0, "CategoryModel");
 

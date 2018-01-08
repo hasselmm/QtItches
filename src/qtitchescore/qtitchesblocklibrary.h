@@ -1,6 +1,7 @@
 #ifndef QTITCHESBLOCKLIBRARY_H
 #define QTITCHESBLOCKLIBRARY_H
 
+#include "qtitchesblock.h"
 #include "qtitchesutils.h"
 
 #include <QAbstractListModel>
@@ -25,7 +26,9 @@ public:
         PrototypeRole = Qt::UserRole,
         ElementNameRole,
         ModuleNameRole,
+        ModuleUriRole,
         TypeNameRole,
+        TypeInfoRole,
     };
 
     QTITCHES_DATAROLE(DataRole)
@@ -46,7 +49,10 @@ public:
     void classBegin() override;
     void componentComplete() override;
 
+    static Block::TypeCategory typeCategory(const QJsonObject &typeInfo);
+
 public slots:
+    QtItches::Core::Block *createBlock(const QByteArray &typeInfo, QObject *parent) const;
     void reload();
 
 signals:

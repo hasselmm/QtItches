@@ -7,4 +7,16 @@ BooleanShape {
     fillColor: Qt.darker(BlockView.shapeColor, 1.2)
     implicitWidth: implicitHeight * 1.5
     implicitHeight: BlockView.font.pixelSize
+
+    BlockDropArea {
+        id: dropArea
+
+        anchors {
+            fill: parent
+            margins: -10
+        }
+
+        acceptedDropActions: BlockDropArea.ApplyBooleanExpression
+        onTypeInfoDropped: parameter.value = BlockView.createBlock(typeInfo)
+    }
 }

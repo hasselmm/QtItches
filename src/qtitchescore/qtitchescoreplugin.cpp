@@ -25,8 +25,8 @@ public:
 
         qmlRegisterType<And>(uri, 1, 0, "And");
         qmlRegisterType<BinaryExpression>(uri, 1, 0, "BinaryExpression");
-        qmlRegisterType<BlockLibrary>(uri, 1, 0, "Library");
         qmlRegisterType<Block>(uri, 1, 0, "Block");
+        qmlRegisterType<BlockLibrary>(uri, 1, 0, "BlockLibrary");
         qmlRegisterType<BooleanParameter>(uri, 1, 0, "BooleanParameter");
         qmlRegisterType<ChoiceParameter>(uri, 1, 0, "ChoiceParameter");
         qmlRegisterType<ConstantParameter>(uri, 1, 0, "ConstantParameter");

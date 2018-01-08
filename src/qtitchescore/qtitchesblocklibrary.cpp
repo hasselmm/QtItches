@@ -7,6 +7,8 @@
 #include <private/qhashedstring_p.h>
 #include <private/qqmlmetatype_p.h>
 
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QPointer>
 #include <QQmlComponent>
 
@@ -14,6 +16,13 @@
 
 namespace QtItches {
 namespace Core {
+
+namespace {
+const auto s_typeId = QStringLiteral("typeId");
+const auto s_typeCategory = QStringLiteral("typeCategory");
+const auto s_elementName = QStringLiteral("elementName");
+const auto s_moduleUri = QStringLiteral("moduleUri");
+}
 
 class BlockLibrary::Private
 {
@@ -24,9 +33,26 @@ public:
         Row(const QQmlType &type, Block *prototype)
             : type{type}, prototype{prototype} {}
 
+        QString moduleUri() const
+        {
+            return type.module() + ' ' + QString::number(type.majorVersion()) + '.' + QString::number(type.majorVersion());
+        }
+
+        QJsonObject createTypeInfo()
+        {
+            return {
+                {s_typeId, type.index()},
+                {s_typeCategory, prototype->typeCategory()},
+                {s_elementName, type.elementName()},
+                {s_moduleUri, moduleUri()},
+            };
+        }
+
         QQmlType type;
         QPointer<Block> prototype;
     };
+
+    Block *createBlock(QQmlEngine *engine, const QQmlType &type) const;
 
     std::vector<Row> m_rows;
     QStringList m_modules = {"QtItches.Core"};
@@ -94,10 +120,14 @@ QVariant BlockLibrary::data(const QModelIndex &index, int role) const
             return d->m_rows[index.row()].type.elementName();
         case ModuleNameRole:
             return d->m_rows[index.row()].type.module();
+        case ModuleUriRole:
+            return d->m_rows[index.row()].moduleUri();
         case TypeNameRole:
             return d->m_rows[index.row()].type.elementName();
         case PrototypeRole:
             return qVariantFromValue(d->m_rows[index.row()].prototype.data());
+        case TypeInfoRole:
+            return d->m_rows[index.row()].createTypeInfo();
         }
     }
 
@@ -114,37 +144,62 @@ void BlockLibrary::componentComplete()
     connect(this, &BlockLibrary::modulesChanged, this, &BlockLibrary::reload);
 }
 
+Block::TypeCategory BlockLibrary::typeCategory(const QJsonObject &typeInfo)
+{
+    return static_cast<Block::TypeCategory>(typeInfo.value(s_typeCategory).toInt());
+}
+
+Block *BlockLibrary::Private::createBlock(QQmlEngine *engine, const QQmlType &type) const
+{
+    if (type.metaObject() && type.metaObject()->inherits(&Block::staticMetaObject)) {
+        if (std::unique_ptr<QObject> object{type.create()})
+            if (object->metaObject()->inherits(&Block::staticMetaObject))
+                return static_cast<Block *>(object.release());
+    }
+
+    if (type.isComposite() && !type.sourceUrl().isEmpty() && engine) {
+        QQmlComponent component{engine, type.sourceUrl()};
+        if (std::unique_ptr<QObject> object{component.create()})
+            if (object->metaObject()->inherits(&Block::staticMetaObject))
+                return static_cast<Block *>(object.release());
+    }
+
+    return {};
+}
+
+Block *BlockLibrary::createBlock(const QByteArray &typeInfo, QObject *parent) const
+{
+    const auto typeId = QJsonDocument::fromJson(typeInfo).object().value(s_typeId).toInt();
+
+    for (const auto &row: d->m_rows) {
+        if (row.type.index() == typeId) {
+            if (const auto block = d->createBlock(qmlEngine(this), row.type)) {
+                block->setParent(parent);
+                return block;
+            }
+        }
+    }
+
+    return {};
+}
+
 void BlockLibrary::reload()
 {
-    const auto engine = qmlEngine(this);
-
     beginResetModel();
     d->m_rows.clear();
 
+    const auto engine = qmlEngine(this);
     for (const auto &type: QQmlMetaType::qmlTypes()) {
-        // FIXME: find better way to exclude types
         if (type.metaObject() == &Block::staticMetaObject
                 || type.metaObject() == &Expression::staticMetaObject
+                || type.metaObject() == &UnaryExpression::staticMetaObject
+                || type.metaObject() == &BinaryExpression::staticMetaObject
                 || !d->m_modules.contains(type.module()))
-            continue;
+            continue; // FIXME: find better way to exclude types - classinfo ?
 
-        if (type.metaObject() && type.metaObject()->inherits(&Block::staticMetaObject)) {
-            if (const auto prototype = dynamic_cast<Block *>(type.create())) {
-                d->m_rows.emplace_back(type, prototype);
-                d->m_rows.back().prototype->setContext(d->m_context);
-                continue;
-            }
-        }
-
-        if (type.isComposite() && !type.sourceUrl().isEmpty() && engine) {
-            QQmlComponent component{engine, type.sourceUrl()};
-            if (std::unique_ptr<QObject> object{component.create()}) {
-                if (object->metaObject()->inherits(&Block::staticMetaObject)) {
-                    d->m_rows.emplace_back(type, static_cast<Block *>(object.release()));
-                    d->m_rows.back().prototype->setContext(d->m_context);
-                    continue;
-                }
-            }
+        if (const auto prototype = d->createBlock(engine, type)) {
+            prototype->setContext(d->m_context);
+            d->m_rows.emplace_back(type, prototype);
         }
     }
 

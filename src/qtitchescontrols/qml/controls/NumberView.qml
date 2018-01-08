@@ -7,7 +7,9 @@ Rectangle {
     property NumberParameter parameter
     property font font: BlockView.font
 
-    color: "#eeffffff"
+    color: dropArea.pendingDropAction ? "#eeff0000" : "#eeffffff" // FIXME: drop indication color
+    Behavior on color { ColorAnimation {} }
+
     implicitWidth: Math.max(input.implicitWidth + 4, implicitHeight)
     implicitHeight: input.implicitHeight + 2
     radius: 3
@@ -20,6 +22,9 @@ Rectangle {
         inputMethodHints: Qt.ImhDigitsOnly
         text: parameter && parameter.number
 
+        color: dropArea.pendingDropAction ? "white" : "black" // FIXME: drop indication color
+        Behavior on color { ColorAnimation {} }
+
         validator: DoubleValidator {
             id: validator
 
@@ -29,5 +34,19 @@ Rectangle {
         }
 
         onEditingFinished: parameter.number = parseFloat(text)
+    }
+
+    BlockDropArea {
+        id: dropArea
+
+        anchors {
+            fill: parent
+            margins: -10
+        }
+
+        acceptedDropActions: BlockDropArea.ApplyNumberExpression |
+                             BlockDropArea.ApplyBooleanExpression
+
+        onTypeInfoDropped: parameter.value = BlockView.createBlock(typeInfo)
     }
 }

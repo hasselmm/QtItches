@@ -143,6 +143,11 @@ Block::Shape Block::shape() const
     return d->m_shape;
 }
 
+Block::TypeCategory Block::typeCategory() const
+{
+    return BlockTypeCategory;
+}
+
 QQmlListProperty<QObject> Block::data()
 {
     return {this, d->m_data};
@@ -191,6 +196,46 @@ void Block::run()
 void Block::stop()
 {
     emit finished();
+}
+
+Q_DECL_RELAXED_CONSTEXPR std::pair<QChar, QChar> Block::delimiters(Shape shape)
+{
+    switch (shape) {
+    case BooleanShape:
+        return {'<', '>'};
+
+    case ReporterShape:
+        return {'(', ')'};
+        break;
+
+    case StackShape:
+        return {'[', ']'};
+        break;
+    }
+
+    return {};
+}
+
+QString Block::toPlainText()
+{
+    const auto delimiters = Block::delimiters(shape());
+
+    QString plainText;
+
+    if (!delimiters.first.isNull())
+        plainText += delimiters.first;
+
+    for (const auto p: d->m_parameters) {
+        if (plainText.length() > 1)
+            plainText += ' ';
+
+        plainText += p->toPlainText();
+    }
+
+    if (!delimiters.second.isNull())
+        plainText += delimiters.second;
+
+    return plainText;
 }
 
 } // namespace Core
