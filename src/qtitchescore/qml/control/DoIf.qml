@@ -12,7 +12,7 @@ Block {
     category: Block.ControlCategory
 
     parameters: [
-        ConstantParameter { string: qsTr("if") },
+        ConstantParameter { string: QT_TR_NOOP("if") },
         BooleanParameter { id: conditionParameter }
     ]
 

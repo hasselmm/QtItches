@@ -9,9 +9,9 @@ Block {
     category: Block.ControlCategory
 
     parameters: [
-        ConstantParameter { string: qsTr("wait") },
+        ConstantParameter { string: QT_TR_NOOP("wait") },
         NumberParameter { id: secondsParameter; decimals: 1; number: 5 },
-        ConstantParameter { string: qsTr("secs") }
+        ConstantParameter { string: QT_TR_NOOP("secs") }
     ]
 
     function run() {

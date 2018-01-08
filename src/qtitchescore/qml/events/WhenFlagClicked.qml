@@ -6,7 +6,7 @@ Block {
     connectors: Block.BottomConnector
 
     ConstantParameter {
-        string: qsTr("when green flag clicked")
+        string: QT_TR_NOOP("when green flag clicked")
     }
 
     Connections {

@@ -7,7 +7,7 @@ Block {
 
     category: Block.ControlCategory
     connectors: Block.TopConnector
-    parameters: ConstantParameter { string: qsTr("forever") }
+    parameters: ConstantParameter { string: QT_TR_NOOP("forever") }
 
     function run() {
         loopMonitor.enabled = true;

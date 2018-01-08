@@ -8,9 +8,9 @@ SpriteBlock {
 
     category: Block.MotionCategory
 
-    ConstantParameter { string: qsTr("go to x:") }
+    ConstantParameter { string: QT_TR_NOOP("go to x:") }
     NumberParameter { id: xParameter  }
-    ConstantParameter { string: qsTr("y:") }
+    ConstantParameter { string: QT_TR_NOOP("y:") }
     NumberParameter { id: yParameter  }
 
     function run() {

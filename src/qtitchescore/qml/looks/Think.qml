@@ -5,7 +5,7 @@ SpriteBlock {
 
     category: Block.LooksCategory
     parameters: [
-        ConstantParameter { string: qsTr("think:") },
+        ConstantParameter { string: QT_TR_NOOP("think:") },
         StringParameter { id: textParameter }
     ]
 

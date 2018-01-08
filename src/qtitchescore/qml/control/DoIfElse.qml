@@ -12,12 +12,12 @@ Block {
     property alias _else: doIfElse.otherwise
 
     readonly property var scripts: [then, otherwise]
-    property var scriptNames: [qsTr("else")]
+    property var scriptNames: [QT_TR_NOOP("else")]
 
     category: Block.ControlCategory
 
     parameters: [
-        ConstantParameter { string: qsTr("if") },
+        ConstantParameter { string: QT_TR_NOOP("if") },
         BooleanParameter { id: conditionParameter }
     ]
 

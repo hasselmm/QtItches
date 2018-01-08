@@ -5,9 +5,9 @@ SpriteBlock {
 
     category: Block.MotionCategory
 
-    ConstantParameter { string: qsTr("turn left") }
+    ConstantParameter { string: QT_TR_NOOP("turn left") }
     NumberParameter { id: angleParameter; value: 90; lowestNumber: 0; highestNumber: 359 }
-    ConstantParameter { string: qsTr("degrees") }
+    ConstantParameter { string: QT_TR_NOOP("degrees") }
 
     function run() {
         sprite.direction -= angle;
