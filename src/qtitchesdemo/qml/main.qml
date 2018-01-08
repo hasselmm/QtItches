@@ -32,6 +32,9 @@ Window {
     StageView {
         id: stageView
 
+        currentContext: !maximizeCanvas.checked && project && !project.running && contextChooser.currentContext || null
+        project: currentProject
+
         width: (parent.width - blockPicker.width * scriptView.opacity) / (1 + Math.pow(scriptView.opacity, 0.8))
         height: parent.height - inch(0.6) * Math.pow(contextChooser.opacity, 0.8)
 
@@ -43,8 +46,6 @@ Window {
 
         Behavior on opacity { NumberAnimation {} }
 
-        project: currentProject
-
         Button {
             id: maximizeCanvas
             checkable: true
@@ -55,12 +56,16 @@ Window {
             anchors.right: parent.right
 
             Button {
+                checked: currentProject && currentProject.running
                 text: "start"
+
                 onClicked: currentProject.flagClicked(this);
             }
 
             Button {
+                enabled: currentProject && currentProject.running
                 text: "stop"
+
                 onClicked: currentProject.stop()
             }
         }
