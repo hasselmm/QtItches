@@ -18,6 +18,7 @@ matrix:
           - QT_TOOLCHAIN="gcc_64"
           - QT_PACKAGES="qtbase qtdeclarative icu"
           - QMAKE_FLAGS="QMAKE_CC=gcc-6 QMAKE_CXX=g++-6"
+          - MAKE_TARGETS="all check"
 
         addons:
             apt:
@@ -46,7 +47,7 @@ matrix:
           - QT_TARGET="android"
           - QT_TOOLCHAIN="android_armv7"
           - QT_PACKAGES="qtbase qtdeclarative"
-          - SKIP_TESTS=1
+          - MAKE_TARGETS="all"
 
         android:
             components:
@@ -65,7 +66,7 @@ matrix:
           - QT_TARGET="ios"
           - QT_TOOLCHAIN="ios"
           - QT_PACKAGES="qtbase qtdeclarative"
-          - SKIP_TESTS=1
+          - MAKE_TARGETS="all"
 
         if: branch = master and type != pull_request
 
@@ -75,6 +76,4 @@ before_install:
   - .travis/install_qt.sh "${QT_HOST}" "${QT_TARGET}" "${QT_TOOLCHAIN}" 5.10.0 ${QT_PACKAGES}
 
 script:
-  - mkdir build && cd build &&
-    "../5.10.0/${QT_TOOLCHAIN}/bin/qmake" ${QMAKE_FLAGS} .. &&
-    make -j2 && { [ -n "${SKIP_TESTS}" ] || make check; }
+  - .travis/build.sh
