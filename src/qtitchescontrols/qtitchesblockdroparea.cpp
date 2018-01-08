@@ -35,22 +35,16 @@ QString mimeTypeForTypeCategory(Core::Block::TypeCategory typeCategory)
     return {};
 }
 
-QString mimeTypeForAction(BlockDropArea::DropAction dropAction)
+BlockDropArea::DropActions actionsForMimeType(const QString &mimeType)
 {
-    switch (dropAction) {
-    case BlockDropArea::PrependBlock:
-    case BlockDropArea::AppendBlock:
-        return s_mimeTypeBlockType;
-
-    case BlockDropArea::ApplyBooleanExpression:
-        return s_mimeTypeBooleanExpression;
-
-    case BlockDropArea::ApplyNumberExpression:
-        return s_mimeTypeNumberExpression;
-
-    case BlockDropArea::ApplyStringExpression:
-        return s_mimeTypeStringExpression;
-    }
+    if (mimeType == s_mimeTypeBlockType)
+        return BlockDropArea::PrependBlock | BlockDropArea::AppendBlock;
+    if (mimeType == s_mimeTypeBooleanExpression)
+        return BlockDropArea::ApplyBooleanExpression;
+    if (mimeType == s_mimeTypeNumberExpression)
+        return BlockDropArea::ApplyNumberExpression;
+    if (mimeType == s_mimeTypeStringExpression)
+        return BlockDropArea::ApplyStringExpression;
 
     return {};
 }
@@ -77,14 +71,14 @@ BlockDropArea::DropActions BlockDropArea::acceptedDropActions() const
     return m_acceptedDropActions;
 }
 
-BlockDropArea::DropAction BlockDropArea::pendingDropAction() const
+BlockDropArea::DropActions BlockDropArea::floatingDropActions() const
 {
-    return m_pendingDropSuspended ? DropAction{} : m_pendingDropAction;
+    return m_floatingDropActions;
 }
 
-QByteArray BlockDropArea::typeInfo() const
+BlockDropArea::DropAction BlockDropArea::pendingDropAction() const
 {
-    return m_typeInfo;
+    return m_pendingDropAction;
 }
 
 QVariantMap BlockDropArea::createMimeData(const QJsonObject &typeInfo) const
@@ -101,36 +95,42 @@ QVariantMap BlockDropArea::createMimeData(const QJsonObject &typeInfo) const
 void BlockDropArea::dragEnterEvent(QDragEnterEvent *event)
 {
     const auto mimeData = event->mimeData();
-    for (const auto &member: QMetaEnum::fromType<DropAction>()) {
-        const auto action = member.value<DropAction>();
+    if (!mimeData)
+        return;
 
-        if (eventViolatesAction(event, action))
-            continue;
+    m_typeInfo.clear();
+    m_floatingDropActions = {};
 
-        if ((m_acceptedDropActions & action) == action) {
-            m_typeInfo = mimeData->data(mimeTypeForAction(action));
+    for (const auto &format: mimeData->formats()) {
+        if (const auto actions = (actionsForMimeType(format) & m_acceptedDropActions)) {
+            if (m_typeInfo.isEmpty())
+                m_typeInfo = mimeData->data(format);
 
-            if (!m_typeInfo.isEmpty()) {
-                event->accept();
-                m_pendingDropAction = action;
-                emit pendingDropActionChanged(m_pendingDropAction);
-                return;
-            }
+            m_floatingDropActions |= actions;
         }
     }
 
-    cancelDrop();
+    if ((m_pendingDropAction = findActionForEvent(event)) != 0) {
+        event->accept(answerRect(m_pendingDropAction));
+        emit pendingDropActionChanged(m_pendingDropAction);
+    }
+
     QQuickItem::dragEnterEvent(event);
 }
 
 void BlockDropArea::dragMoveEvent(QDragMoveEvent *event)
 {
-    if (m_pendingDropAction) {
-        const auto suspendRequired = eventViolatesAction(event, m_pendingDropAction);
-        if (m_pendingDropSuspended != suspendRequired) {
-            m_pendingDropSuspended = suspendRequired;
-            emit pendingDropActionChanged(pendingDropAction());
-        }
+    const auto action = findActionForEvent(event);
+
+    if (m_pendingDropAction != action) {
+        m_pendingDropAction = action;
+
+        if (m_pendingDropAction)
+            event->accept(answerRect(m_pendingDropAction));
+        else
+            event->ignore();
+
+        emit pendingDropActionChanged(m_pendingDropAction);
     }
 
     QQuickItem::dragMoveEvent(event);
@@ -138,11 +138,8 @@ void BlockDropArea::dragMoveEvent(QDragMoveEvent *event)
 
 void BlockDropArea::dragLeaveEvent(QDragLeaveEvent *event)
 {
-    if (m_pendingDropAction) {
-        cancelDrop();
-    } else {
-        QQuickItem::dragLeaveEvent(event);
-    }
+    resetDropActionState();
+    QQuickItem::dragLeaveEvent(event);
 }
 
 void BlockDropArea::dropEvent(QDropEvent *event)
@@ -150,27 +147,52 @@ void BlockDropArea::dropEvent(QDropEvent *event)
     if (m_pendingDropAction) {
         event->accept();
         emit typeInfoDropped(m_pendingDropAction, m_typeInfo);
-        cancelDrop();
-    } else {
-        QQuickItem::dropEvent(event);
     }
+
+    resetDropActionState();
+    QQuickItem::dropEvent(event);
 }
 
-void BlockDropArea::cancelDrop()
+QRect BlockDropArea::answerRect(BlockDropArea::DropAction action) const
+{
+    const auto center = height()/2;
+
+    switch(action) {
+    case PrependBlock:
+        return {0, 0, qRound(width()), qRound(center)};
+
+    case AppendBlock:
+        return {0, qRound(height() - center), qRound(width()), qRound(center)};
+
+    case ApplyBooleanExpression:
+    case ApplyNumberExpression:
+    case ApplyStringExpression:
+        break;
+    }
+
+    return {};
+}
+
+BlockDropArea::DropAction BlockDropArea::findActionForEvent(QDropEvent *event) const
+{
+    for (const auto &member: QMetaEnum::fromType<DropAction>()) {
+        const auto action = member.value<DropAction>();
+
+        if ((m_floatingDropActions & action) == action
+                && answerRect(action).contains(event->pos()))
+            return action;
+    }
+
+    return {};
+}
+
+void BlockDropArea::resetDropActionState()
 {
     m_typeInfo.clear();
-    m_pendingDropAction = {};
-    emit pendingDropActionChanged(m_pendingDropAction);
-}
+    m_floatingDropActions = {};
 
-bool BlockDropArea::eventViolatesAction(QDropEvent *event, BlockDropArea::DropAction action) const
-{
-    if (action == PrependBlock && event->pos().y() >= height()/2)
-        return true;
-    if (action == AppendBlock && event->pos().y() < height()/2)
-        return true;
-
-    return false;
+    if (std::exchange(m_pendingDropAction, {}))
+        emit pendingDropActionChanged(m_pendingDropAction);
 }
 
 } // namespace Controls

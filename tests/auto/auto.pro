@@ -1,4 +1,2 @@
 TEMPLATE = subdirs
-
-SUBDIRS = \
-    tst_expressions.pro
+SUBDIRS = $$files(tst_*.pro)

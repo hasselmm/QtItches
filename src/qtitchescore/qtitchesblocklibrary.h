@@ -50,6 +50,7 @@ public:
     void componentComplete() override;
 
     static Block::TypeCategory typeCategory(const QJsonObject &typeInfo);
+    QJsonObject typeInfo(const QString &uri, int majorVersion, int minorVersion, const QString &name);
 
 public slots:
     QtItches::Core::Block *createBlock(const QByteArray &typeInfo, QObject *parent) const;

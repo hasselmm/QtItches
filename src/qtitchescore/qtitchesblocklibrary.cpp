@@ -38,7 +38,7 @@ public:
             return type.module() + ' ' + QString::number(type.majorVersion()) + '.' + QString::number(type.majorVersion());
         }
 
-        QJsonObject createTypeInfo()
+        QJsonObject createTypeInfo() const
         {
             return {
                 {s_typeId, type.index()},
@@ -147,6 +147,21 @@ void BlockLibrary::componentComplete()
 Block::TypeCategory BlockLibrary::typeCategory(const QJsonObject &typeInfo)
 {
     return static_cast<Block::TypeCategory>(typeInfo.value(s_typeCategory).toInt());
+}
+
+QJsonObject BlockLibrary::typeInfo(const QString &uri, int majorVersion, int minorVersion, const QString &name)
+{
+    const QHashedString hashedUri{uri};
+
+    for (const auto &row: d->m_rows) {
+        if (row.type.module() == hashedUri
+                && row.type.majorVersion() == majorVersion
+                && row.type.minorVersion() == minorVersion
+                && row.type.elementName() == name)
+            return row.createTypeInfo();
+    }
+
+    return {};
 }
 
 Block *BlockLibrary::Private::createBlock(QQmlEngine *engine, const QQmlType &type) const
