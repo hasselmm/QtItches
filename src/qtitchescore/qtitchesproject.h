@@ -11,7 +11,7 @@ class ScriptContext;
 class Sprite;
 class Stage;
 
-class Project : public QObject, public QQmlParserStatus
+class QTITCHES_CORE_EXPORT Project : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)

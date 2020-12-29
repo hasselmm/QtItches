@@ -11,7 +11,7 @@ class BlockLibrary;
 
 namespace Controls {
 
-class BlockView : public BlockDropArea
+class QTITCHES_CONTROLS_EXPORT BlockView : public BlockDropArea
 {
     Q_OBJECT
     Q_PROPERTY(QtItches::Core::BlockLibrary *library READ library WRITE setLibrary NOTIFY libraryChanged FINAL)

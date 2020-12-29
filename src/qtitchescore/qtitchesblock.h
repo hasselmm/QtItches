@@ -1,6 +1,8 @@
 #ifndef QTITCHESBLOCK_H
 #define QTITCHESBLOCK_H
 
+#include "qtitchescoreglobal.h"
+
 #include <QQmlListProperty>
 #include <QQmlParserStatus>
 
@@ -14,7 +16,7 @@ class ScriptContext;
 class Sprite;
 class Stage;
 
-class Block : public QObject, public QQmlParserStatus
+class QTITCHES_CORE_EXPORT Block : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_CLASSINFO("DefaultProperty", "data")

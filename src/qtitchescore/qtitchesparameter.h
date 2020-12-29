@@ -1,6 +1,8 @@
 #ifndef QTITCHESPARAMETER_H
 #define QTITCHESPARAMETER_H
 
+#include "qtitchescoreglobal.h"
+
 #include <QObject>
 #include <QVariant>
 
@@ -11,7 +13,7 @@ class Expression;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Parameter : public QObject
+class QTITCHES_CORE_EXPORT Parameter : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int type READ type CONSTANT FINAL)
@@ -59,7 +61,7 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class BooleanParameter : public Parameter
+class QTITCHES_CORE_EXPORT BooleanParameter : public Parameter
 {
     Q_OBJECT
     Q_PROPERTY(bool boolean READ boolean WRITE setBoolean NOTIFY booleanChanged FINAL)
@@ -78,7 +80,7 @@ signals:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class ChoiceParameter : public Parameter
+class QTITCHES_CORE_EXPORT ChoiceParameter : public Parameter
 {
     Q_OBJECT
     Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged FINAL)
@@ -105,7 +107,7 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class ConstantParameter : public Parameter
+class QTITCHES_CORE_EXPORT ConstantParameter : public Parameter
 {
     Q_OBJECT
     Q_PROPERTY(QString string READ string WRITE setString NOTIFY stringChanged FINAL)
@@ -125,7 +127,7 @@ signals:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class NumberParameter : public Parameter
+class QTITCHES_CORE_EXPORT NumberParameter : public Parameter
 {
     Q_OBJECT
     Q_PROPERTY(int decimals READ decimals WRITE setDecimals NOTIFY decimalsChanged FINAL)
@@ -164,7 +166,7 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class StringParameter : public Parameter
+class QTITCHES_CORE_EXPORT StringParameter : public Parameter
 {
     Q_OBJECT
     Q_PROPERTY(int maximumLength READ maximumLength WRITE setMaximumLength NOTIFY maximumLengthChanged FINAL)

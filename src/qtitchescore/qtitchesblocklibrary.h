@@ -12,7 +12,7 @@ namespace Core {
 
 class ScriptContext;
 
-class BlockLibrary : public QAbstractListModel, public QQmlParserStatus
+class QTITCHES_CORE_EXPORT BlockLibrary : public QAbstractListModel, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
