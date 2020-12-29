@@ -1,8 +1,8 @@
 import QtItches.Core 1.0
 import QtItches.Controls 1.0
 
-import QtQuick 2.9
-import QtQuick.Shapes 1.0
+import QtQuick 2.15
+import QtQuick.Shapes 1.15
 
 Shape {
     property Block block

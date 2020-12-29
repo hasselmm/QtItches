@@ -1,7 +1,7 @@
 import QtItches.Core 1.0
 import QtItches.Controls 1.0
 
-import QtQuick 2.9
+import QtQuick 2.15
 
 Item {
     property Parameter parameter

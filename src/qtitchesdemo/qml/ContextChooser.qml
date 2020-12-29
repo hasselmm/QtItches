@@ -1,6 +1,6 @@
 import QtItches.Core 1.0
 
-import QtQuick 2.9
+import QtQuick 2.15
 
 Rectangle {
     id: contextChooser
