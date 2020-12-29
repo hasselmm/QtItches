@@ -38,7 +38,7 @@ Block {
         enabled: false
         target: then
 
-        onFinished: {
+        function onFinished() {
             enabled = false;
             doIf.finished();
         }

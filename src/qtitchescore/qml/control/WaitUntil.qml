@@ -28,6 +28,8 @@ Block {
         enabled: false
         target: expressionParameter
 
-        onBooleanChanged: run()
+        function onBooleanChanged() {
+            run();
+        }
     }
 }

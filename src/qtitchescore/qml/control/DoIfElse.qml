@@ -39,7 +39,7 @@ Block {
 
         enabled: false
 
-        onFinished: {
+        function onFinished() {
             enabled = false;
             doIfElse.finished();
         }

@@ -26,6 +26,8 @@ Block {
         enabled: false
         target: loop
 
-        onFinished: loop.run()
+        function onFinished() {
+            loop.run();
+        }
     }
 }
