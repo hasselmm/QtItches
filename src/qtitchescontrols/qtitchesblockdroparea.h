@@ -1,6 +1,8 @@
 #ifndef QTITCHESBLOCKDROPAREA_H
 #define QTITCHESBLOCKDROPAREA_H
 
+#include "qtitchescontrolsglobal.h"
+
 #include "qtitchesblock.h"
 
 #include <QQuickItem>
@@ -8,7 +10,7 @@
 namespace QtItches {
 namespace Controls {
 
-class BlockDropArea : public QQuickItem
+class QTITCHES_CONTROLS_EXPORT BlockDropArea : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(int acceptedDropActions READ acceptedDropActions WRITE setAcceptedDropActions NOTIFY acceptedDropActionsChanged FINAL)

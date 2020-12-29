@@ -10,7 +10,7 @@ namespace Core {
 
 class Sprite;
 
-class Stage : public ScriptContext
+class QTITCHES_CORE_EXPORT Stage : public ScriptContext
 {
     Q_OBJECT
     Q_PROPERTY(QList<QUrl> backdrops READ backdrops WRITE setBackdrops NOTIFY backdropsChanged FINAL)
