@@ -9,6 +9,8 @@ QT_REPOSITORY="http://download.qt.io/online/qtsdkrepository/"
 
 shift 4
 
+QT_PACKAGES="$@"
+
 print_usage() {
     echo "Usage: $(basename "$0") HOST TARGET TOOLCHAIN VERSION"
     echo "$1"
@@ -57,7 +59,7 @@ then
     exit 1
 fi
 
-for package_name in "$@"
+for package_name in ${QT_PACKAGES}
 do
     package_suffix=$(xmllint Updates.xml --xpath "substring-before(substring-after(concat(${package_node}/DownloadableArchives/text(), ','), '${package_name}-'), ',')")
     package_filename="${package_prefix}${package_name}-${package_suffix}"
