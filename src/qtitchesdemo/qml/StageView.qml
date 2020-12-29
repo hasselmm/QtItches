@@ -1,5 +1,5 @@
 import QtItches.Core 1.0 as Core
-import QtQuick 2.9
+import QtQuick 2.15
 
 Rectangle {
     id: stageView
