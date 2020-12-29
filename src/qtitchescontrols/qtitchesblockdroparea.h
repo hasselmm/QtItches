@@ -36,8 +36,7 @@ public:
     DropAction pendingDropAction() const;
     QByteArray typeInfo() const;
 
-public slots:
-    virtual QVariantMap createMimeData(const QJsonObject &typeInfo) const;
+    Q_INVOKABLE virtual QVariantMap createMimeData(const QJsonObject &typeInfo) const;
 
 signals:
     void acceptedDropActionsChanged(int acceptedDropActions);

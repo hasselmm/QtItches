@@ -51,8 +51,9 @@ public:
 
     static Block::TypeCategory typeCategory(const QJsonObject &typeInfo);
 
+    Q_INVOKABLE QtItches::Core::Block *createBlock(const QByteArray &typeInfo, QObject *parent) const;
+
 public slots:
-    QtItches::Core::Block *createBlock(const QByteArray &typeInfo, QObject *parent) const;
     void reload();
 
 signals:
