@@ -17,23 +17,23 @@ namespace {
 using Core::Block;
 using Core::BlockLibrary;
 
-const auto s_qmlShapePrefix = QByteArrayLiteral("import QtItches.Controls 1.0\n"
-                                                "\n");
-const auto s_qmlShapeSuffix = QByteArrayLiteral(" {\n"
-                                                "    anchors.fill: parent\n"
-                                                "    block: _qtItches_blockView_.block\n"
-                                                "    scriptViews: _qtItches_blockViewContent_.scriptViews\n"
-                                                "}\n");
+constexpr auto s_qmlShapePrefix = "import QtItches.Controls 1.0\n"
+                                  "\n";
+constexpr auto s_qmlShapeSuffix = " {\n"
+                                  "    anchors.fill: parent\n"
+                                  "    block: _qtItches_blockView_.block\n"
+                                  "    scriptViews: _qtItches_blockViewContent_.scriptViews\n"
+                                  "}\n";
 
-const auto s_qmlContent = QByteArrayLiteral("import QtItches.Controls 1.0\n"
-                                            "\n"
-                                            "BlockViewContent {\n"
-                                            "    id: contentView\n"
-                                            "\n"
-                                            "    anchors { fill: parent /*; margins: 5*/ }\n"
-                                            "    block: _qtItches_blockView_.block\n"
-                                            "    shape: _qtItches_blockView_.shape\n"
-                                            "}");
+constexpr auto s_qmlContent = "import QtItches.Controls 1.0\n"
+                              "\n"
+                              "BlockViewContent {\n"
+                              "    id: contentView\n"
+                              "\n"
+                              "    anchors { fill: parent /*; margins: 5*/ }\n"
+                              "    block: _qtItches_blockView_.block\n"
+                              "    shape: _qtItches_blockView_.shape\n"
+                              "}";
 
 template<typename Object, typename Property>
 void updateProperty(Object *target, void (Object::*notify)(const Property &), Property *field, const Property &newValue)

@@ -2,6 +2,7 @@
 
 #include "qtitchesblocklibrary.h"
 #include "qtitchesmetaenumiterator.h"
+#include "qtitchesutils.h"
 
 #include <QJsonDocument>
 #include <QMimeData>
@@ -11,10 +12,10 @@ namespace Controls {
 
 namespace {
 
-const auto s_mimeTypeBlockType = QStringLiteral("application/vnd.qtitches.blocktype");
-const auto s_mimeTypeBooleanExpression = QStringLiteral("application/vnd.qtitches.boolean+expression+blocktype");
-const auto s_mimeTypeNumberExpression = QStringLiteral("application/vnd.qtitches.number+expression+blocktype");
-const auto s_mimeTypeStringExpression = QStringLiteral("application/vnd.qtitches.string+expression+blocktype");
+constexpr auto s_mimeTypeBlockType = "application/vnd.qtitches.blocktype"_l1;
+constexpr auto s_mimeTypeBooleanExpression = "application/vnd.qtitches.boolean+expression+blocktype"_l1;
+constexpr auto s_mimeTypeNumberExpression = "application/vnd.qtitches.number+expression+blocktype"_l1;
+constexpr auto s_mimeTypeStringExpression = "application/vnd.qtitches.string+expression+blocktype"_l1;
 
 QString mimeTypeForTypeCategory(Core::Block::TypeCategory typeCategory)
 {
