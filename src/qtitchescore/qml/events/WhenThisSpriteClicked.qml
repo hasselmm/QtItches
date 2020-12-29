@@ -1,5 +1,5 @@
 import QtItches.Core 1.0
-import QtQml 2.2
+import QtQml 2.15
 
 Block {
     category: Block.EventsCategory
@@ -13,7 +13,7 @@ Block {
     Connections {
         target: sprite
 
-        onClicked: {
+        function onClicked() {
             if (script)
                 script.run();
         }

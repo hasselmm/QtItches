@@ -1,8 +1,8 @@
 import QtItches.Core 1.0
 import QtItches.Controls 1.0
 
-import QtQuick 2.9
-import QtQuick.Layouts 1.3
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
 
 ColumnLayout {
     id: blockPicker

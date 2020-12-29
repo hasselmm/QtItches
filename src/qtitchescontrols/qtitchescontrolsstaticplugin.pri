@@ -1,3 +1,6 @@
-PRE_TARGETDEPS *= $$PROJECT_LIBRARY_DIR/$${QMAKE_PREFIX_STATICLIB}qtitchescontrolsstaticplugin.$$QMAKE_EXTENSION_STATICLIB
-LIBS *= -lqtitchescontrolsstaticplugin
-include(qtitchescontrolslibrary.pri)
+QTITCHESCONTROLS_STATICPLUGIN_TARGET = qtitchescontrolsstaticplugin
+android: QTITCHESCONTROLS_STATICPLUGIN_TARGET = $${QTITCHESCONTROLS_STATICPLUGIN_TARGET}_$${QT_ARCH}
+PRE_TARGETDEPS *= $$PROJECT_LIBRARY_DIR/$${QMAKE_PREFIX_STATICLIB}$${QTITCHESCONTROLS_STATICPLUGIN_TARGET}.$${QMAKE_EXTENSION_STATICLIB}
+LIBS *= -L$${PROJECT_LIBRARY_DIR} -l$${QTITCHESCONTROLS_STATICPLUGIN_TARGET}
+
+include(qtitchescontrolslibrary.pri) # dependencies must occur after usage for static libraries

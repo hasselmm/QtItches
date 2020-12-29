@@ -34,7 +34,7 @@ QQmlListProperty<ScriptContext> Project::contextes()
 
 QQmlListProperty<Sprite> Project::sprites()
 {
-    return {this, m_sprites};
+    return {this, &m_sprites};
 }
 
 Stage *Project::stage() const

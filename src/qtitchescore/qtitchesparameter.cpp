@@ -44,7 +44,7 @@ void Parameter::setExpression(Expression *expression)
     if (type() == InvalidType)
         qWarning("TODO: derrive parameter type from initital expressions");
 
-    setValue(qVariantFromValue(expression));
+    setValue(QVariant::fromValue(expression));
 }
 
 Expression *Parameter::expression() const

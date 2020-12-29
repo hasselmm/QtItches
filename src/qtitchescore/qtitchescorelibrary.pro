@@ -1,7 +1,10 @@
 TEMPLATE = lib
 TARGET = QtItchesCore
 DESTDIR = $$PROJECT_LIBRARY_DIR
-CONFIG += create_prf
+OBJECTS_DIR = $${QT_ARCH}/qtitchescorelibrary
+MOC_DIR = $$OBJECTS_DIR
+
+CONFIG += create_prl
 QT += qml_private
 
 DEFINES += \

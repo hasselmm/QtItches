@@ -57,7 +57,7 @@ void ScriptContext::updateRunningState()
 
 QQmlListProperty<Script> ScriptContext::scripts()
 {
-    return {this, m_scripts};
+    return {this, &m_scripts};
 }
 
 } // namespace Core

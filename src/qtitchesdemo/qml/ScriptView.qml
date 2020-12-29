@@ -1,10 +1,10 @@
 import QtItches.Core 1.0 as Core
 import QtItches.Controls 1.0
 
-import QtQml.Models 2.3
+import QtQml.Models 2.15
 
-import QtQuick 2.9
-import QtQuick.Layouts 1.3
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
 
 Rectangle {
     id: scriptView
