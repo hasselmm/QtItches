@@ -1,6 +1,8 @@
 #ifndef QTICHESUTILS_H
 #define QTICHESUTILS_H
 
+#include "qtitchescoreglobal.h"
+
 #include <QHash>
 
 #define QTITCHES_DATAROLE(Enum) \
@@ -10,8 +12,8 @@
 namespace QtItches {
 namespace Core {
 
-QHash<int, QByteArray> roleNamesFromEnum(const QMetaObject *metaObject, const char *enumName);
-const char *valueToKey(const QMetaObject *metaObject, const char *enumName, int value);
+QTITCHES_CORE_EXPORT QHash<int, QByteArray> roleNamesFromEnum(const QMetaObject *metaObject, const char *enumName);
+QTITCHES_CORE_EXPORT const char *valueToKey(const QMetaObject *metaObject, const char *enumName, int value);
 
 template<typename T>
 inline QHash<int, QByteArray> roleNamesFromEnum(typename std::enable_if<std::is_enum<T>::value>::type * = {})

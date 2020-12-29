@@ -1,6 +1,8 @@
 #ifndef QTITCHESCATEGORYMODEL_H
 #define QTITCHESCATEGORYMODEL_H
 
+#include "qtitchescontrolsglobal.h"
+
 #include "qtitchesutils.h"
 
 #include <QAbstractListModel>
@@ -8,7 +10,7 @@
 namespace QtItches {
 namespace Controls {
 
-class CategoryModel : public QAbstractListModel
+class QTITCHES_CONTROLS_EXPORT CategoryModel : public QAbstractListModel
 {
     Q_OBJECT
 

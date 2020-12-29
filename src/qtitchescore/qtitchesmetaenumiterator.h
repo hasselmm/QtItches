@@ -1,6 +1,8 @@
 #ifndef QTITCHESMETAENUMITERATOR_H
 #define QTITCHESMETAENUMITERATOR_H
 
+#include "qtitchescoreglobal.h"
+
 #include <QMetaEnum>
 
 inline /*constexpr*/ bool operator==(const QMetaEnum &lhs, const QMetaEnum &rhs)
@@ -30,7 +32,7 @@ private:
     int m_index;
 };
 
-class MetaEnumIterator : public std::iterator<std::forward_iterator_tag, MetaEnumEntry, int>
+class QTITCHES_CORE_EXPORT MetaEnumIterator : public std::iterator<std::forward_iterator_tag, MetaEnumEntry, int>
 {
 public:
     MetaEnumIterator() = default;
