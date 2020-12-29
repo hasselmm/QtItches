@@ -9,17 +9,17 @@ namespace QtItches {
 namespace Controls {
 
 namespace {
-const QColor s_controlCategoryColor{"#e1a91a"};
-const QColor s_dataCategoryColor{"#ee7d16"};
-const QColor s_eventsCategoryColor{"#c88330"};
-const QColor s_listsCategoryColor{"#ca5c2c"};
-const QColor s_looksCategoryColor{"#8a55d7"};
-const QColor s_motionCategoryColor{"#4a6cd4"};
-const QColor s_operatorsCategoryColor{"#5cb712"};
-const QColor s_penCategoryColor{"#0e9a6c"};
-const QColor s_sensingCategoryColor{"#2ca5e2"};
-const QColor s_soundCategoryColor{"#bb42c3"};
-const QColor s_unknownCategoryColor{"#4d4b60"};
+constexpr auto s_controlCategoryColor = QRgb{0xe1a91a};
+constexpr auto s_dataCategoryColor = QRgb{0xee7d16};
+constexpr auto s_eventsCategoryColor = QRgb{0xc88330};
+constexpr auto s_listsCategoryColor = QRgb{0xca5c2c};
+constexpr auto s_looksCategoryColor = QRgb{0x8a55d7};
+constexpr auto s_motionCategoryColor = QRgb{0x4a6cd4};
+constexpr auto s_operatorsCategoryColor = QRgb{0x5cb712};
+constexpr auto s_penCategoryColor = QRgb{0x0e9a6c};
+constexpr auto s_sensingCategoryColor = QRgb{0x2ca5e2};
+constexpr auto s_soundCategoryColor = QRgb{0xbb42c3};
+constexpr auto s_unknownCategoryColor = QRgb{0x4d4b60};
 }
 
 class CategoryModel::Private
