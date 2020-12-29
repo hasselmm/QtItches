@@ -1,6 +1,9 @@
 TEMPLATE = lib
 TARGET = QtItchesControls
 DESTDIR = $$PROJECT_LIBRARY_DIR
+OBJECTS_DIR = $${QT_ARCH}/qtitchescontrolslibrary
+MOC_DIR = $$OBJECTS_DIR
+
 CONFIG += create_prf
 QT = quick
 

@@ -3,7 +3,7 @@ CONFIG += plugin
 
 SOURCES = qtitchescoreplugin.cpp
 RESOURCES = qtitchescoreplugin.qrc
-OBJECTS_DIR = qtitchescoreplugin
+OBJECTS_DIR = $${QT_ARCH}/qtitchescoreplugin
 MOC_DIR = $$OBJECTS_DIR
 
 QMAKE_RPATHDIR += ../../../lib

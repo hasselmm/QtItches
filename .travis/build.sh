@@ -3,7 +3,7 @@
 mkdir build
 pushd build
 
-"../5.10.0/${QT_TOOLCHAIN}/bin/qmake" ${QMAKE_FLAGS} ..
+"../5.15.2/${QT_TOOLCHAIN}/bin/qmake" ${QMAKE_FLAGS} ..
 
 popd
 
