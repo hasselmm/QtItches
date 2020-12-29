@@ -1,5 +1,5 @@
 import QtItches.Core 1.0
-import QtQml 2.2
+import QtQml 2.15
 
 Block {
     id: doRepeat
@@ -42,6 +42,8 @@ Block {
         enabled: false
         target: loop
 
-        onFinished: iterate(currentIteration + 1)
+        function onFinished() {
+            iterate(currentIteration + 1);
+        }
     }
 }

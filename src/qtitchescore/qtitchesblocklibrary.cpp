@@ -125,7 +125,7 @@ QVariant BlockLibrary::data(const QModelIndex &index, int role) const
         case TypeNameRole:
             return d->m_rows[index.row()].type.elementName();
         case PrototypeRole:
-            return qVariantFromValue(d->m_rows[index.row()].prototype.data());
+            return QVariant::fromValue(d->m_rows[index.row()].prototype.data());
         case TypeInfoRole:
             return d->m_rows[index.row()].createTypeInfo();
         }

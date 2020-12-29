@@ -1,8 +1,11 @@
 include(../qtitchescore/qtitchescorelibrary.pri)
 
+CONFIG *= link_prl
 QT *= quick
 
 DEPENDPATH *= $$PWD
 INCLUDEPATH *= $$PWD
 
-LIBS *= -lQtItchesControls
+QTITCHESCONTROLS_LIBRARY_TARGET = QtItchesControls
+android: QTITCHESCONTROLS_LIBRARY_TARGET = $${QTITCHESCONTROLS_LIBRARY_TARGET}_$${QT_ARCH}
+LIBS *= -L$${PROJECT_LIBRARY_DIR} -l$${QTITCHESCONTROLS_LIBRARY_TARGET}

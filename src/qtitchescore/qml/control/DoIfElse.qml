@@ -1,5 +1,5 @@
 import QtItches.Core 1.0
-import QtQml 2.2
+import QtQml 2.15
 
 Block {
     id: doIfElse
@@ -39,7 +39,7 @@ Block {
 
         enabled: false
 
-        onFinished: {
+        function onFinished() {
             enabled = false;
             doIfElse.finished();
         }

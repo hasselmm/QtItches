@@ -1,5 +1,5 @@
 import QtItches.Core 1.0
-import QtQml 2.2
+import QtQml 2.15
 
 Block {
     property Script loop: Script {}
@@ -26,6 +26,8 @@ Block {
         enabled: false
         target: loop
 
-        onFinished: loop.run()
+        function onFinished() {
+            loop.run();
+        }
     }
 }

@@ -1,5 +1,5 @@
 import QtItches.Core 1.0
-import QtQml 2.2
+import QtQml 2.15
 
 Block {
     category: Block.EventsCategory
@@ -12,7 +12,7 @@ Block {
     Connections {
         target: project
 
-        onFlagClicked: {
+        function onFlagClicked() {
             script.stop();
             script.run();
         }

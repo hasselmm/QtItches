@@ -1,5 +1,5 @@
 import QtItches.Core 1.0
-import QtQml 2.2
+import QtQml 2.15
 
 Block {
     property alias expression: expressionParameter.value
@@ -28,6 +28,8 @@ Block {
         enabled: false
         target: expressionParameter
 
-        onBooleanChanged: run()
+        function onBooleanChanged() {
+            run();
+        }
     }
 }
