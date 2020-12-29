@@ -4,9 +4,13 @@ DESTDIR = $$PROJECT_LIBRARY_DIR
 CONFIG += create_prf
 QT += qml_private
 
+DEFINES += \
+    QTITCHES_CORE_EXPORT=Q_DECL_EXPORT
+
 HEADERS += \
     qtitchesblock.h \
     qtitchesblocklibrary.h \
+    qtitchescoreglobal.h \
     qtitchesexpression.h \
     qtitchesmetaenumiterator.h \
     qtitchesparameter.h \

@@ -5,14 +5,14 @@
 #include "qtitchesparameter.h"
 
 #define QTITCHES_DECLARE_BINARY_EXPRESSION(Name) \
-    class Name : public BinaryExpression { \
+    class QTITCHES_CORE_EXPORT Name : public BinaryExpression { \
         Q_OBJECT \
     public: explicit Name(QObject *parent = {}); \
     private: void evaluate(); \
     }
 
 #define QTITCHES_DECLARE_UNARY_EXPRESSION(Name) \
-    class Name : public UnaryExpression { \
+    class QTITCHES_CORE_EXPORT Name : public UnaryExpression { \
         Q_OBJECT \
     public: explicit Name(QObject *parent = {}); \
     private: void evaluate(); \
@@ -21,7 +21,7 @@
 namespace QtItches {
 namespace Core {
 
-class Expression : public Block
+class QTITCHES_CORE_EXPORT Expression : public Block
 {
     Q_OBJECT
     Q_PROPERTY(int parameterType READ parameterType WRITE setParameterType NOTIFY parameterTypeChanged FINAL)
@@ -56,7 +56,7 @@ private:
     QVariant m_value;
 };
 
-class BinaryExpression : public Expression
+class QTITCHES_CORE_EXPORT BinaryExpression : public Expression
 {
     Q_OBJECT
 
@@ -95,7 +95,7 @@ private:
     void onResultTypeChanged(int resultType);
 };
 
-class UnaryExpression : public Expression
+class QTITCHES_CORE_EXPORT UnaryExpression : public Expression
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged FINAL)

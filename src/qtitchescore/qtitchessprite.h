@@ -9,7 +9,7 @@
 namespace QtItches {
 namespace Core {
 
-class Sprite : public ScriptContext
+class QTITCHES_CORE_EXPORT Sprite : public ScriptContext
 {
     Q_OBJECT
     Q_CLASSINFO("DefaultProperty", "scripts")

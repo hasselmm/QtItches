@@ -1,6 +1,8 @@
 #ifndef QTITCHESSCRIPTCONTEXT_H
 #define QTITCHESSCRIPTCONTEXT_H
 
+#include "qtitchescoreglobal.h"
+
 #include <QQmlListProperty>
 #include <QQmlParserStatus>
 
@@ -10,7 +12,7 @@ namespace Core {
 class Project;
 class Script;
 
-class ScriptContext : public QObject, public QQmlParserStatus
+class QTITCHES_CORE_EXPORT ScriptContext : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
