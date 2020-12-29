@@ -126,7 +126,7 @@ Stage *Script::stage() const
 
 QQmlListProperty<Block> Script::blocks()
 {
-    return {this, d->m_blocks};
+    return {this, &d->m_blocks};
 }
 
 Block *Script::currentBlock() const
