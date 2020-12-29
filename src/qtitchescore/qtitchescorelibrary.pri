@@ -1,4 +1,4 @@
-CONFIG *= link_prf
+CONFIG *= link_prl
 QT *= qml
 
 DEPENDPATH *= $$PWD

@@ -4,7 +4,7 @@ DESTDIR = $$PROJECT_LIBRARY_DIR
 OBJECTS_DIR = $${QT_ARCH}/qtitchescontrolslibrary
 MOC_DIR = $$OBJECTS_DIR
 
-CONFIG += create_prf
+CONFIG += create_prl
 QT = quick
 
 DEFINES += \
