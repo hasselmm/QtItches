@@ -13,7 +13,7 @@ Block {
     Connections {
         target: sprite
 
-        onClicked: {
+        function onClicked() {
             if (script)
                 script.run();
         }

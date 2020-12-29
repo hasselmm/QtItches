@@ -42,6 +42,8 @@ Block {
         enabled: false
         target: loop
 
-        onFinished: iterate(currentIteration + 1)
+        function onFinished() {
+            iterate(currentIteration + 1);
+        }
     }
 }

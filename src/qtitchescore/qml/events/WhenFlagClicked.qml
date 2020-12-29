@@ -12,7 +12,7 @@ Block {
     Connections {
         target: project
 
-        onFlagClicked: {
+        function onFlagClicked() {
             script.stop();
             script.run();
         }
