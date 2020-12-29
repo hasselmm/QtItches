@@ -32,7 +32,7 @@ android|desktop|ios|winrt);;
 esac
 
 case "${QT_TOOLCHAIN}" in
-android_armv7|android_x86|gcc|gcc_64|ios|win32_mingw*|win32_msvc*|win64_msvc2015_winrt_armv|win64_msvc2015_winrt_x64|win64_msvc2017_winrt_x86);;
+android|android_armv7|android_x86|gcc|gcc_64|ios|win32_mingw*|win32_msvc*|win64_msvc2015_winrt_armv|win64_msvc2015_winrt_x64|win64_msvc2017_winrt_x86);;
 *) print_usage "Invalid SDK toolchain" >&2; exit 2;;
 esac
 
@@ -50,7 +50,7 @@ P7ZIP=$(which 7zr || which 7za || which 7z) || { echo "Could not find any 7zip e
 download "${QT_BASEURL}Updates.xml"
 
 package_folder="qt.qt5.${QT_VERSION_CODE}.${QT_TOOLCHAIN}"
-package_node="/Updates/PackageUpdate[Name/text() = '${package_folder}' and position() = 1]"
+package_node="/Updates/PackageUpdate[Name/text() = '${package_folder}'][position() = 1]"
 package_prefix=$(xmllint Updates.xml --xpath "${package_node}/Version/text()")
 
 if [ -z "${package_prefix}" ]
@@ -69,6 +69,7 @@ done
 
 echo "Activating '${QT_EDITION}' license in '${QT_CONFIG}'..."
 sed -ie "s/^\(QT_EDITION[[:space:]]*=[[:space:]]*\).*/\1${QT_EDITION}/" "${QT_CONFIG}"
+sed -ie "s/^\(QT_LICHECK[[:space:]]*=\).*/\1/" "${QT_CONFIG}"
 cat "${QT_CONFIG}"
 
 echo "Enabling relocating of Qt..."

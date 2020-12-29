@@ -37,16 +37,16 @@ matrix:
         sudo: false
 
         env:
-          - ANDROID_API_VERSION="android-19"
+          - ANDROID_API_VERSION="android-21"
           - ANDROID_NDK_HOST="linux-x86_64"
-          - ANDROID_NDK_VERSION="r16b"
+          - ANDROID_NDK_VERSION="r21"
           - ANDROID_NDK_ROOT="${PWD}/android-ndk-${ANDROID_NDK_VERSION}"
           - ANDROID_NDK_PLATFORM="${ANDROID_API_VERSION}"
           - ANDROID_SDK_ROOT="/usr/local/android-sdk"
 
           - QT_HOST="linux_x64"
           - QT_TARGET="android"
-          - QT_TOOLCHAIN="android_armv7"
+          - QT_TOOLCHAIN="android"
           - QT_PACKAGES="qtbase qtdeclarative"
           - MAKE_TARGETS="all"
 
@@ -74,7 +74,7 @@ matrix:
 before_install:
   - if [ "${QT_HOST}" == "mac_x64" ]; then brew update && brew install p7zip; fi
   - if [ -n "${ANDROID_NDK_ROOT}" ]; then .travis/install_ndk.sh "${ANDROID_NDK_HOST}" "${ANDROID_NDK_VERSION}" "${ANDROID_NDK_PLATFORM}"; fi
-  - .travis/install_qt.sh "${QT_HOST}" "${QT_TARGET}" "${QT_TOOLCHAIN}" 5.10.0 ${QT_PACKAGES}
+  - .travis/install_qt.sh "${QT_HOST}" "${QT_TARGET}" "${QT_TOOLCHAIN}" 5.15.2 ${QT_PACKAGES}
 
 script:
   - .travis/build.sh

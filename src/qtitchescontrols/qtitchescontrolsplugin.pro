@@ -3,7 +3,7 @@ CONFIG += plugin
 
 SOURCES = qtitchescontrolsplugin.cpp
 RESOURCES = qtitchescontrolsplugin.qrc
-OBJECTS_DIR = qtitchescontrolsplugin
+OBJECTS_DIR = $${QT_ARCH}/qtitchescontrolsplugin
 MOC_DIR = $$OBJECTS_DIR
 
 QMAKE_RPATHDIR += ../../../lib
