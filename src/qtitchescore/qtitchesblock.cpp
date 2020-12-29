@@ -150,12 +150,12 @@ Block::TypeCategory Block::typeCategory() const
 
 QQmlListProperty<QObject> Block::data()
 {
-    return {this, d->m_data};
+    return {this, &d->m_data};
 }
 
 QQmlListProperty<Parameter> Block::parameters()
 {
-    return {this, d->m_parameters};
+    return {this, &d->m_parameters};
 }
 
 Parameter *Block::parameter(int index) const
