@@ -190,7 +190,8 @@ void BlockLibrary::reload()
     d->m_rows.clear();
 
     const auto engine = qmlEngine(this);
-    for (const auto &type: QQmlMetaType::qmlTypes()) {
+    const auto knownQmlTypes = QQmlMetaType::qmlTypes();
+    for (const auto &type: knownQmlTypes) {
         if (type.metaObject() == &Block::staticMetaObject
                 || type.metaObject() == &Expression::staticMetaObject
                 || type.metaObject() == &UnaryExpression::staticMetaObject
