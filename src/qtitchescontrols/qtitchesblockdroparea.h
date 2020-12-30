@@ -36,13 +36,12 @@ public:
     DropAction pendingDropAction() const;
     QByteArray typeInfo() const;
 
-public slots:
-    virtual QVariantMap createMimeData(const QJsonObject &typeInfo) const;
+    Q_INVOKABLE virtual QVariantMap createMimeData(const QJsonObject &typeInfo) const;
 
 signals:
     void acceptedDropActionsChanged(int acceptedDropActions);
     void pendingDropActionChanged(int pendingDropAction);
-    void typeInfoDropped(DropAction dropAction, const QByteArray &typeInfo);
+    void typeInfoDropped(QtItches::Controls::BlockDropArea::DropAction dropAction, const QByteArray &typeInfo);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;

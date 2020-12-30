@@ -17,7 +17,7 @@ this license doesn't work for you.
 
 ## Requirements
 
-- A C++ compiler with decent support for C++14.
+- A C++ compiler with decent support for C++17.
 - [Qt 5.15](https://www.qt.io/download-open-source/) for
   [QtQuick.Shapes](http://blog.qt.io/blog/2017/07/07/let-there-be-shapes/)
   support.
