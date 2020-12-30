@@ -72,7 +72,7 @@ matrix:
         if: branch = master and type != pull_request
 
 before_install:
-  - if [ "${QT_HOST}" == "mac_x64" ]; then brew update && brew install p7zip; fi
+  - if [ "${QT_HOST}" == "mac_x64" ]; then brew install p7zip; fi
   - if [ -n "${ANDROID_NDK_ROOT}" ]; then .travis/install_ndk.sh "${ANDROID_NDK_HOST}" "${ANDROID_NDK_VERSION}" "${ANDROID_NDK_PLATFORM}"; fi
   - .travis/install_qt.sh "${QT_HOST}" "${QT_TARGET}" "${QT_TOOLCHAIN}" 5.15.2 ${QT_PACKAGES}
 
