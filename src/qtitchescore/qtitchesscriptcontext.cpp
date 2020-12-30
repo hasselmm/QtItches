@@ -21,13 +21,13 @@ void ScriptContext::classBegin()
 
 void ScriptContext::componentComplete()
 {
-    for (auto s: m_scripts)
+    for (auto s: qAsConst(m_scripts))
         connect(s, &Script::runningChanged, this, &ScriptContext::updateRunningState);
 }
 
 void ScriptContext::stopAllButThis(Script *script)
 {
-    for (const auto s: m_scripts) {
+    for (const auto s: qAsConst(m_scripts)) {
         if (s != script)
             s->stop();
     }
@@ -41,7 +41,7 @@ void ScriptContext::stop()
 void ScriptContext::updateRunningState()
 {
     const auto running = [this] {
-        for (auto s: m_scripts) {
+        for (auto s: qAsConst(m_scripts)) {
             if (s->running())
                 return true;
         }

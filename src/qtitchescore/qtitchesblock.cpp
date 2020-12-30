@@ -168,7 +168,7 @@ void Block::resetParameters(QList<Parameter *> &&parameters)
     if (d->m_parameters == parameters)
         return;
 
-    for (const auto p: d->m_parameters) {
+    for (const auto p: qAsConst(d->m_parameters)) {
         if (p && p->parent() == this && !parameters.contains(p))
             delete p;
     }
@@ -225,7 +225,7 @@ QString Block::toPlainText()
     if (!delimiters.first.isNull())
         plainText += delimiters.first;
 
-    for (const auto p: d->m_parameters) {
+    for (const auto p: qAsConst(d->m_parameters)) {
         if (plainText.length() > 1)
             plainText += ' ';
 

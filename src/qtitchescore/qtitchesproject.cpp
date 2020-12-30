@@ -66,7 +66,7 @@ void Project::classBegin()
 
 void Project::componentComplete()
 {
-    for (auto s: m_sprites)
+    for (auto s: qAsConst(m_sprites))
         connect(s, &ScriptContext::runningChanged, this, &Project::updateRunningState);
 
     connect(m_stage, &ScriptContext::runningChanged, this, &Project::updateRunningState);
@@ -74,7 +74,7 @@ void Project::componentComplete()
 
 void Project::stop()
 {
-    for (const auto s: m_sprites)
+    for (const auto s: qAsConst(m_sprites))
         s->stop();
 
     m_stage->stop();
@@ -83,7 +83,7 @@ void Project::stop()
 void Project::updateRunningState()
 {
     const auto running = [this] {
-        for (auto s: m_sprites) {
+        for (auto s: qAsConst(m_sprites)) {
             if (s->running())
                 return true;
         }
