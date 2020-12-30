@@ -11,6 +11,14 @@
 
 namespace QtItches {
 namespace Core {
+namespace Literals {
+
+constexpr QLatin1String operator""_l1(const char *str, size_t len)
+{
+    return QLatin1String{str, static_cast<int>(len)};
+}
+
+} // namespace Literals
 
 QTITCHES_CORE_EXPORT QHash<int, QByteArray> roleNamesFromEnum(const QMetaObject *metaObject, const char *enumName);
 QTITCHES_CORE_EXPORT const char *valueToKey(const QMetaObject *metaObject, const char *enumName, int value);
@@ -29,6 +37,9 @@ inline const char *valueToKey(T value, typename std::enable_if<std::is_enum<T>::
 }
 
 } // namespace Core
+
+using namespace Core::Literals;
+
 } // namespace QtItches
 
 #endif // QTICHESUTILS_H

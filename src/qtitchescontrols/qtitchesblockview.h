@@ -48,9 +48,8 @@ public:
 
     static BlockView *qmlAttachedProperties(QObject *object);
 
-public slots:
-    QtItches::Core::Block *createBlock(const QByteArray &typeInfo);
-    QVariantMap createMimeData(const QJsonObject &typeInfo) const override;
+    Q_INVOKABLE QtItches::Core::Block *createBlock(const QByteArray &typeInfo);
+    Q_INVOKABLE QVariantMap createMimeData(const QJsonObject &typeInfo) const override;
 
 signals:
     void libraryChanged(QtItches::Core::BlockLibrary *library);
