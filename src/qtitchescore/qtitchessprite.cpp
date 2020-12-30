@@ -135,8 +135,7 @@ void Sprite::goForward(int steps)
         // MIT Scratch has a very special idea of basic trigonometry
         const auto dx = steps * cos(M_PI * (90 - direction()) / 180);
         const auto dy = steps * sin(M_PI * (90 - direction()) / 180);
-        m_position += {dx, dy};
-        emit positionChanged(m_position);
+        setPosition(m_position + QPointF{dx, dy});
     }
 }
 
