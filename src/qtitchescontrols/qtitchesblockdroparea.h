@@ -32,9 +32,8 @@ public:
 
     void setAcceptedDropActions(DropActions acceptedDropActions);
     DropActions acceptedDropActions() const;
-
+    DropActions floatingDropActions() const;
     DropAction pendingDropAction() const;
-    QByteArray typeInfo() const;
 
     Q_INVOKABLE virtual QVariantMap createMimeData(const QJsonObject &typeInfo) const;
 
@@ -49,21 +48,23 @@ protected:
     void dragLeaveEvent(QDragLeaveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
 
+private:
     void setAcceptedDropActions(int acceptedDropActions) { setAcceptedDropActions(static_cast<DropActions>(acceptedDropActions)); }
 
-private:
-    void cancelDrop();
-    bool eventViolatesAction(QDropEvent *event, DropAction action) const;
+    QRect answerRect(DropAction action) const;
+    DropAction findActionForEvent(QDropEvent *event) const;
+    void resetDropActionState();
 
     DropActions m_acceptedDropActions;
+    DropActions m_floatingDropActions;
     DropAction m_pendingDropAction = {};
-    bool m_pendingDropSuspended = false;
     QByteArray m_typeInfo;
 };
 
 } // namespace Controls
 } // namespace QtItches
 
+Q_DECLARE_METATYPE(QtItches::Controls::BlockDropArea::DropActions)
 Q_DECLARE_OPERATORS_FOR_FLAGS(QtItches::Controls::BlockDropArea::DropActions)
 
 #endif // QTITCHESBLOCKDROPAREA_H
